@@ -17,6 +17,8 @@ This directory contains the operational system for your project: mission, method
 .pip/
 ├── README.md                  # This file
 ├── CONTRIBUTING.md            # How to contribute and collaborate
+├── WARP.md                   # AI agent guidance for this repo
+├── INDEX.md                  # Quick reference to all documentation
 ├── mission/                   # Why this project exists
 │   └── mission.md            # Problem, solution, vision, outcomes
 ├── method/                    # How we deliver
@@ -34,11 +36,22 @@ This directory contains the operational system for your project: mission, method
 │       ├── ciso/
 │       ├── cmo/
 │       └── cro/
+├── fragments/                 # Reusable project scaffolds
+│   └── nx-dev-infra/         # Nx + Docker + Postgres + n8n
+│       ├── README.md         # Fragment documentation
+│       └── files/            # Files to copy into projects
+├── bin/                       # Apply scripts for fragments
+│   └── apply-nx-dev-infra.sh # Script to apply nx-dev-infra
 └── docs/                      # Living documentation
     ├── activity-log.md       # Historical record of changes
     ├── changelog.md          # User-facing release notes
+    ├── fragments-guide.md    # How to use fragments system
+    ├── glossary.md           # Terms and definitions
+    ├── agents/               # Agent-specific documentation
+    ├── blog/                 # Blog posts and content
     ├── processes/            # Workflow guides
     ├── policies/             # Governance and compliance
+    ├── templates/            # Reusable templates
     └── tools/                # Tool guides and integrations
 ```
 
