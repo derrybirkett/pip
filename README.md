@@ -17,7 +17,8 @@ This directory contains the operational system for your project: mission, method
 .pip/
 ├── README.md                  # This file
 ├── CONTRIBUTING.md            # How to contribute and collaborate
-├── WARP.md                   # AI agent guidance for this repo
+├── fragment-prompt.md         # Universal AI agent entrypoint
+├── WARP.md                   # Warp-specific AI agent guidance
 ├── INDEX.md                  # Quick reference to all documentation
 ├── mission/                   # Why this project exists
 │   └── mission.md            # Problem, solution, vision, outcomes
@@ -138,11 +139,25 @@ See `CONTRIBUTING.md` for:
 
 ## Using with AI Agents
 
-This structure is optimized for AI-assisted development:
+This structure is optimized for AI-assisted development across multiple AI platforms:
+
+**Quick Start**: Point your AI agent to `fragment-prompt.md` — a universal entrypoint file that works with:
+- ChatGPT Projects
+- Claude Projects
+- Cursor Composer
+- Warp Agent Mode
+- n8n workflows
+
+### How It Works
 1. AI agents can reference role docs to understand decision authority
 2. Templates provide consistent formats for discovery and delivery
 3. Activity logs help agents understand project history
 4. Process docs guide agents through workflows
+
+### Platform-Specific Guidance
+- **Warp**: Automatically reads `WARP.md`
+- **ChatGPT/Claude/Cursor**: Reference `fragment-prompt.md` in project instructions
+- **n8n**: Add "Read File" node pointing to `fragment-prompt.md`
 
 ## Adapting for Your Project
 
