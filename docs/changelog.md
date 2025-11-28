@@ -3,7 +3,17 @@
 All notable changes to the website/app are documented here.
 
 ## Unreleased
+- <planned or in-progress changes>
+
+## 2025-11-28 — Universal AI Agent Entrypoint
+### Added
+- **fragment-prompt.md** - Universal AI agent entrypoint file that works across ChatGPT, Claude, Cursor, Warp, and n8n
+- Platform-specific integration examples for all major AI tools
+- Comprehensive agent behavior guidelines, decision boundaries, and quick reference
+- Blog post documenting the universal entrypoint feature
+
 ### Changed
+- Updated README.md with AI agent guidance and platform-specific instructions
 - Updated README.md directory tree to reflect actual repository structure
 - Strengthened git branching rules in WARP.md with explicit "Never Work Directly on Main" section
 
