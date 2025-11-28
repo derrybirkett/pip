@@ -43,6 +43,22 @@ This directory contains the operational system for your project: mission, method
 
 ## Getting Started
 
+### 0. Environment Setup
+This repository uses [direnv](https://direnv.net/) for environment variable management:
+```bash
+# Install direnv (if not already installed)
+brew install direnv  # macOS
+
+# Copy the example env file
+cp .envrc.example .envrc
+
+# Add your secrets to .envrc (it's gitignored)
+vim .envrc
+
+# Allow direnv to load the environment
+direnv allow
+```
+
 ### 1. Customize Mission
 Edit `mission/mission.md` to define:
 - Who you're serving
