@@ -1,0 +1,23 @@
+{
+  "name": "infra",
+  "targets": {
+    "up": {
+      "executor": "@nx/workspace:run-commands",
+      "options": {
+        "command": "docker compose up -d dev db n8n"
+      }
+    },
+    "down": {
+      "executor": "@nx/workspace:run-commands",
+      "options": {
+        "command": "docker compose down"
+      }
+    },
+    "logs": {
+      "executor": "@nx/workspace:run-commands",
+      "options": {
+        "command": "docker compose logs -f dev db n8n"
+      }
+    }
+  }
+}

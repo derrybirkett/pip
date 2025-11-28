@@ -55,9 +55,16 @@ Pre-merge checklist covering testing, documentation, blog posts, and communicati
 │           ├── role.md
 │           ├── responsibilities.md
 │           └── tech-stack/     # (for CTO only)
+├── fragments/                  # Reusable project scaffolds
+│   └── nx-dev-infra/          # Nx + Docker + Postgres + n8n
+│       ├── README.md
+│       └── files/
+├── bin/                        # Apply scripts for fragments
+│   └── apply-nx-dev-infra.sh
 └── docs/                       # Living documentation
     ├── activity-log.md         # Required for all changes
     ├── changelog.md            # Required for user-facing changes
+    ├── fragments-guide.md      # How to use fragments
     ├── processes/
     └── templates/
 ```
@@ -160,6 +167,17 @@ When adapting .pip for a new project:
 3. Update product graphs in `graph/`
 4. Remove unused agent directories
 5. Adapt `method/delivery-method.md`
+
+### Using Fragments
+Bootstrap new projects with reusable infrastructure:
+```bash
+# In new project directory
+git submodule add git@github.com:derrybirkett/pip.git .pip
+./.pip/bin/apply-nx-dev-infra.sh
+nx run infra:up
+```
+
+See `docs/fragments-guide.md` for detailed usage.
 
 ## Quick Reference
 
