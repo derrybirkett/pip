@@ -3,7 +3,9 @@
 All notable changes to the website/app are documented here.
 
 ## Unreleased
-- <planned or in-progress changes>
+### Changed
+- Updated README.md directory tree to reflect actual repository structure
+- Strengthened git branching rules in WARP.md with explicit "Never Work Directly on Main" section
 
 ## 2025-11-28 — Fragments System: Project Bootstrapping
 ### Added
