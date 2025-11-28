@@ -71,6 +71,14 @@ Pre-merge checklist covering testing, documentation, blog posts, and communicati
 
 ## Git Workflow
 
+### Critical Rule: Never Work Directly on Main
+**IMPORTANT**: All changes MUST be made on feature branches. NEVER commit directly to main, even for small documentation updates.
+
+When working as an AI agent:
+- Always create a feature branch before making ANY edits
+- If you accidentally make changes on main, stash them and move to a feature branch immediately
+- This rule applies to all changes: code, docs, configs, everything
+
 ### Branching Strategy
 Trunk-based development with short-lived feature branches (1-3 days max):
 - `feat/<desc>` — New features
@@ -254,6 +262,7 @@ git push --tags
 
 ### Agent Automation
 When working as an AI agent:
+- **NEVER work directly on main** — Always create a feature branch first
 - Perform wrap-up steps automatically unless told otherwise
 - Activity log and changelog are **required** before merge
 - Blog posts should be **drafted**, not just outlined
