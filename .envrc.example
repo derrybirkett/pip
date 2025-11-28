@@ -1,0 +1,7 @@
+# Environment variables for .pip repository
+# Copy this file to .envrc and fill in your values
+# .envrc is gitignored and will be loaded by direnv
+
+# Atlassian API token for Linear/Jira integration
+# Get one from: https://id.atlassian.com/manage-profile/security/api-tokens
+export ATLASSIAN_TOKEN=your_token_here
