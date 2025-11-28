@@ -9,6 +9,7 @@ This directory contains the operational system for your project: mission, method
 - **Agent-based governance** with defined roles and responsibilities
 - **Process templates** for delivery, documentation, and collaboration
 - **Project graphs** mapping key surfaces and flows
+- **Reusable fragments** for bootstrapping new projects with consistent infrastructure
 
 ## Directory Structure
 
@@ -80,6 +81,16 @@ Update the graph files:
 ### 4. Set Up Processes
 Customize `method/delivery-method.md` for your delivery approach.
 
+### 5. Use Fragments (Optional)
+Bootstrap new projects with reusable infrastructure scaffolds:
+```bash
+# In your new project
+git submodule add git@github.com:derrybirkett/pip.git .pip
+./.pip/bin/apply-nx-dev-infra.sh
+```
+
+See [Fragments Guide](./docs/fragments-guide.md) for more.
+
 ## Key Concepts
 
 ### Agents
@@ -101,6 +112,9 @@ Each agent has defined decision rights and interfaces.
 
 ### Graph
 "Graph" refers to the interconnected surfaces you're building (product, marketing, blog). Each graph file maps key flows and requirements.
+
+### Fragments
+Fragments are reusable project scaffolds (Docker configs, Nx setups, etc.) that you can inject into new projects for consistent infrastructure.
 
 ## Contributing
 
