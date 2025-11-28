@@ -1,0 +1,68 @@
+# Short machine-readable manifest of project agents
+
+agents:
+  - name: CEO
+    owner: <name/email or @github>
+    primary_docs:
+      - .pip/docs/agents/ceo/role.md
+      - .pip/docs/agents/ceo/responsibilities.md
+    responsibilities:
+      - Mission and strategy
+      - Final decision authority
+      - Prioritization across functions
+
+  - name: CTO
+    owner: <name/email or @github>
+    primary_docs:
+      - .pip/docs/agents/cto/role.md
+      - .pip/docs/agents/cto/responsibilities.md
+      - .pip/docs/agents/cto/tech-stack/tech-stack.md
+    responsibilities:
+      - Architecture and quality
+      - Delivery standards
+      - Reliability and performance
+
+  - name: CPO
+    owner: <name/email or @github>
+    primary_docs:
+      - .pip/docs/agents/cpo/role.md
+      - .pip/docs/agents/cpo/responsibilities.md
+      - .pip/docs/agents/cpo/initiative-one-pager.md
+    responsibilities:
+      - Roadmap and scope
+      - Discovery and outcomes
+      - Acceptance criteria
+
+  - name: CISO
+    owner: <name/email or @github>
+    primary_docs:
+      - .pip/docs/agents/ciso/role.md
+      - .pip/docs/agents/ciso/responsibilities.md
+      - .pip/docs/agents/ciso/security-policies.md
+    responsibilities:
+      - Security policies
+      - Risk management
+      - Incident readiness
+
+  - name: CMO
+    owner: <name/email or @github>
+    primary_docs:
+      - .pip/docs/agents/cmo/role.md
+      - .pip/docs/agents/cmo/responsibilities.md
+      - .pip/docs/agents/cmo/marketing-strategy.md
+    responsibilities:
+      - Messaging and channels
+      - Content calendar
+      - Campaign performance
+
+  - name: CRO
+    owner: <name/email or @github>
+    primary_docs:
+      - .pip/docs/agents/cro/role.md
+      - .pip/docs/agents/cro/responsibilities.md
+      - .pip/docs/agents/cro/revenue-strategy.md
+    responsibilities:
+      - Pricing and packaging
+      - Funnel optimization
+      - Retention and expansion
+
