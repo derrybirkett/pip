@@ -8,6 +8,7 @@ Log new agent activity for each commit: who did what and why.
 | 2025-11-28 | CTO | 89c7889 | Added WARP.md, .envrc.example, updated README.md with environment setup | Provide AI agents with repository guidance; secure token management via direnv | WARP.md, .envrc.example |
 | 2025-11-28 | CTO | PR #4 | Updated README directory structure; strengthened git branching rules in WARP.md | Sync documentation with actual repo structure after recent PRs; prevent AI agents from working directly on main | README.md, WARP.md |
 | 2025-11-28 | CTO | PR #5 | Added fragment-prompt.md universal AI agent entrypoint | Enable ChatGPT, Claude, Cursor, n8n to use .pip framework; provide single source of truth for agent behavior across all AI platforms | fragment-prompt.md, README.md |
+| 2025-11-30 | CTO | TBD | Added Kiro steering rules and genome concept documentation | Provide Kiro IDE with project context; clarify .pip's role as submodule-based instruction system (genome) for host repositories | .kiro/steering/, docs/genome-concept.md, README.md |
 | YYYY-MM-DD | <agent> | <hash or #PR> | <summary> | <decision/assumption> | <issue/docs> |
 
 Guidance:

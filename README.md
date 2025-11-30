@@ -4,12 +4,16 @@ This directory contains the operational system for your project: mission, method
 
 ## What is .pip?
 
-`.pip` is a lightweight framework for AI-assisted development that provides:
+`.pip` is a **project genome** - a living instruction system designed to be embedded as a git submodule in your projects. Like biological DNA, it provides the operational instructions for how your project functions.
+
+`.pip` provides:
 - **Clear mission and method** for consistent decision-making
 - **Agent-based governance** with defined roles and responsibilities
 - **Process templates** for delivery, documentation, and collaboration
 - **Project graphs** mapping key surfaces and flows
 - **Reusable fragments** for bootstrapping new projects with consistent infrastructure
+
+> **Important**: `.pip` is designed to be used as a **git submodule**, not copied or forked. This ensures your projects stay connected to upstream improvements while maintaining project-specific customizations. See [Genome Concept](./docs/genome-concept.md) for details.
 
 ## Directory Structure
 

@@ -62,6 +62,11 @@ Quick reference to all .pip documentation.
 
 ## Documentation
 
+### Core Concepts
+- [Genome Concept](./docs/genome-concept.md) — Understanding .pip as a submodule-based instruction system
+- [Fragments Guide](./docs/fragments-guide.md) — Using reusable project scaffolds
+- [Adapting for Your Project](./docs/adapting-for-your-project.md) — Customization guide
+
 ### Living Docs
 - [Activity Log](./docs/activity-log.md) — Historical record of changes
 - [Changelog](./docs/changelog.md) — User-facing release notes
@@ -105,8 +110,10 @@ When starting a new project with this template:
 
 ## Glossary
 
+- **Genome**: The .pip submodule acting as operational DNA for your project
 - **Graph**: The interconnected surfaces you're building (product, marketing, blog)
 - **Agent**: A role with defined decision rights and responsibilities (CEO, CTO, CPO, etc.)
+- **Fragment**: Reusable project scaffold that can be applied to new projects
 - **Wrap-Up**: Process of documenting, merging, and communicating completed work
 - **Activity Log**: Historical record of what changed and why
 - **Changelog**: User-facing release notes

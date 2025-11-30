@@ -3,7 +3,16 @@
 All notable changes to the website/app are documented here.
 
 ## Unreleased
-- <planned or in-progress changes>
+
+## 2025-11-30 — Kiro IDE Integration & Genome Concept
+### Added
+- **Kiro steering rules** - Three steering documents (product.md, tech.md, structure.md) to guide Kiro AI assistant
+- **Genome concept documentation** - Comprehensive guide explaining .pip's role as a submodule-based instruction system
+- Clear positioning of .pip as "project genome" that provides operational DNA for host repositories
+
+### Changed
+- Updated README.md to emphasize submodule usage over copying/forking
+- Clarified that .pip is designed to be embedded in projects, not used standalone
 
 ## 2025-11-28 — Universal AI Agent Entrypoint
 ### Added
