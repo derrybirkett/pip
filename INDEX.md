@@ -62,6 +62,10 @@ Quick reference to all .pip documentation.
 
 ## Documentation
 
+### Getting Started
+- **[Using .pip as Genome](./docs/using-pip-as-genome.md)** — How to use .pip as immutable template
+- [Adapting for Your Project](./docs/adapting-for-your-project.md) — Customization guide by project type
+
 ### Living Docs
 - [Activity Log](./docs/activity-log.md) — Historical record of changes
 - [Changelog](./docs/changelog.md) — User-facing release notes
