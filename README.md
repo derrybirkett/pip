@@ -56,6 +56,30 @@ This directory contains the operational system for your project: mission, method
     └── tools/                # Tool guides and integrations
 ```
 
+## The Genome/Organism Model
+
+**Important:** Think of `.pip` as **DNA/genome** — an immutable template that provides instructions.
+
+Your project is the **organism** that expresses those instructions:
+- **`.pip/` (Genome)** = Immutable template (DO NOT MODIFY)
+- **`docs/` in your project** = Your actual documentation (modify freely)
+
+### Quick Setup
+```bash
+# Add .pip as submodule
+git submodule add https://github.com/derrybirkett/pip.git .pip
+
+# Bootstrap your documentation
+mkdir -p docs
+cp .pip/docs/activity-log.md docs/
+cp .pip/docs/changelog.md docs/
+cp .pip/mission/mission.md docs/mission.md
+
+# Edit these files for YOUR project
+```
+
+**See [Using .pip as Genome](./docs/using-pip-as-genome.md) for detailed guidance.**
+
 ## Getting Started
 
 ### 0. Environment Setup
