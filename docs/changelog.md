@@ -5,6 +5,20 @@ All notable changes to the website/app are documented here.
 ## Unreleased
 - <planned or in-progress changes>
 
+## 2025-12-01 — Interactive Bootstrap Feature
+### Added
+- **bootstrap-project.sh** - Interactive wizard that captures user stories and generates personalized project documentation
+- Script asks 6 questions (project name, users, problem, solution, differentiator, project type) and generates:
+  - `docs/mission.md` with mission statement from user story
+  - Customized `README.md` with project description
+  - `docs/activity-log.md` and `docs/changelog.md` templates
+- Colored CLI interface for better user experience
+- Input sanitization to prevent control characters in generated files
+
+### Changed
+- Updated README.md with "Quick Setup (Recommended)" section highlighting interactive bootstrap
+- Bootstrap wizard now first step in project setup flow
+
 ## 2025-12-01 — Fragment Compatibility Fixes
 ### Fixed
 - **nx-dev-infra fragment** now compatible with Nx 22+ (updated executor from `@nx/workspace:run-commands` to `nx:run-commands`)
