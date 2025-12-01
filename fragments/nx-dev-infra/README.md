@@ -13,17 +13,27 @@ Provides a containerized Nx development environment with supporting infrastructu
 
 ## Prerequisites
 
-- Docker Desktop installed and running
-- Nx workspace (or will create one)
+- **Docker Desktop** installed and running
+- **Nx workspace** initialized
+- **pnpm** (or npm/yarn) installed
 
-## Usage
+## Quick Start
 
-### Apply to New Project
+### 1. Initialize Nx Workspace (if not already done)
+
+```bash
+# In your project directory
+npx nx@latest init --integrated
+```
+
+### 2. Apply Fragment
 
 ```bash
 # In your project root
 ./.pip/bin/apply-nx-dev-infra.sh
 ```
+
+The script will check prerequisites and copy the necessary files.
 
 ### Start Infrastructure
 
@@ -87,6 +97,40 @@ After applying, you can customize:
 
 ## Troubleshooting
 
+### "Nx workspace not initialized"
+**Error**: Script exits with "Nx workspace not initialized"
+
+**Solution**: Initialize Nx first:
+```bash
+npx nx@latest init --integrated
+```
+
+### "Docker is not running"
+**Error**: Script exits with "Docker is not running"
+
+**Solution**: Start Docker Desktop:
+```bash
+open -a Docker  # macOS
+# or start Docker Desktop from Applications
+```
+
+### "Cannot find executor 'run-commands'"
+**Error**: `Unable to resolve @nx/workspace:run-commands`
+
+**Cause**: Using older Nx version or outdated fragment
+
+**Solution**: Ensure you're using the latest fragment (uses `nx:run-commands` executor)
+
+### "Duplicate projects detected: infra"
+**Error**: `The following projects are defined in multiple locations: infra`
+
+**Cause**: Nx is detecting both the template in `.pip/fragments/` and your `tools/infra/`
+
+**Solution**: The fragment now creates `.nxignore` automatically. If you applied an older version:
+```bash
+echo ".pip/" >> .nxignore
+```
+
 ### Containers won't start
 ```bash
 # Check Docker is running
@@ -105,6 +149,9 @@ Edit `docker-compose.yml` and change port mappings:
 ports:
   - "5433:5432"  # Changed from 5432:5432
 ```
+
+### "version is obsolete" warning
+This warning is harmless. The fragment uses Docker Compose v2 format (no version needed). The warning appears if you're using an older Docker Compose version.
 
 ## Next Steps
 
