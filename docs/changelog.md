@@ -5,6 +5,19 @@ All notable changes to the website/app are documented here.
 ## Unreleased
 - <planned or in-progress changes>
 
+## 2025-12-01 — Fragment Compatibility Fixes
+### Fixed
+- **nx-dev-infra fragment** now compatible with Nx 22+ (updated executor from `@nx/workspace:run-commands` to `nx:run-commands`)
+- Removed obsolete `version` attribute from docker-compose.yml (eliminates warning)
+- Added `.nxignore` template to prevent "duplicate projects" error when using `.pip` as submodule
+- Apply script now checks Docker is running before attempting to start containers
+- Apply script now verifies Nx workspace is initialized before applying fragment
+
+### Changed
+- Enhanced apply script with prerequisite checks and better error messages
+- Updated fragment README with Quick Start section and comprehensive troubleshooting
+- Documented all common setup errors with solutions
+
 ## 2025-12-01 — Genome/Organism Model Integration
 ### Changed
 - Integrated genome/organism model explanation into WARP.md for Warp AI agents
