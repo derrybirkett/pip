@@ -9,6 +9,7 @@ Log new agent activity for each commit: who did what and why.
 | 2025-11-28 | CTO | PR #4 | Updated README directory structure; strengthened git branching rules in WARP.md | Sync documentation with actual repo structure after recent PRs; prevent AI agents from working directly on main | README.md, WARP.md |
 | 2025-11-28 | CTO | PR #5 | Added fragment-prompt.md universal AI agent entrypoint | Enable ChatGPT, Claude, Cursor, n8n to use .pip framework; provide single source of truth for agent behavior across all AI platforms | fragment-prompt.md, README.md |
 | 2025-12-01 | CTO | PR #6 | Integrated genome/organism model into WARP.md, fragment-prompt.md, fragments-guide.md | Ensure AI agents across all platforms understand .pip immutability and dual usage patterns; prevent accidental modification of template files | WARP.md, fragment-prompt.md, docs/fragments-guide.md |
+| 2025-12-01 | CTO | PR #7 | Fixed nx-dev-infra fragment Nx 22+ compatibility issues | Real-world testing revealed blocking issues: obsolete executor, duplicate projects, missing prereq checks; fixed all issues to enable smooth fragment application | fragments/nx-dev-infra/, bin/apply-nx-dev-infra.sh |
 | YYYY-MM-DD | <agent> | <hash or #PR> | <summary> | <decision/assumption> | <issue/docs> |
 
 Guidance:
