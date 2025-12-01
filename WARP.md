@@ -8,9 +8,30 @@ This file provides guidance to WARP (warp.dev) when working with code in this re
 - Agent-based governance with C-suite roles (CEO, CTO, CPO, CISO, CMO, CRO)
 - Process templates for discovery, delivery, and collaboration
 - Product graphs mapping key surfaces and flows
+- Reusable infrastructure fragments (Nx, Docker, Postgres, n8n)
 - Activity logging and changelog management
 
-**This is a pure documentation repository** — no application code, only Markdown files organized by purpose.
+## The Genome/Organism Model
+
+**Important Context**: `.pip` can be used in two ways:
+
+### 1. Working ON `.pip` Repository Itself
+When you're contributing to the `.pip` project:
+- This is a **documentation + scaffolding repository**
+- Markdown files + shell scripts + Docker configs
+- The docs here ARE the actual `.pip` project documentation
+- Follow all git workflow rules below
+
+### 2. Using `.pip` AS a Template (Most Common)
+When `.pip` is a submodule in your project:
+- **`.pip` = Genome** (immutable template, DO NOT MODIFY)
+- **Your project = Organism** (living implementation with its own docs)
+- Your project has its own `docs/` directory for actual documentation
+- `.pip/` stays pristine as reference and templates
+
+**See [Using .pip as Genome](./docs/using-pip-as-genome.md) for complete guide.**
+
+This guide assumes you're working ON the `.pip` repository itself.
 
 ## Key Concepts
 
