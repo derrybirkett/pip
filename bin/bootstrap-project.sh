@@ -22,31 +22,36 @@ echo
 # Get project information
 echo -e "${GREEN}1. Project Name${NC}"
 echo "   What should we call this project?"
-read -p "   > " PROJECT_NAME
+printf "   > "
+read -r PROJECT_NAME
 echo
 
 echo -e "${GREEN}2. Who Does This Serve?${NC}"
 echo "   Who is the primary user or customer?"
 echo "   Example: 'Small business owners', 'Mobile developers', 'Fitness enthusiasts'"
-read -p "   > " PRIMARY_USER
+printf "   > "
+read -r PRIMARY_USER
 echo
 
 echo -e "${GREEN}3. What Problem Are You Solving?${NC}"
 echo "   What specific pain point does this address?"
 echo "   Example: 'Manually tracking inventory takes hours each week'"
-read -p "   > " PROBLEM
+printf "   > "
+read -r PROBLEM
 echo
 
 echo -e "${GREEN}4. What's Your Solution?${NC}"
 echo "   How does your project solve this problem?"
 echo "   Example: 'Automated inventory tracking with real-time sync'"
-read -p "   > " SOLUTION
+printf "   > "
+read -r SOLUTION
 echo
 
 echo -e "${GREEN}5. What Makes It Different?${NC}"
 echo "   What's your unique differentiator?"
 echo "   Example: 'Works offline-first with no monthly subscription'"
-read -p "   > " DIFFERENTIATOR
+printf "   > "
+read -r DIFFERENTIATOR
 echo
 
 echo -e "${GREEN}6. What Type of Project?${NC}"
@@ -56,8 +61,17 @@ echo "   3) Full-stack (Web + API)"
 echo "   4) API/Backend Service"
 echo "   5) CLI Tool"
 echo "   6) Other"
-read -p "   > " PROJECT_TYPE
+printf "   > "
+read -r PROJECT_TYPE
 echo
+
+# Strip control characters from all inputs
+PROJECT_NAME=$(echo "$PROJECT_NAME" | tr -d '[:cntrl:]')
+PRIMARY_USER=$(echo "$PRIMARY_USER" | tr -d '[:cntrl:]')
+PROBLEM=$(echo "$PROBLEM" | tr -d '[:cntrl:]')
+SOLUTION=$(echo "$SOLUTION" | tr -d '[:cntrl:]')
+DIFFERENTIATOR=$(echo "$DIFFERENTIATOR" | tr -d '[:cntrl:]')
+PROJECT_TYPE=$(echo "$PROJECT_TYPE" | tr -d '[:cntrl:]')
 
 # Determine project type text
 case $PROJECT_TYPE in
@@ -68,7 +82,9 @@ case $PROJECT_TYPE in
   5) PROJECT_TYPE_TEXT="CLI tool" ;;
   *) 
     echo "   What type of project is it?"
-    read -p "   > " PROJECT_TYPE_TEXT
+    printf "   > "
+    read -r PROJECT_TYPE_TEXT
+    PROJECT_TYPE_TEXT=$(echo "$PROJECT_TYPE_TEXT" | tr -d '[:cntrl:]')
     ;;
 esac
 echo

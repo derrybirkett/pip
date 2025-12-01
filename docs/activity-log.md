@@ -10,6 +10,7 @@ Log new agent activity for each commit: who did what and why.
 | 2025-11-28 | CTO | PR #5 | Added fragment-prompt.md universal AI agent entrypoint | Enable ChatGPT, Claude, Cursor, n8n to use .pip framework; provide single source of truth for agent behavior across all AI platforms | fragment-prompt.md, README.md |
 | 2025-12-01 | CTO | PR #6 | Integrated genome/organism model into WARP.md, fragment-prompt.md, fragments-guide.md | Ensure AI agents across all platforms understand .pip immutability and dual usage patterns; prevent accidental modification of template files | WARP.md, fragment-prompt.md, docs/fragments-guide.md |
 | 2025-12-01 | CTO | PR #7 | Fixed nx-dev-infra fragment Nx 22+ compatibility issues | Real-world testing revealed blocking issues: obsolete executor, duplicate projects, missing prereq checks; fixed all issues to enable smooth fragment application | fragments/nx-dev-infra/, bin/apply-nx-dev-infra.sh |
+| 2025-12-01 | CTO | PR #8 | Added interactive bootstrap script for project setup | Enable users to generate personalized mission.md and README.md from user stories; fixed readline control character issues by using printf+read and stripping control characters | bin/bootstrap-project.sh, README.md |
 | YYYY-MM-DD | <agent> | <hash or #PR> | <summary> | <decision/assumption> | <issue/docs> |
 
 Guidance:
