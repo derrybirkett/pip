@@ -13,6 +13,44 @@
 
 **Repository Type**: Documentation + Infrastructure Scaffolds (Markdown + shell scripts + Docker configs)
 
+## The Genome/Organism Model
+
+**Critical Concept**: `.pip` is designed as an **immutable template** (genome) when used in projects.
+
+### Two Usage Modes:
+
+#### 1. Working ON `.pip` Repo (You're Here)
+When contributing to `.pip` itself:
+- These docs ARE the actual `.pip` project documentation
+- You can modify files (on feature branches)
+- Follow all git workflow rules in this guide
+
+#### 2. Using `.pip` AS Template (Most Common)
+When `.pip` is added as a git submodule to YOUR project:
+- **`.pip/` = Genome** → Immutable template (NEVER MODIFY)
+- **`your-project/docs/` = Organism** → Your actual documentation (modify freely)
+- Bootstrap your docs by copying templates from `.pip/docs/` to `your-project/docs/`
+- `.pip/` stays pristine as reference
+
+### Quick Example:
+```bash
+# In your project
+my-project/
+├── .pip/                    # ✔️ Immutable submodule (genome)
+│   └── docs/
+│       ├── activity-log.md  # Template/example
+│       └── changelog.md     # Template/example
+└── docs/                    # ✔️ Your actual docs (organism)
+    ├── activity-log.md      # Your project's real history
+    └── changelog.md         # Your project's real releases
+```
+
+**See [Using .pip as Genome](.pip/docs/using-pip-as-genome.md) for detailed setup guide.**
+
+---
+
+The rest of this guide assumes you're working ON the `.pip` repository itself or understand the genome/organism pattern.
+
 ## How Agents Should Behave
 
 ### Core Principles

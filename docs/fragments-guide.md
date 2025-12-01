@@ -2,6 +2,16 @@
 
 Fragments are reusable project scaffolds that provide consistent infrastructure patterns across all your projects.
 
+## Context: The Genome/Organism Model
+
+Fragments are designed to work with `.pip` as an **immutable submodule** (genome):
+- **`.pip/` = Genome** → Contains fragment templates (never modify)
+- **Your project = Organism** → Receives fragment files (customize freely)
+
+Fragments are applied **once** from `.pip/` to your project, then owned by your project.
+
+[Learn more about the genome/organism model →](./using-pip-as-genome.md)
+
 ## What Are Fragments?
 
 Fragments are pre-configured code and config templates that you can inject into new projects. They provide:
