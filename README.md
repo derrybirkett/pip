@@ -42,6 +42,7 @@ This directory contains the operational system for your project: mission, method
 │       ├── README.md         # Fragment documentation
 │       └── files/            # Files to copy into projects
 ├── bin/                       # Apply scripts for fragments
+│   ├── bootstrap-project.sh  # Interactive project setup
 │   └── apply-nx-dev-infra.sh # Script to apply nx-dev-infra
 └── docs/                      # Living documentation
     ├── activity-log.md       # Historical record of changes
@@ -64,7 +65,29 @@ Your project is the **organism** that expresses those instructions:
 - **`.pip/` (Genome)** = Immutable template (DO NOT MODIFY)
 - **`docs/` in your project** = Your actual documentation (modify freely)
 
-### Quick Setup
+### Quick Setup (Recommended)
+
+**Interactive Bootstrap** - Answer a few questions and get personalized documentation:
+
+```bash
+# In your new project
+git init
+git submodule add https://github.com/derrybirkett/pip.git .pip
+
+# Run interactive bootstrap
+./.pip/bin/bootstrap-project.sh
+```
+
+The script will ask about your project and generate:
+- Mission statement based on your user story
+- README with your project description  
+- Activity log and changelog templates
+- All customized for your specific project
+
+### Manual Setup (Advanced)
+
+If you prefer to set up manually:
+
 ```bash
 # Add .pip as submodule
 git submodule add https://github.com/derrybirkett/pip.git .pip
