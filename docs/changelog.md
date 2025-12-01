@@ -5,6 +5,14 @@ All notable changes to the website/app are documented here.
 ## Unreleased
 - <planned or in-progress changes>
 
+## 2025-12-01 — Genome/Organism Model Integration
+### Changed
+- Integrated genome/organism model explanation into WARP.md for Warp AI agents
+- Integrated genome/organism model explanation into fragment-prompt.md for all AI platforms
+- Added genome model context to fragments-guide.md
+- Clarified dual usage pattern: working ON `.pip` repository vs using `.pip` AS immutable template
+- Improved AI agent understanding of when to modify files vs treat them as templates
+
 ## 2025-11-28 — Universal AI Agent Entrypoint
 ### Added
 - **fragment-prompt.md** - Universal AI agent entrypoint file that works across ChatGPT, Claude, Cursor, Warp, and n8n
