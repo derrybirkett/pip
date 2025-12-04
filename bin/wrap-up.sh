@@ -42,7 +42,7 @@ if [[ -n "$tag_name" ]]; then
 fi
 
 git push
-if git rev-parse --verify --quiet "$tag_name" >/dev/null 2>&1; then
+if [[ -n "${tag_name:-}" ]]; then
   git push origin "$tag_name"
 fi
 

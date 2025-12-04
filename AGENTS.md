@@ -17,5 +17,6 @@ Each PR should cite the goal, scope, risks, tests, and linked issues using `docs
 
 ## Security & Configuration Tips
 Secrets belong in `.envrc`, never in repo files. Follow `ia/agents/ciso/security-policies.md` for dependency review, access control, and penetration-testing cadence. Before publishing new fragments or scripts, verify they fail fast when required tools are missing and document configuration steps in `docs/tools/` or the fragment README so other agents can reproduce environments safely.
+
 ## Command Glossary
-- **ok wrap up** — Run `bin/wrap-up.sh` to execute the full wrap process: verify checklist, update docs, commit, tag, push.
+- **ok wrap up** — Run `bin/wrap-up.sh` to walk through the wrap process: confirm `docs/processes/wrap-up-checklist.md`, update the activity log and changelog, stage everything, prompt for a commit message, optionally tag (e.g., `v0.4.0`), and push code + tags back to GitHub.
