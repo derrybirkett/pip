@@ -5,6 +5,16 @@ All notable changes to the website/app are documented here.
 ## Unreleased
 - <planned or in-progress changes>
 
+## 2025-12-04 — Command Ownership & Wrap Automation
+### Added
+- `AGENTS.md` contributor guide with command ownership/usage sections so downstream agents know how to work in this repo.
+- `bin/wrap-up.sh` script + COO role docs to automate the wrap-up checklist, commit, tag, and push process triggered by “ok wrap up”.
+
+### Changed
+- Updated `README.md`, `INDEX.md`, `WARP.md`, and `fragment-prompt.md` to include the COO role and agent-tool mappings.
+- `ia/agent_manifest.yml` now lists owning agents and tools for transparency (CTO for bootstrap scripts, COO for wrap-up automation).
+- `docs/processes/wrap-up-checklist.md` now explicitly references COO ownership and the wrap-up script.
+
 ## 2025-12-01 — Interactive Bootstrap Feature
 ### Added
 - **bootstrap-project.sh** - Interactive wizard that captures user stories and generates personalized project documentation
@@ -85,4 +95,3 @@ All notable changes to the website/app are documented here.
 
 ### Security
 - <notable security changes>
-
