@@ -10,6 +10,7 @@ Quick reference to all .pip documentation.
 
 ### Contributing
 - [Contributing Guide](./CONTRIBUTING.md) — How to contribute
+- [Repository Guidelines](./AGENTS.md) — Agent-ready conventions and workflows
 - [PR Template](./docs/templates/pr-template.md) — Pull request template
 - [Wrap-Up Checklist](./docs/processes/wrap-up-checklist.md) — Pre-merge checklist
 

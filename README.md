@@ -49,7 +49,6 @@ This directory contains the operational system for your project: mission, method
     ├── changelog.md          # User-facing release notes
     ├── fragments-guide.md    # How to use fragments system
     ├── glossary.md           # Terms and definitions
-    ├── agents/               # Agent-specific documentation
     ├── blog/                 # Blog posts and content
     ├── processes/            # Workflow guides
     ├── policies/             # Governance and compliance
