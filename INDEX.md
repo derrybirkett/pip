@@ -55,6 +55,10 @@ Quick reference to all .pip documentation.
 - [Responsibilities](./ia/agents/cro/responsibilities.md)
 - [Revenue Strategy](./ia/agents/cro/revenue-strategy.md)
 
+#### COO
+- [Role](./ia/agents/coo/role.md)
+- [Responsibilities](./ia/agents/coo/responsibilities.md)
+
 ## Product Graphs
 
 - [Product App](./graph/product-app.md) — Core product flows and features

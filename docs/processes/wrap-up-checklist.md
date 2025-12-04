@@ -1,6 +1,6 @@
 # Wrap-Up Process
 
-This checklist guides you through the final steps before completing work on a feature or fix. Use `bin/wrap-up.sh` (triggered whenever someone says “ok wrap up”) to walk through these steps interactively.
+This checklist (owned by the COO) guides you through the final steps before completing work on a feature or fix. Use `bin/wrap-up.sh` (triggered whenever someone says “ok wrap up”) to walk through these steps interactively.
 
 ## What is "Wrap-Up"?
 

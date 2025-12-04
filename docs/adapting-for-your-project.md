@@ -165,15 +165,15 @@ Files needed:
 - CTO: technical decisions
 - CPO: product decisions
 
-Remove: CISO, CMO, CRO (team members handle these as needed without formal roles)
+Remove: CISO, CMO, CRO, COO (team members handle these as needed without formal roles)
 
 ### Growing Team (5-15 people)
 Keep: CEO, CTO, CPO, CISO
 
-Add back: CMO when you start marketing actively, CRO when you have revenue
+Add back: CMO when you start marketing actively, CRO when you have revenue, COO when release cadence needs explicit ownership
 
 ### Mature Organization (15+ people)
-Keep: All agent roles
+Keep: All agent roles (CEO, CTO, CPO, CISO, CMO, CRO, COO)
 
 Each role should have a dedicated owner or small team.
 

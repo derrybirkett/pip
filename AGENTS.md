@@ -4,7 +4,7 @@
 `.pip/` is the template genome—treat it as read-only when embedded elsewhere, but in this repo we keep it authoritative. Mission and delivery intent live in `mission/` and `method/`. Product surfaces are described in `graph/`, while `ia/` and its `agents/` subtree define decision rights. Living documents sit in `docs/` (activity log, changelog, processes, templates, tools). Use `fragments/` for reusable scaffolds (see `fragments/nx-dev-infra/`) and `bin/` for helper scripts. Store new assets next to the doc or fragment they refine so agents can find them through `INDEX.md`.
 
 ## Build, Test, and Development Commands
-Run `bin/bootstrap.sh` from a downstream project root to scaffold `.pip` with guided prompts. Apply the Nx/Docker/Postgres fragment with `bin/apply-nx-dev-infra.sh <target-dir>`; it copies files from `fragments/nx-dev-infra/files`. Validate onboarding via `bin/test-bootstrap.sh`, which feeds canned answers into the bootstrapper; tweak it whenever prompt text changes. Scripts assume POSIX shell plus direnv configured via `.envrc`/`.envrc.example`.
+Run `bin/bootstrap.sh` from a downstream project root to scaffold `.pip` with guided prompts (owned by the CTO). Apply the Nx/Docker/Postgres fragment with `bin/apply-nx-dev-infra.sh <target-dir>`; it copies files from `fragments/nx-dev-infra/files`. Validate onboarding via `bin/test-bootstrap.sh`, which feeds canned answers into the bootstrapper; tweak it whenever prompt text changes. For mission/story creation, use `bin/bootstrap-project.sh`. Scripts assume POSIX shell plus direnv configured via `.envrc`/`.envrc.example`.
 
 ## Coding Style & Naming Conventions
 Documentation is Markdown-first: headings increment by level, wrap prose at ~100 chars, and keep tables simple. YAML/JSON files are two-space indented; shell scripts are formatted with `bash -n` + `shellcheck` before committing. Use imperative voice (“Add agent manifest”) for commits and prefer lowercase dashed filenames (`docs/processes/wrap-up-checklist.md`). Branch names follow `feat/`, `fix/`, `docs/`, or `chore/` prefixes per `CONTRIBUTING.md`.
@@ -18,5 +18,9 @@ Each PR should cite the goal, scope, risks, tests, and linked issues using `docs
 ## Security & Configuration Tips
 Secrets belong in `.envrc`, never in repo files. Follow `ia/agents/ciso/security-policies.md` for dependency review, access control, and penetration-testing cadence. Before publishing new fragments or scripts, verify they fail fast when required tools are missing and document configuration steps in `docs/tools/` or the fragment README so other agents can reproduce environments safely.
 
+## Command Ownership
+- **CTO**: `bin/bootstrap-project.sh`, `bin/bootstrap.sh`, `bin/test-bootstrap.sh`, `bin/apply-nx-dev-infra.sh` — automation for bootstrapping genomes and applying infra fragments.
+- **COO**: `bin/wrap-up.sh` — enforces release hygiene, docs, commits, tags, and pushes.
+
 ## Command Glossary
-- **ok wrap up** — Run `bin/wrap-up.sh` to walk through the wrap process: confirm `docs/processes/wrap-up-checklist.md`, update the activity log and changelog, stage everything, prompt for a commit message, optionally tag (e.g., `v0.4.0`), and push code + tags back to GitHub.
+- **ok wrap up** — (COO-owned) Run `bin/wrap-up.sh` to walk through the wrap process: confirm `docs/processes/wrap-up-checklist.md`, update the activity log and changelog, stage everything, prompt for a commit message, optionally tag (e.g., `v0.4.0`), and push code + tags back to GitHub.

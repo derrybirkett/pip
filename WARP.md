@@ -221,6 +221,7 @@ See `docs/fragments-guide.md` for detailed usage.
 - Testing Strategy: `ia/agents/cto/tech-stack/testing-strategy.md`
 - CMO Marketing Strategy: `ia/agents/cmo/marketing-strategy.md`
 - CISO Security Policies: `ia/agents/ciso/security-policies.md`
+- COO Wrap Ops: `ia/agents/coo/role.md`
 
 ### Common Tasks
 

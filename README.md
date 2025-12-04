@@ -36,7 +36,8 @@ This directory contains the operational system for your project: mission, method
 │       ├── cpo/
 │       ├── ciso/
 │       ├── cmo/
-│       └── cro/
+│       ├── cro/
+│       └── coo/
 ├── fragments/                 # Reusable project scaffolds
 │   └── nx-dev-infra/         # Nx + Docker + Postgres + n8n
 │       ├── README.md         # Fragment documentation
@@ -156,11 +157,12 @@ See [Fragments Guide](./docs/fragments-guide.md) for more.
 ### Agents
 This system uses a C-suite agent model:
 - **CEO**: Mission, strategy, cross-functional decisions
-- **CTO**: Technical architecture and delivery
+- **CTO**: Technical architecture, developer tooling, automation
 - **CPO**: Product roadmap and outcomes
 - **CISO**: Security, risk, compliance
 - **CMO**: Messaging, content, marketing
 - **CRO**: Revenue, pricing, growth
+- **COO**: Delivery operations, wrap-up governance, release hygiene
 
 Each agent has defined decision rights and interfaces.
 

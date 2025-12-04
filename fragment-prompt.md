@@ -248,6 +248,14 @@ See `docs/fragments-guide.md` for detailed instructions:
 - Revenue model shifts
 **Docs**: `ia/agents/cro/`
 
+### COO — Chief Operating Officer
+**Decision Rights**: Delivery operations, wrap-up governance, release hygiene
+**Approval Required For**:
+- Changes to wrap-up checklist or automation
+- Release/tag cadence adjustments
+- Exceptions to documentation/publishing standards
+**Docs**: `ia/agents/coo/`
+
 ## Quick Commands Reference
 
 ### Git

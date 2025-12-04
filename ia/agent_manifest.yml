@@ -10,6 +10,7 @@ agents:
       - Mission and strategy
       - Final decision authority
       - Prioritization across functions
+    tools: []
 
   - name: CTO
     owner: <name/email or @github>
@@ -21,6 +22,15 @@ agents:
       - Architecture and quality
       - Delivery standards
       - Reliability and performance
+    tools:
+      - path: bin/bootstrap-project.sh
+        description: Interactive mission and docs bootstrap
+      - path: bin/bootstrap.sh
+        description: Repo bootstrap wizard for `.pip` genomes
+      - path: bin/test-bootstrap.sh
+        description: Non-interactive bootstrap verification
+      - path: bin/apply-nx-dev-infra.sh
+        description: Apply Nx + Docker + Postgres fragment
 
   - name: CPO
     owner: <name/email or @github>
@@ -32,6 +42,7 @@ agents:
       - Roadmap and scope
       - Discovery and outcomes
       - Acceptance criteria
+    tools: []
 
   - name: CISO
     owner: <name/email or @github>
@@ -43,6 +54,7 @@ agents:
       - Security policies
       - Risk management
       - Incident readiness
+    tools: []
 
   - name: CMO
     owner: <name/email or @github>
@@ -54,6 +66,7 @@ agents:
       - Messaging and channels
       - Content calendar
       - Campaign performance
+    tools: []
 
   - name: CRO
     owner: <name/email or @github>
@@ -65,3 +78,17 @@ agents:
       - Pricing and packaging
       - Funnel optimization
       - Retention and expansion
+    tools: []
+
+  - name: COO
+    owner: <name/email or @github>
+    primary_docs:
+      - .pip/ia/agents/coo/role.md
+      - .pip/ia/agents/coo/responsibilities.md
+    responsibilities:
+      - Delivery operations and release hygiene
+      - Wrap-up checklist ownership
+      - Compliance for docs/tags
+    tools:
+      - path: bin/wrap-up.sh
+        description: Runs wrap-up checklist, commit, tag, push
