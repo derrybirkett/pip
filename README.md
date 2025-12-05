@@ -204,7 +204,8 @@ This structure is optimized for AI-assisted development across multiple AI platf
 
 ### Platform-Specific Guidance
 - **Warp**: Automatically reads `WARP.md`
-- **ChatGPT/Claude/Cursor**: Reference `fragment-prompt.md` in project instructions
+- **Cursor**: Copy `.cursorrules.example` to project root as `.cursorrules` (bootstrap script does this automatically)
+- **ChatGPT/Claude**: Reference `fragment-prompt.md` in project instructions
 - **n8n**: Add "Read File" node pointing to `fragment-prompt.md`
 
 ## Adapting for Your Project

@@ -200,6 +200,12 @@ EOF
 
 echo -e "${GREEN}✅ Created README.md${NC}"
 
+# Create .cursorrules from template
+if [ -f ".pip/.cursorrules.example" ]; then
+  sed "s/\[Project Name\]/${PROJECT_NAME}/g" .pip/.cursorrules.example > .cursorrules
+  echo -e "${GREEN}✅ Created .cursorrules${NC}"
+fi
+
 echo
 echo "────────────────────────────────────────────────────────────────"
 echo -e "${BLUE}╔════════════════════════════════════════════════════════════════╗${NC}"
@@ -213,6 +219,7 @@ echo "  • Mission statement (docs/mission.md)"
 echo "  • Activity log (docs/activity-log.md)"
 echo "  • Changelog (docs/changelog.md)"
 echo "  • README with your project story"
+echo "  • Cursor AI rules (.cursorrules)"
 echo
 echo -e "${YELLOW}Next steps:${NC}"
 echo "  1. Review and customize docs/mission.md"
