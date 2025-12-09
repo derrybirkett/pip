@@ -178,6 +178,19 @@ Each agent has defined decision rights and interfaces.
 ### Fragments
 Fragments are reusable project scaffolds (Docker configs, Nx setups, etc.) that you can inject into new projects for consistent infrastructure.
 
+## Roadmap
+
+`.pip` is evolving from a documentation framework into a **complete agentic development system** with formal patterns, persistent memory, and multi-agent coordination.
+
+See [ROADMAP.md](./ROADMAP.md) for:
+- Strategic vision (v0.4.0 → v1.0.0)
+- 7 phases: Foundation, Memory System, Agent Workflows, Interaction Protocols, Evaluation, Templates, Fragments
+- Vector database memory integration
+- ReAct/Planning/Reflection patterns
+- Agent quality metrics and self-evaluation
+
+**Next Milestone**: v0.4.0 Foundation (2 weeks) — Pattern library and resources
+
 ## Contributing
 
 See `CONTRIBUTING.md` for:
