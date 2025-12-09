@@ -5,6 +5,24 @@ All notable changes to the website/app are documented here.
 ## Unreleased
 - <planned or in-progress changes>
 
+## 2025-12-09 — Branch Protection & Strategic Roadmap
+### Added
+- **Git hooks system** - Pre-commit hook blocks direct commits to main branch locally
+- **hooks/install-hooks.sh** - One-command installation script for git hooks
+- **hooks/README.md** - Documentation for hook system and bypassing in emergencies
+- **docs/github-branch-protection.md** - Complete guide for configuring GitHub branch protection
+- **ROADMAP.md** - Strategic plan to transform .pip into complete agentic development system (v0.4.0 → v1.0.0)
+- **resources/agentic-design-patterns/** - Added 482-page Agentic Design Patterns PDF as reference
+- **GitHub branch protection rules** - Configured via API: enforce admins, require PRs, linear history, block force pushes
+
+### Changed
+- Updated README.md with git hooks installation as step 0 in Getting Started
+- README.md now includes roadmap section highlighting 7-phase transformation plan
+
+### Security
+- Branch protection prevents unauthorized changes to main branch
+- Hooks provide local enforcement before push to GitHub
+
 ## 2025-12-04 — Command Ownership & Wrap Automation
 ### Added
 - `AGENTS.md` contributor guide with command ownership/usage sections so downstream agents know how to work in this repo.

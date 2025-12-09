@@ -14,6 +14,8 @@ Log new agent activity for each commit: who did what and why.
 | 2025-12-04 | COO | 0f81b30 | Added `bin/wrap-up.sh`, documented `ok wrap up` command, linked checklist ownership | Ensure every wrap command drives consistent docs updates, commit, tag, and push flow for releases | AGENTS.md, bin/wrap-up.sh, docs/processes/wrap-up-checklist.md |
 | 2025-12-04 | CEO | 8aaf63f | Added COO role, mapped command ownership to CTO/COO, updated IA references | Clarify accountability for automation and release hygiene so agents know who governs each script | ia/agent_manifest.yml, ia/agents/coo/, README.md, AGENTS.md |
 | 2025-12-05 | CTO | feat/add-cursorrules-template | Added .cursorrules.example template and bootstrap integration | Enable Cursor IDE users to automatically follow pip framework guidelines; bootstrap script now creates .cursorrules from template | .cursorrules.example, bin/bootstrap-project.sh, README.md, docs/activity-log.md |
+| 2025-12-09 | CTO | 0ac2e70 | Added ROADMAP.md with agentic system transformation plan | Document 7-phase strategic plan (v0.4.0-v1.0.0) to transform .pip into complete agentic development system with vector memory, formal patterns, and multi-agent coordination | ROADMAP.md, README.md, resources/agentic-design-patterns/ |
+| 2025-12-09 | CTO | PR #10 | Added git hooks and GitHub branch protection to prevent direct commits to main | Enforce feature branch workflow after agent violated branching rule; local pre-commit hook blocks commits to main; GitHub protection requires PRs for all changes | hooks/, docs/github-branch-protection.md, README.md |
 | YYYY-MM-DD | <agent> | <hash or #PR> | <summary> | <decision/assumption> | <issue/docs> |
 
 Guidance:
