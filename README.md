@@ -105,7 +105,15 @@ cp .pip/mission/mission.md docs/mission.md
 
 ## Getting Started
 
-### 0. Environment Setup
+### 0. Install Git Hooks (Required)
+**First thing after cloning**: Install git hooks to prevent direct commits to main:
+```bash
+./hooks/install-hooks.sh
+```
+
+This installs a pre-commit hook that blocks commits to `main` branch, enforcing the feature branch workflow.
+
+### 1. Environment Setup
 This repository uses [direnv](https://direnv.net/) for environment variable management:
 ```bash
 # Install direnv (if not already installed)
@@ -121,28 +129,28 @@ vim .envrc
 direnv allow
 ```
 
-### 1. Customize Mission
+### 2. Customize Mission
 Edit `mission/mission.md` to define:
 - Who you're serving
 - What problem you're solving
 - Your unique solution and vision
 
-### 2. Configure Agents
+### 3. Configure Agents
 Review `ia/agent_manifest.yml` and update:
 - Owner assignments
 - Responsibility boundaries
 - Documentation paths
 
-### 3. Define Your Product
+### 4. Define Your Product
 Update the graph files:
 - `graph/product-app.md` — Core product flows
 - `graph/marketing-website.md` — Marketing structure
 - `graph/blog.md` — Content strategy
 
-### 4. Set Up Processes
+### 5. Set Up Processes
 Customize `method/delivery-method.md` for your delivery approach.
 
-### 5. Use Fragments (Optional)
+### 6. Use Fragments (Optional)
 Bootstrap new projects with reusable infrastructure scaffolds:
 ```bash
 # In your new project
