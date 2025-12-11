@@ -3,7 +3,30 @@
 All notable changes to the website/app are documented here.
 
 ## Unreleased
-- <planned or in-progress changes>
+
+## 2025-12-11 — Astro Blog Fragment
+### Added
+- **astro-blog fragment** - Fast, SEO-friendly blog powered by Astro 4 with Tailwind CSS
+- Fragment includes:
+  - Astro 4 static site generator with lightning-fast performance
+  - Tailwind CSS styling with built-in dark mode support
+  - TypeScript for type-safe development
+  - Content Collections for type-safe markdown handling
+  - Auto-generated RSS feed at `/rss.xml`
+  - Nx integration with serve/build/preview targets
+- **bin/apply-astro-blog.sh** - Apply script with prerequisite checks and automatic symlink setup
+- **fragments/astro-blog/README.md** - Comprehensive documentation covering:
+  - Quick start guide
+  - Writing posts with frontmatter schema
+  - Customization options (styling, site URL, analytics)
+  - Deployment to Vercel/Netlify/Docker/GitHub Pages
+  - Troubleshooting common issues
+  - Best practices for writing, SEO, and performance
+
+### Changed
+- Updated `docs/fragments-guide.md` with astro-blog section and usage examples
+- Added Example 2 (Content Marketing Blog) and Example 4 (Full Stack with Blog) to fragments guide
+- Enhanced fragments guide with deployment and customization patterns
 
 ## 2025-12-09 — Branch Protection & Strategic Roadmap
 ### Added

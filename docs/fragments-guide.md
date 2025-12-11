@@ -35,6 +35,21 @@ Containerized Nx development environment with Postgres and n8n.
 
 [Full documentation →](../fragments/nx-dev-infra/README.md)
 
+### astro-blog
+Fast, SEO-friendly blog powered by Astro with Tailwind CSS.
+
+**Provides:**
+- Astro 4 static site generator
+- Tailwind CSS styling with dark mode
+- TypeScript support
+- Content Collections for type-safe markdown
+- RSS feed generation
+- Nx integration with serve/build/preview targets
+
+**When to use:** Content marketing, technical blogging, documentation sites
+
+[Full documentation →](../fragments/astro-blog/README.md)
+
 ## Using Fragments
 
 ### Basic Usage
@@ -215,6 +230,7 @@ cd /path/to/your/project
 - **expo-mobile** - Expo mobile app scaffold
 - **agent-service** - AI agent service scaffold
 - **api-graphql** - GraphQL API scaffold
+- **prisma-db** - Prisma ORM with migrations scaffold
 
 ## Examples
 
@@ -236,7 +252,25 @@ nx run infra:up
 docker exec -it monospace-dev bash
 ```
 
-### Example 2: New Mobile App
+### Example 2: Content Marketing Blog
+
+```bash
+mkdir my-marketing-site
+cd my-marketing-site
+git init
+git submodule add git@github.com:derrybirkett/pip.git .pip
+
+# Apply infrastructure
+./.pip/bin/apply-nx-dev-infra.sh
+
+# Add blog
+./.pip/bin/apply-astro-blog.sh
+
+# Start blog dev server
+nx serve blog
+```
+
+### Example 3: New Mobile App
 
 ```bash
 mkdir my-mobile-app
@@ -254,7 +288,7 @@ nx run infra:up
 docker exec -it monospace-dev bash
 ```
 
-### Example 3: Full Stack Project
+### Example 4: Full Stack Project with Blog
 
 ```bash
 mkdir my-fullstack-app
@@ -264,17 +298,22 @@ git submodule add git@github.com:derrybirkett/pip.git .pip
 
 # Apply all fragments
 ./.pip/bin/apply-nx-dev-infra.sh
+./.pip/bin/apply-astro-blog.sh
 # ./.pip/bin/apply-next-web.sh
 # ./.pip/bin/apply-expo-mobile.sh
 # ./.pip/bin/apply-api-graphql.sh
 
 nx run infra:up
 docker exec -it monospace-dev bash
+
+# In container: start blog
+nx serve blog
 ```
 
 ## Related Documentation
 
 - [nx-dev-infra Fragment](../fragments/nx-dev-infra/README.md)
+- [astro-blog Fragment](../fragments/astro-blog/README.md)
 - [Tech Stack Overview](../ia/agents/cto/tech-stack/tech-stack.md)
 - [Docker Security Policies](../ia/agents/ciso/security-policies.md)
 - [Testing Strategy](../ia/agents/cto/tech-stack/testing-strategy.md)
