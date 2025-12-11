@@ -1,16 +1,19 @@
 # ReAct Pattern: Reason + Act
 
-**Pattern Type**: Agent Workflow  
-**Primary Users**: CTO, CISO (Technical agents)  
+**Pattern Type**: Agent Workflow
+**Primary Users**: CTO, CISO (Technical agents)
 **Purpose**: Structured problem-solving with explicit reasoning, action, observation, and reflection loops
 
 ## Overview
 
-The **ReAct pattern** combines **Rea**soning and **Act**ing in an interleaved manner, creating a systematic approach to technical problem-solving. Instead of jumping straight to solutions, agents explicitly reason about the problem, take action, observe results, and reflect on what was learned.
+The **ReAct pattern** combines **Rea**soning and **Act**ing in an interleaved manner,
+creating a systematic approach to technical problem-solving. Instead of jumping straight
+to solutions, agents explicitly reason about the problem, take action, observe results,
+and reflect on what was learned.
 
 ## The Four-Step Loop
 
-```
+```text
 ┌─────────────┐
 │   REASON    │ ← Why is this happening? What should I try?
 └──────┬──────┘
@@ -32,7 +35,8 @@ The **ReAct pattern** combines **Rea**soning and **Act**ing in an interleaved ma
 
 ## When to Use
 
-### ✅ Use ReAct For:
+### Use ReAct For
+
 - **Debugging** - Diagnosing and fixing bugs
 - **Performance optimization** - Identifying and resolving bottlenecks
 - **Security incidents** - Investigating and remediating vulnerabilities
@@ -40,7 +44,8 @@ The **ReAct pattern** combines **Rea**soning and **Act**ing in an interleaved ma
 - **Code review** - Systematically analyzing pull requests
 - **Infrastructure issues** - Troubleshooting deployment or scaling problems
 
-### ❌ Don't Use ReAct For:
+### Don't Use ReAct For
+
 - **Simple tasks** - Straightforward implementations with clear requirements
 - **Time-critical emergencies** - When speed trumps thoroughness (revert first, analyze later)
 - **Non-technical decisions** - Product prioritization, business strategy (use Planning pattern instead)
@@ -48,9 +53,11 @@ The **ReAct pattern** combines **Rea**soning and **Act**ing in an interleaved ma
 ## Detailed Steps
 
 ### 1. REASON
+
 **Ask**: What's the problem? What do I know? What hypotheses can I form?
 
 **Actions**:
+
 - State the problem clearly
 - List known facts and constraints
 - Form 2-3 hypotheses about root cause or solution approach
@@ -59,7 +66,8 @@ The **ReAct pattern** combines **Rea**soning and **Act**ing in an interleaved ma
 **Output**: A clear reasoning statement documenting your thought process
 
 **Example**:
-```
+
+```text
 REASON: Test suite is failing on CI but passing locally.
 Known facts:
 - Tests pass on macOS (local)
@@ -73,9 +81,11 @@ Testing hypothesis #1 first.
 ```
 
 ### 2. ACT
+
 **Ask**: What specific action will test my hypothesis?
 
 **Actions**:
+
 - Execute a concrete, measurable action
 - Use tools (run tests, check logs, query databases, read code)
 - Make changes (code edits, config updates, environment tweaks)
@@ -84,16 +94,19 @@ Testing hypothesis #1 first.
 **Output**: The action taken and expected outcome
 
 **Example**:
-```
+
+```text
 ACT: Checking CI environment's installed packages
 Command: docker exec ci-container pip list | grep module-x
 Expected: If hypothesis #1 is correct, module-x won't appear
 ```
 
 ### 3. OBSERVE
+
 **Ask**: What actually happened? Does it match expectations?
 
 **Actions**:
+
 - Record the actual results
 - Compare to expected results
 - Note any surprises or new information
@@ -102,7 +115,8 @@ Expected: If hypothesis #1 is correct, module-x won't appear
 **Output**: Objective observation of results
 
 **Example**:
-```
+
+```text
 OBSERVE: Command output shows:
 - module-x: NOT FOUND in pip list
 - 15 other packages present
@@ -110,9 +124,11 @@ Result matches expectation - hypothesis #1 confirmed.
 ```
 
 ### 4. REFLECT
+
 **Ask**: What did I learn? Should I continue, iterate, or conclude?
 
 **Actions**:
+
 - Evaluate if hypothesis was confirmed or rejected
 - Decide next steps: fix the issue, test another hypothesis, or gather more data
 - Document insights for future reference
@@ -121,7 +137,8 @@ Result matches expectation - hypothesis #1 confirmed.
 **Output**: Learning statement and decision
 
 **Example**:
-```
+
+```text
 REFLECT: Hypothesis confirmed - module-x missing from CI.
 Learning: requirements.txt not being installed correctly in CI pipeline.
 Decision: Fix Dockerfile to install requirements before tests.
@@ -142,7 +159,8 @@ Next: Implement fix and verify.
 
 ### Iteration 2
 
-**REASON**: Cache needs eviction policy. Hypothesis: LRU cache with 1000 entry limit will prevent leak while maintaining performance.
+**REASON**: Cache needs eviction policy. Hypothesis: LRU cache with 1000 entry limit
+will prevent leak while maintaining performance.
 
 **ACT**: Implemented LRU cache with max_size=1000. Deployed to staging.
 
@@ -154,20 +172,23 @@ Next: Implement fix and verify.
 
 ## Integration with Other Patterns
 
-- **With Reflection Pattern**: Use Reflection at project/sprint boundaries; use ReAct during execution
+- **With Reflection Pattern**: Use Reflection at project/sprint boundaries;
+  use ReAct during execution
 - **With Tool Use Pattern**: ReAct ACT step leverages Tool Use guidelines
 - **With Multi-agent Pattern**: Share ReAct reasoning with next agent in handoff
 
 ## Best Practices
 
-### Do:
+### Do
+
 - ✅ **Document each step** - Helps with handoffs and future debugging
 - ✅ **Limit iterations** - If stuck after 3-4 loops, escalate or pivot approach
 - ✅ **Test one variable** - Change one thing at a time to isolate cause
 - ✅ **Be specific** - "Check logs" → "Check error logs from 14:00-14:15 UTC"
 - ✅ **Update memory** - Store learnings in decision records (Phase 2)
 
-### Don't:
+### Don't
+
 - ❌ **Skip reasoning** - Jumping to action leads to thrashing
 - ❌ **Ignore observations** - If results surprise you, investigate why
 - ❌ **Forget to reflect** - Reflection turns experience into knowledge
@@ -177,11 +198,13 @@ Next: Implement fix and verify.
 ## Measuring Success
 
 ### Individual Task Level
+
 - Problem solved within 5 ReAct iterations: ✅ Good
 - Required escalation after 5 iterations: 🟡 Acceptable (complex problem)
 - Solved without reasoning documented: ❌ Pattern not followed
 
 ### Agent Performance Level (Phase 5)
+
 - % of bugs fixed on first attempt (good reasoning)
 - Average iterations per issue (efficiency)
 - % of issues requiring escalation (complexity gauge)
@@ -189,6 +212,7 @@ Next: Implement fix and verify.
 ## Tools for ReAct
 
 Common tools used in ACT step:
+
 - `grep` / `codebase_semantic_search` - Finding relevant code
 - `read_files` - Understanding context
 - `run_shell_command` - Testing hypotheses
@@ -198,6 +222,7 @@ Common tools used in ACT step:
 ## Templates
 
 ### Bug Fix Template
+
 ```markdown
 ## REASON
 Problem: [describe bug]
