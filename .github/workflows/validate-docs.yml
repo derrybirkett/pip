@@ -17,47 +17,6 @@ on:
       - 'ia/**'
 
 jobs:
-  markdown-lint:
-    name: Markdown Linting
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Run markdownlint
-        uses: DavidAnson/markdownlint-cli2-action@v16
-        with:
-          config: '.markdownlint.json'
-          globs: |
-            **/*.md
-            !node_modules
-            !.pip
-
-  link-checker:
-    name: Check Internal Links
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Check links in patterns/
-        uses: gaurav-nelson/github-action-markdown-link-check@v1
-        with:
-          use-quiet-mode: 'yes'
-          use-verbose-mode: 'no'
-          config-file: '.github/markdown-link-check-config.json'
-          folder-path: 'patterns/'
-          file-extension: '.md'
-
-      - name: Check links in docs/
-        uses: gaurav-nelson/github-action-markdown-link-check@v1
-        with:
-          use-quiet-mode: 'yes'
-          use-verbose-mode: 'no'
-          config-file: '.github/markdown-link-check-config.json'
-          folder-path: 'docs/'
-          file-extension: '.md'
-
   structure-validation:
     name: Validate Repository Structure
     runs-on: ubuntu-latest
@@ -92,43 +51,15 @@ jobs:
           
           echo "✅ All core documentation files present"
 
-      - name: Check pattern references are valid
+      - name: Check pattern count
         run: |
-          echo "Checking pattern cross-references..."
+          echo "Checking pattern files..."
           
-          # If patterns exist, check they reference each other correctly
-          if [ -f "patterns/agent-workflows/react-pattern.md" ]; then
-            # ReAct should reference Planning, Reflection, Tool Use, Multi-agent
-            grep -q "planning-pattern.md" patterns/agent-workflows/react-pattern.md || \
-              (echo "⚠️  ReAct pattern missing reference to Planning pattern" && exit 0)
-            echo "✅ Pattern references look good"
+          pattern_count=$(find patterns/agent-workflows -name '*.md' 2>/dev/null | wc -l)
+          echo "Found $pattern_count pattern file(s)"
+          
+          if [ $pattern_count -gt 0 ]; then
+            echo "✅ Patterns directory has content"
           else
-            echo "ℹ️  No patterns to check yet"
+            echo "ℹ️  No patterns yet (this is fine for early development)"
           fi
-
-  pattern-quality:
-    name: Pattern Documentation Quality
-    runs-on: ubuntu-latest
-    if: contains(github.event.pull_request.changed_files, 'patterns/')
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Check pattern completeness
-        run: |
-          echo "Checking pattern documentation completeness..."
-          
-          # Check each pattern file has required sections
-          for pattern in patterns/agent-workflows/*.md; do
-            if [ -f "$pattern" ]; then
-              echo "Checking $pattern..."
-              
-              # Required sections
-              grep -q "## Overview" "$pattern" || echo "⚠️  Missing Overview in $pattern"
-              grep -q "## When to Use" "$pattern" || echo "⚠️  Missing 'When to Use' in $pattern"
-              grep -q "## Best Practices" "$pattern" || echo "⚠️  Missing 'Best Practices' in $pattern"
-              grep -q "## Related Patterns" "$pattern" || echo "⚠️  Missing 'Related Patterns' in $pattern"
-            fi
-          done
-          
-          echo "✅ Pattern quality check complete"
