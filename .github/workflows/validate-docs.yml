@@ -29,12 +29,30 @@ jobs:
           echo "Checking directory structure..."
           
           # Core directories
-          test -d "patterns/agent-workflows" || (echo "❌ Missing patterns/agent-workflows" && exit 1)
-          test -d "patterns/decision-frameworks" || (echo "❌ Missing patterns/decision-frameworks" && exit 1)
-          test -d "patterns/quality-metrics" || (echo "❌ Missing patterns/quality-metrics" && exit 1)
-          test -d "ia/agents" || (echo "❌ Missing ia/agents" && exit 1)
-          test -d "docs" || (echo "❌ Missing docs" && exit 1)
-          test -d "fragments" || (echo "❌ Missing fragments" && exit 1)
+          if [ ! -d "patterns/agent-workflows" ]; then
+            echo "❌ Missing patterns/agent-workflows"
+            exit 1
+          fi
+          if [ ! -d "patterns/decision-frameworks" ]; then
+            echo "❌ Missing patterns/decision-frameworks"
+            exit 1
+          fi
+          if [ ! -d "patterns/quality-metrics" ]; then
+            echo "❌ Missing patterns/quality-metrics"
+            exit 1
+          fi
+          if [ ! -d "ia/agents" ]; then
+            echo "❌ Missing ia/agents"
+            exit 1
+          fi
+          if [ ! -d "docs" ]; then
+            echo "❌ Missing docs"
+            exit 1
+          fi
+          if [ ! -d "fragments" ]; then
+            echo "❌ Missing fragments"
+            exit 1
+          fi
           
           echo "✅ All required directories present"
 
@@ -43,11 +61,26 @@ jobs:
           echo "Checking core documentation..."
           
           # Core files
-          test -f "README.md" || (echo "❌ Missing README.md" && exit 1)
-          test -f "WARP.md" || (echo "❌ Missing WARP.md" && exit 1)
-          test -f "ROADMAP.md" || (echo "❌ Missing ROADMAP.md" && exit 1)
-          test -f "docs/activity-log.md" || (echo "❌ Missing docs/activity-log.md" && exit 1)
-          test -f "docs/changelog.md" || (echo "❌ Missing docs/changelog.md" && exit 1)
+          if [ ! -f "README.md" ]; then
+            echo "❌ Missing README.md"
+            exit 1
+          fi
+          if [ ! -f "WARP.md" ]; then
+            echo "❌ Missing WARP.md"
+            exit 1
+          fi
+          if [ ! -f "ROADMAP.md" ]; then
+            echo "❌ Missing ROADMAP.md"
+            exit 1
+          fi
+          if [ ! -f "docs/activity-log.md" ]; then
+            echo "❌ Missing docs/activity-log.md"
+            exit 1
+          fi
+          if [ ! -f "docs/changelog.md" ]; then
+            echo "❌ Missing docs/changelog.md"
+            exit 1
+          fi
           
           echo "✅ All core documentation files present"
 
