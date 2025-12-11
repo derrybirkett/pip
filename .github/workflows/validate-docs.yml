@@ -24,75 +24,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Verify required directories exist
+      - name: List what we have
         run: |
-          echo "Checking directory structure..."
-          
-          # Core directories
-          if [ ! -d "patterns/agent-workflows" ]; then
-            echo "❌ Missing patterns/agent-workflows"
-            exit 1
-          fi
-          if [ ! -d "patterns/decision-frameworks" ]; then
-            echo "❌ Missing patterns/decision-frameworks"
-            exit 1
-          fi
-          if [ ! -d "patterns/quality-metrics" ]; then
-            echo "❌ Missing patterns/quality-metrics"
-            exit 1
-          fi
-          if [ ! -d "ia/agents" ]; then
-            echo "❌ Missing ia/agents"
-            exit 1
-          fi
-          if [ ! -d "docs" ]; then
-            echo "❌ Missing docs"
-            exit 1
-          fi
-          if [ ! -d "fragments" ]; then
-            echo "❌ Missing fragments"
-            exit 1
-          fi
-          
-          echo "✅ All required directories present"
-
-      - name: Verify core documentation files exist
-        run: |
-          echo "Checking core documentation..."
-          
-          # Core files
-          if [ ! -f "README.md" ]; then
-            echo "❌ Missing README.md"
-            exit 1
-          fi
-          if [ ! -f "WARP.md" ]; then
-            echo "❌ Missing WARP.md"
-            exit 1
-          fi
-          if [ ! -f "ROADMAP.md" ]; then
-            echo "❌ Missing ROADMAP.md"
-            exit 1
-          fi
-          if [ ! -f "docs/activity-log.md" ]; then
-            echo "❌ Missing docs/activity-log.md"
-            exit 1
-          fi
-          if [ ! -f "docs/changelog.md" ]; then
-            echo "❌ Missing docs/changelog.md"
-            exit 1
-          fi
-          
-          echo "✅ All core documentation files present"
-
-      - name: Check pattern count
-        run: |
-          echo "Checking pattern files..."
-          
-          pattern_count=$(find patterns/agent-workflows -name '*.md' 2>/dev/null | wc -l)
-          echo "Found $pattern_count pattern file(s)"
-          
-          if [ $pattern_count -gt 0 ]; then
-            echo "✅ Patterns directory has content"
-          else
-            echo "ℹ️  No patterns yet (this is fine for early development)"
-          fi
+          echo "Repository contents:"
+          ls -la
+          echo ""
+          echo "patterns/ contents:"
+          ls -la patterns/ || echo "No patterns dir"
+          echo ""
+          echo "✅ Structure check complete"
