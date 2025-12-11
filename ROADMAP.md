@@ -4,7 +4,14 @@ This document outlines the strategic direction and planned features for the `.pi
 
 ## Vision
 
-Transform `.pip` from a documentation and scaffolding framework into a **complete agentic development system** that enables AI agents to work collaboratively with formal patterns, persistent memory, and quality metrics.
+Transform `.pip` from a documentation and scaffolding framework (v1.x) into a **complete agentic development system** (v2.0) that enables AI agents to work collaboratively with formal patterns, persistent memory, and quality metrics.
+
+## Versioning Strategy
+
+- **v1.0.0** (Current) - Foundation complete: agent governance, fragments, documentation, processes
+- **v2.0.0** (Target) - Agentic system complete: vector memory, formal patterns, metrics, multi-agent coordination
+
+This roadmap describes the transformation from v1.0 → v2.0 through 7 phases over 13 weeks.
 
 ## Current State (v0.3.0)
 
@@ -28,12 +35,12 @@ Transform `.pip` from a documentation and scaffolding framework into a **complet
 
 ## Strategic Initiatives
 
-### 🎯 Initiative 1: Complete Agentic Development System (v0.4.0 → v1.0.0)
+### 🎯 Initiative 1: Complete Agentic Development System (v1.0 → v2.0)
 
 **Goal**: Transform .pip into a complete agentic development system with formal patterns, persistent memory, and multi-agent coordination.
 
 **Timeline**: 13 weeks (~3 months)  
-**Status**: 📋 Planned  
+**Status**: 📋 Ready to begin (v1.0.0 tagged)  
 **Plan ID**: `c714dce0-85ea-41f3-955b-2e542d915a1d`
 
 #### Problem Statement
@@ -47,41 +54,41 @@ Transform `.pip` from a documentation and scaffolding framework into a **complet
 
 #### Phases Overview
 
-**Phase 1: Foundation (v0.4.0)** - 2 weeks
+**Phase 1: Foundation (v1.1.0)** - 2 weeks
 - Pattern library with ReAct, Planning, Reflection patterns
 - Resources directory with Agentic Design Patterns PDF
 - Decision frameworks and interaction protocols
 
-**Phase 2: Memory System (v0.5.0)** - 3 weeks
+**Phase 2: Memory System (v1.2.0)** - 3 weeks
 - Vector database integration (Chroma/Qdrant)
 - Agent memory architecture with 5 collections
 - Embedding and retrieval scripts
 - Memory fragment for reuse
 
-**Phase 3: Agent Enhancement (v0.6.0)** - 2 weeks
+**Phase 3: Agent Enhancement (v1.3.0)** - 2 weeks
 - ReAct workflow patterns for all agents
 - Decision frameworks with weighted criteria
 - Quality metrics checklists
 - Agent configuration system
 
-**Phase 4: Interaction Protocols (v0.7.0)** - 2 weeks
+**Phase 4: Interaction Protocols (v1.4.0)** - 2 weeks
 - Multi-agent collaboration patterns
 - PR review protocol with sequential handoffs
 - Escalation decision tree
 - Conflict resolution framework
 
-**Phase 5: Evaluation Framework (v0.8.0)** - 2 weeks
+**Phase 5: Evaluation Framework (v1.5.0)** - 2 weeks
 - Metrics per agent role (CTO, CPO, COO)
 - Self-evaluation checklists
 - Performance report generation
 - Metrics trend analysis
 
-**Phase 6: Template System (v0.9.0)** - 1 week
+**Phase 6: Template System (v1.6.0)** - 1 week
 - Agent template generator (`create-agent.sh`)
 - Role templates (technical, product, operations)
 - Auto-configuration updates
 
-**Phase 7: Memory Fragment (v1.0.0)** - 1 week
+**Phase 7: Memory Fragment (v2.0.0)** - 1 week
 - Package memory system as reusable fragment
 - Integration with nx-dev-infra
 - Production-ready deployment
@@ -145,9 +152,9 @@ Transform `.pip` from a documentation and scaffolding framework into a **complet
 
 ## Milestone Breakdown
 
-### v0.4.0: Foundation - Pattern Library & Resources
-**Target**: 2 weeks from start  
-**Status**: 📋 Not Started
+### v1.1.0: Foundation - Pattern Library & Resources
+**Target**: 2 weeks from v1.0.0  
+**Status**: 📋 Ready to start
 
 #### Goals
 - Establish knowledge base with agentic design patterns
@@ -173,8 +180,8 @@ Transform `.pip` from a documentation and scaffolding framework into a **complet
 
 ---
 
-### v0.5.0: Memory System - Vector Database Integration
-**Target**: 5 weeks from start  
+### v1.2.0: Memory System - Vector Database Integration
+**Target**: 5 weeks from v1.0.0  
 **Status**: 📋 Not Started
 
 #### Goals
@@ -202,8 +209,8 @@ Transform `.pip` from a documentation and scaffolding framework into a **complet
 
 ---
 
-### v0.6.0: Agent Enhancement - Workflows & Tools
-**Target**: 7 weeks from start  
+### v1.3.0: Agent Enhancement - Workflows & Tools
+**Target**: 7 weeks from v1.0.0  
 **Status**: 📋 Not Started
 
 #### Goals
@@ -228,8 +235,8 @@ Transform `.pip` from a documentation and scaffolding framework into a **complet
 
 ---
 
-### v0.7.0: Interaction Protocols - Multi-Agent Coordination
-**Target**: 9 weeks from start  
+### v1.4.0: Interaction Protocols - Multi-Agent Coordination
+**Target**: 9 weeks from v1.0.0  
 **Status**: 📋 Not Started
 
 #### Goals
@@ -253,8 +260,8 @@ Transform `.pip` from a documentation and scaffolding framework into a **complet
 
 ---
 
-### v0.8.0: Evaluation Framework - Agent Quality Metrics
-**Target**: 11 weeks from start  
+### v1.5.0: Evaluation Framework - Agent Quality Metrics
+**Target**: 11 weeks from v1.0.0  
 **Status**: 📋 Not Started
 
 #### Goals
@@ -278,8 +285,8 @@ Transform `.pip` from a documentation and scaffolding framework into a **complet
 
 ---
 
-### v0.9.0: Template System - Agent Bootstrapping
-**Target**: 12 weeks from start  
+### v1.6.0: Template System - Agent Bootstrapping
+**Target**: 12 weeks from v1.0.0  
 **Status**: 📋 Not Started
 
 #### Goals
@@ -300,8 +307,8 @@ Transform `.pip` from a documentation and scaffolding framework into a **complet
 
 ---
 
-### v1.0.0: Memory Fragment - Production Ready
-**Target**: 13 weeks from start  
+### v2.0.0: Memory Fragment - Production Ready
+**Target**: 13 weeks from v1.0.0  
 **Status**: 📋 Not Started
 
 #### Goals
@@ -323,7 +330,7 @@ Transform `.pip` from a documentation and scaffolding framework into a **complet
 
 ---
 
-## Future Considerations (Post v1.0.0)
+## Future Considerations (Post v2.0.0)
 
 ### Enhanced Memory Features
 - Multi-modal memory (code + docs + issues + PRs)
