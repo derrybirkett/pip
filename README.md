@@ -106,7 +106,9 @@ cp .pip/mission/mission.md docs/mission.md
 ## Getting Started
 
 ### 0. Install Git Hooks (Required)
-**First thing after cloning**: Install git hooks to prevent direct commits to main:
+**Automatic**: Git hooks are now automatically installed during bootstrap.
+
+**Manual installation** (if needed):
 ```bash
 ./hooks/install-hooks.sh
 ```

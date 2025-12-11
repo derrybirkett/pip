@@ -206,6 +206,15 @@ if [ -f ".pip/.cursorrules.example" ]; then
   echo -e "${GREEN}✅ Created .cursorrules${NC}"
 fi
 
+# Install git hooks
+echo -e "${GREEN}🔒 Installing git hooks...${NC}"
+if [ -f ".pip/hooks/install-hooks.sh" ]; then
+  ./.pip/hooks/install-hooks.sh
+  echo -e "${GREEN}✅ Git hooks installed (blocks commits to main)${NC}"
+else
+  echo -e "${YELLOW}⚠️  Git hooks not found - run .pip/hooks/install-hooks.sh manually${NC}"
+fi
+
 echo
 echo "────────────────────────────────────────────────────────────────"
 echo -e "${BLUE}╔════════════════════════════════════════════════════════════════╗${NC}"
@@ -220,12 +229,14 @@ echo "  • Activity log (docs/activity-log.md)"
 echo "  • Changelog (docs/changelog.md)"
 echo "  • README with your project story"
 echo "  • Cursor AI rules (.cursorrules)"
+echo "  • Git hooks (prevents commits to main)"
 echo
 echo -e "${YELLOW}Next steps:${NC}"
 echo "  1. Review and customize docs/mission.md"
 echo "  2. Initialize Nx: npx nx@latest init --integrated"
 echo "  3. Apply infrastructure: ./.pip/bin/apply-nx-dev-infra.sh"
-echo "  4. Start building!"
+echo "  4. Use feature branches: git checkout -b feat/your-feature"
+echo "  5. Start building!"
 echo
 echo -e "${BLUE}Happy building! 🚀${NC}"
 echo

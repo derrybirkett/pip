@@ -194,6 +194,14 @@ cp "$PIP_DIR/docs/fragments-guide.md" "$TARGET_DIR/.pip/docs/"
 cp -r "$PIP_DIR/docs/processes" "$TARGET_DIR/.pip/docs/"
 cp -r "$PIP_DIR/docs/templates" "$TARGET_DIR/.pip/docs/"
 
+# Copy and install git hooks
+echo "🔒 Setting up git hooks..."
+cp -r "$PIP_DIR/hooks" "$TARGET_DIR/.pip/"
+chmod +x "$TARGET_DIR/.pip/hooks/install-hooks.sh"
+cd "$TARGET_DIR"
+./.pip/hooks/install-hooks.sh
+cd - > /dev/null
+
 # Set up environment
 if [ "$SETUP_ENVRC" = "true" ]; then
     echo "🔐 Setting up environment..."
@@ -223,6 +231,9 @@ echo "  2. Update .pip/ia/agent_manifest.yml with owner assignments"
 [ "$HAS_PRODUCT_APP" = "true" ] && echo "  3. Define your product flows in .pip/graph/product-app.md"
 [ "$SETUP_ENVRC" = "true" ] && echo "  4. Add your secrets to .envrc"
 [ "$USE_NX_FRAGMENT" = "true" ] && echo "  5. Run: nx run infra:up"
+echo
+echo -e "${GREEN}🔒 Git hooks installed! Direct commits to main are now blocked.${NC}"
+echo "   Use feature branches: git checkout -b feat/your-feature"
 echo
 echo -e "${BLUE}📖 Read .pip/README.md for full documentation${NC}"
 echo
