@@ -7,14 +7,14 @@
     "serve": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "pnpm --filter blog dev",
+        "command": "pnpm dev",
         "cwd": "apps/blog"
       }
     },
     "build": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "pnpm --filter blog build",
+        "command": "pnpm build",
         "cwd": "apps/blog",
         "outputs": ["{workspaceRoot}/apps/blog/dist"]
       }
@@ -22,7 +22,7 @@
     "preview": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "pnpm --filter blog preview",
+        "command": "pnpm preview",
         "cwd": "apps/blog"
       },
       "dependsOn": ["build"]

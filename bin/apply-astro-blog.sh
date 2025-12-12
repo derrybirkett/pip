@@ -29,6 +29,12 @@ else
   echo "✅ Created apps/blog/"
 fi
 
+# Copy .nxignore if it doesn't exist
+if [ ! -f "$TARGET_DIR/.nxignore" ]; then
+  cp "$FRAGMENT_DIR/.nxignore" "$TARGET_DIR/.nxignore"
+  echo "✅ Created .nxignore"
+fi
+
 # Create symlink for blog content
 mkdir -p "$TARGET_DIR/blog"
 mkdir -p "$TARGET_DIR/apps/blog/src/content"
