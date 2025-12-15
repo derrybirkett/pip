@@ -89,6 +89,31 @@ All notable changes to the website/app are documented here.
 - Phase 1 (v1.1.0) Pattern Library & Resources milestone started per ROADMAP.md
 - Patterns adapted specifically for .pip framework agent workflows
 
+## 2025-12-15 — pip-blog Testing & Validation
+### Added
+- **Blog post** - "Testing .pip with pip-blog: Real-World Framework Validation"
+  - Documented comprehensive testing of framework with real-world project
+  - Validated genome/organism model works in practice
+  - Confirmed astro-blog fragment is production-ready
+  - Verified AI agent workflows (WARP.md guidance) enable consistent behavior
+  - Demonstrated required processes scale well without slowing development
+  - Captured 4 key insights and next priorities for v1.1.0
+  - Reinforced LEAN methodology with Build-Measure-Learn cycle
+
+### Changed
+- Framework validation approach: dogfooding with real projects instead of theoretical testing
+- Confirmed v1.1.0 priorities: pattern library, decision frameworks, quality metrics
+
+### Added (Linear Integration)
+- **PIP Framework project in Linear** - High-priority project tracking v0.3 → v2.0 transformation
+  - Created v1.1.0 epic (MSTUDIO-55): Foundation - Pattern Library & Resources
+  - Created first task (MSTUDIO-56): Extract and document agentic design patterns
+- **Linear integration documentation** (`docs/linear-integration.md`)
+  - Workflow for creating and managing tasks
+  - Status flow and task organization
+  - Agent workflow with MCP integration
+  - Best practices for humans and AI agents
+
 ## 2025-12-11 — Astro Blog Fragment
 ### Added
 - **astro-blog fragment** - Fast, SEO-friendly blog powered by Astro 4 with Tailwind CSS
