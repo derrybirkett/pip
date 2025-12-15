@@ -103,6 +103,17 @@ All notable changes to the website/app are documented here.
 ### Changed
 - Framework validation approach: dogfooding with real projects instead of theoretical testing
 - Confirmed v1.1.0 priorities: pattern library, decision frameworks, quality metrics
+- Integrated Linear project management for tracking roadmap milestones
+
+### Added (Linear Integration)
+- **PIP Framework project in Linear** - High-priority project tracking v0.3 → v2.0 transformation
+  - Created v1.1.0 epic (MSTUDIO-55): Foundation - Pattern Library & Resources
+  - Created first task (MSTUDIO-56): Extract and document agentic design patterns
+- **Linear integration documentation** (`docs/linear-integration.md`)
+  - Workflow for creating and managing tasks
+  - Status flow and task organization
+  - Agent workflow with MCP integration
+  - Best practices for humans and AI agents
 
 ### Added (Linear Integration)
 - **PIP Framework project in Linear** - High-priority project tracking v0.3 → v2.0 transformation
