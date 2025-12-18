@@ -4,6 +4,28 @@ All notable changes to the website/app are documented here.
 
 ## Unreleased
 
+## 2025-12-17 — Agentic Design Patterns (Phase 1 v1.1.0)
+### Added
+- **5 Core Agentic Design Patterns** extracted from 482-page PDF and documented:
+  - **ReAct Pattern** - Reason-Act-Observe-Reflect workflow for iterative problem-solving
+  - **Planning Pattern** - Task decomposition and sequencing for complex work
+  - **Reflection Pattern** - Learning from experience through structured retrospectives
+  - **Tool Use Pattern** - Extending agent capabilities with specialized tools
+  - **Multi-Agent Collaboration Pattern** - Coordinating specialized agents on large projects
+- **Pattern Library Catalog** (README.md) with pattern relationships, selection guide, and usage examples
+- Each pattern includes:
+  - Overview and purpose
+  - When to use guidance with concrete scenarios
+  - Step-by-step how-it-works with examples
+  - Benefits and limitations
+  - Integration with .pip agent roles (CTO, CPO, COO, etc.)
+  - Automation opportunities with example scripts
+- **3,017 lines of documentation** providing foundation for agentic system transformation
+
+### Changed
+- Phase 1 (v1.1.0) Pattern Library & Resources milestone started per ROADMAP.md
+- Patterns adapted specifically for .pip framework agent workflows
+
 ## 2025-12-11 — Astro Blog Fragment
 ### Added
 - **astro-blog fragment** - Fast, SEO-friendly blog powered by Astro 4 with Tailwind CSS

@@ -18,7 +18,8 @@ Log new agent activity for each commit: who did what and why.
 | 2025-12-09 | CTO | PR #10 | Added git hooks and GitHub branch protection to prevent direct commits to main | Enforce feature branch workflow after agent violated branching rule; local pre-commit hook blocks commits to main; GitHub protection requires PRs for all changes | hooks/, docs/github-branch-protection.md, README.md |
 | 2025-12-09 | CTO | PR #11 | Updated activity log, changelog, and blog post for branch protection | Complete wrap-up for PR #10; documented learning process from branching mistake; added defense-in-depth protection strategy | docs/activity-log.md, docs/changelog.md, blog/2025-12-09-branch-protection-enforcement.md |
 | 2025-12-11 | CTO | feat/astro-blog-fragment | Added astro-blog fragment with comprehensive documentation | Enable organisms to quickly bootstrap content marketing blogs; includes Astro 4, Tailwind CSS, dark mode, RSS feed, and full Nx integration following genome/organism pattern | fragments/astro-blog/, bin/apply-astro-blog.sh, docs/fragments-guide.md |
-| YYYY-MM-DD | <agent> | <hash or #PR> | <summary> | <decision/assumption> | <issue/docs> |
+|| 2025-12-17 | CTO | 9c00a47 | Extracted 5 core agentic design patterns from 482-page PDF | Enable structured agent decision-making through documented patterns (ReAct, Planning, Reflection, Tool Use, Multi-Agent Collaboration); foundation for Phase 1 (v1.1.0) agentic system transformation | resources/agentic-design-patterns/extracted-patterns/, MSTUDIO-56 |
+|| YYYY-MM-DD | <agent> | <hash or #PR> | <summary> | <decision/assumption> | <issue/docs> |
 
 Guidance:
 - One row per meaningful change merged to `main`.
