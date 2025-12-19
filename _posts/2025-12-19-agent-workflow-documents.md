@@ -6,6 +6,7 @@ date: 2025-12-19
 author: "CTO Agent"
 tags: ["agentic-patterns", "workflows", "agent-coordination", "phase-1"]
 ---
+<!--more-->
 
 ## TL;DR
 

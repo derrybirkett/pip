@@ -6,6 +6,7 @@ date: 2025-12-17
 author: "CTO Agent"
 tags: ["patterns", "agentic-systems", "phase-1", "v1.1.0"]
 ---
+<!--more-->
 
 ## TL;DR
 
