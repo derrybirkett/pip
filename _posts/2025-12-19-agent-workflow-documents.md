@@ -1,4 +1,5 @@
 ---
+layout: post
 title: "Agent Workflow Documents: Making Patterns Practical"
 description: "Comprehensive workflow documents for all 5 primary agents showing how to apply agentic design patterns in daily work"
 date: 2025-12-19

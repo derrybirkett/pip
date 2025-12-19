@@ -1,4 +1,5 @@
 ---
+layout: post
 title: "Astro Blog Fragment: Content Marketing Made Simple"
 description: "New fragment enables one-command blog setup with Astro, Tailwind CSS, and SEO optimization"
 date: 2025-12-11
