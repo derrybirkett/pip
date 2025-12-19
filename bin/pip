@@ -1,0 +1,265 @@
+#!/usr/bin/env bash
+
+# pip - Unified CLI for .pip framework
+# Provides simple commands for common operations
+#
+# Usage: pip <command> [options]
+
+set -e
+
+VERSION="1.0.0"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+show_help() {
+    cat << EOF
+${BLUE}pip${NC} - Project Intelligence & Process CLI
+Version $VERSION
+
+${GREEN}USAGE:${NC}
+    pip <command> [options]
+
+${GREEN}COMMANDS:${NC}
+
+  ${YELLOW}Project Management:${NC}
+    review              Review progress and recommend priorities
+    validate            Validate patterns are properly structured
+    wrap                Run wrap-up process (activity log, changelog, blog)
+    
+  ${YELLOW}Development:${NC}
+    bootstrap [dir]     Bootstrap new project (interactive)
+    apply <fragment>    Apply infrastructure fragment
+    
+  ${YELLOW}Patterns:${NC}
+    patterns            List available agentic design patterns
+    pattern <name>      Show specific pattern details
+    
+  ${YELLOW}Information:${NC}
+    version             Show version information
+    help                Show this help message
+
+${GREEN}EXAMPLES:${NC}
+    pip review                    # Review progress and get recommendations
+    pip review --days 14          # Review last 14 days
+    pip validate                  # Validate pattern structure
+    pip bootstrap my-project      # Create new project
+    pip apply nx-dev-infra        # Apply Nx infrastructure fragment
+    pip patterns                  # List all patterns
+    pip pattern react             # Show ReAct pattern details
+
+${GREEN}COMMON WORKFLOWS:${NC}
+    
+    ${YELLOW}Weekly Review:${NC}
+        pip review
+        # Review recommendations, approve to create branch
+        # Work on approved priority
+        pip wrap
+        
+    ${YELLOW}Starting New Project:${NC}
+        pip bootstrap my-project
+        cd my-project
+        pip apply nx-dev-infra
+        
+    ${YELLOW}Learning Patterns:${NC}
+        pip patterns            # See all patterns
+        pip pattern react       # Deep dive on ReAct
+        pip pattern planning    # Deep dive on Planning
+
+${GREEN}DOCS:${NC}
+    Full documentation: README.md, WARP.md
+    Pattern library: resources/agentic-design-patterns/extracted-patterns/
+
+EOF
+}
+
+show_version() {
+    echo "pip version $VERSION"
+    echo ""
+    echo "Project Intelligence & Process Framework"
+    echo "https://github.com/derrybirkett/pip"
+}
+
+list_patterns() {
+    echo ""
+    echo "${BLUE}Available Agentic Design Patterns:${NC}"
+    echo ""
+    
+    local pattern_dir="$SCRIPT_DIR/../resources/agentic-design-patterns/extracted-patterns"
+    
+    if [ ! -d "$pattern_dir" ]; then
+        echo "${RED}Error: Pattern directory not found${NC}"
+        exit 1
+    fi
+    
+    echo "${GREEN}1. ReAct Pattern${NC} (react)"
+    echo "   Reason → Act → Observe → Reflect workflow"
+    echo "   File: react-pattern.md"
+    echo ""
+    
+    echo "${GREEN}2. Planning Pattern${NC} (planning)"
+    echo "   Task decomposition and sequencing"
+    echo "   File: planning-pattern.md"
+    echo ""
+    
+    echo "${GREEN}3. Reflection Pattern${NC} (reflection)"
+    echo "   Learning from experience and improvement"
+    echo "   File: reflection-pattern.md"
+    echo ""
+    
+    echo "${GREEN}4. Tool Use Pattern${NC} (tool-use)"
+    echo "   Extending capabilities with specialized tools"
+    echo "   File: tool-use-pattern.md"
+    echo ""
+    
+    echo "${GREEN}5. Multi-Agent Collaboration${NC} (multi-agent)"
+    echo "   Coordinating specialized agents"
+    echo "   File: multi-agent-collaboration-pattern.md"
+    echo ""
+    
+    echo "Use: ${YELLOW}pip pattern <name>${NC} to view details"
+    echo ""
+}
+
+show_pattern() {
+    local pattern_name=$1
+    local pattern_dir="$SCRIPT_DIR/../resources/agentic-design-patterns/extracted-patterns"
+    local pattern_file=""
+    
+    case "$pattern_name" in
+        react|ReAct)
+            pattern_file="$pattern_dir/react-pattern.md"
+            ;;
+        planning|Planning)
+            pattern_file="$pattern_dir/planning-pattern.md"
+            ;;
+        reflection|Reflection)
+            pattern_file="$pattern_dir/reflection-pattern.md"
+            ;;
+        tool-use|tool|Tool)
+            pattern_file="$pattern_dir/tool-use-pattern.md"
+            ;;
+        multi-agent|multi|collaboration)
+            pattern_file="$pattern_dir/multi-agent-collaboration-pattern.md"
+            ;;
+        *)
+            echo "${RED}Error: Unknown pattern '$pattern_name'${NC}"
+            echo ""
+            echo "Available patterns: react, planning, reflection, tool-use, multi-agent"
+            echo "Use: ${YELLOW}pip patterns${NC} to see all patterns"
+            exit 1
+            ;;
+    esac
+    
+    if [ -f "$pattern_file" ]; then
+        if command -v bat &> /dev/null; then
+            # Use bat if available (better syntax highlighting)
+            bat --style=plain --paging=never "$pattern_file"
+        elif command -v less &> /dev/null; then
+            # Use less as fallback
+            less "$pattern_file"
+        else
+            # Plain cat as last resort
+            cat "$pattern_file"
+        fi
+    else
+        echo "${RED}Error: Pattern file not found: $pattern_file${NC}"
+        exit 1
+    fi
+}
+
+# Main command router
+case "${1:-help}" in
+    review)
+        shift
+        exec "$SCRIPT_DIR/review-and-prioritize.sh" "$@"
+        ;;
+    
+    validate)
+        shift
+        exec "$SCRIPT_DIR/validate-patterns.sh" "$@"
+        ;;
+    
+    wrap|wrap-up)
+        shift
+        if [ -f "$SCRIPT_DIR/wrap-up.sh" ]; then
+            exec "$SCRIPT_DIR/wrap-up.sh" "$@"
+        else
+            echo "${YELLOW}Note: wrap-up.sh not yet implemented${NC}"
+            echo "Manual wrap-up steps:"
+            echo "  1. Update docs/activity-log.md"
+            echo "  2. Update docs/changelog.md"
+            echo "  3. Write blog post (if needed)"
+            echo "  4. Commit and create PR"
+        fi
+        ;;
+    
+    bootstrap)
+        shift
+        if [ -f "$SCRIPT_DIR/bootstrap-project.sh" ]; then
+            exec "$SCRIPT_DIR/bootstrap-project.sh" "$@"
+        else
+            echo "${RED}Error: bootstrap-project.sh not found${NC}"
+            exit 1
+        fi
+        ;;
+    
+    apply)
+        fragment=$2
+        shift 2
+        if [ -z "$fragment" ]; then
+            echo "${RED}Error: Fragment name required${NC}"
+            echo "Usage: pip apply <fragment>"
+            echo ""
+            echo "Available fragments:"
+            ls -1 "$SCRIPT_DIR/../fragments/" | grep -v "^\\." || echo "  No fragments found"
+            exit 1
+        fi
+        
+        apply_script="$SCRIPT_DIR/apply-${fragment}.sh"
+        if [ -f "$apply_script" ]; then
+            exec "$apply_script" "$@"
+        else
+            echo "${RED}Error: Apply script not found: $apply_script${NC}"
+            echo ""
+            echo "Available fragments:"
+            ls -1 "$SCRIPT_DIR/../fragments/" | grep -v "^\\." || echo "  No fragments found"
+            exit 1
+        fi
+        ;;
+    
+    patterns)
+        list_patterns
+        ;;
+    
+    pattern)
+        if [ -z "$2" ]; then
+            echo "${RED}Error: Pattern name required${NC}"
+            echo "Usage: pip pattern <name>"
+            echo ""
+            list_patterns
+            exit 1
+        fi
+        show_pattern "$2"
+        ;;
+    
+    version|--version|-v)
+        show_version
+        ;;
+    
+    help|--help|-h)
+        show_help
+        ;;
+    
+    *)
+        echo "${RED}Error: Unknown command '$1'${NC}"
+        echo ""
+        echo "Use: ${YELLOW}pip help${NC} to see available commands"
+        exit 1
+        ;;
+esac
