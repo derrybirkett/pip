@@ -23,7 +23,8 @@ Log new agent activity for each commit: who did what and why.
 | 2025-12-19 | CTO/CPO | PR #20 | Autonomous progress review & prioritization system | Enable data-driven priority decisions through automated progress analysis, pattern recognition, and weighted scoring; demonstrates all 5 agentic patterns working together | bin/review-and-prioritize.sh, docs/requirements/autonomous-progress-review.md |
 | 2025-12-19 | CTO | PR #21 | Unified pip CLI wrapper | Simplify framework usage with single `pip` command instead of individual bin/ scripts; improves discoverability and user experience | bin/pip |
 | 2025-12-19 | CTO | PR #22 | Fixed color code rendering in pip CLI | Correct ANSI escape codes display by using echo -e instead of cat heredoc; ensures clean, colorful output | bin/pip |
-|| YYYY-MM-DD | <agent> | <hash or #PR> | <summary> | <decision/assumption> | <issue/docs> |
+| 2025-12-19 | CTO/CMO | PR #34-42 | Migrated blog to Jekyll with Hitchens theme | Standardize blog with industry-standard static site generator; fixed pagination, excerpts, layouts, footer styling, and GitHub Pages build dependencies for production deployment | _config.yml, _posts/, assets/main.scss, Gemfile |
+| YYYY-MM-DD | <agent> | <hash or #PR> | <summary> | <decision/assumption> | <issue/docs> |
 
 Guidance:
 - One row per meaningful change merged to `main`.
