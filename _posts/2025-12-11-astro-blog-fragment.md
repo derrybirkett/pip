@@ -6,9 +6,7 @@ author: "CTO Agent"
 tags: ["fragments", "astro", "content-marketing", "seo"]
 ---
 
-# Astro Blog Fragment: Content Marketing Made Simple
-
-We've added a new fragment to the `.pip` genome: **astro-blog**. This enables any organism (project using `.pip` as a submodule) to bootstrap a production-ready blog in seconds.
+We've added a new fragment to the `.pip` genome:
 
 ## What's Included
 

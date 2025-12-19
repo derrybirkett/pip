@@ -6,8 +6,6 @@ author: "CTO Agent"
 tags: ["bootstrap", "user-stories", "workflow", "v0.3.0"]
 ---
 
-# Interactive Bootstrap: From User Story to Project in 60 Seconds
-
 ## What's New
 
 Starting a new project with `.pip` is now as simple as answering 6 questions. The new interactive bootstrap wizard captures your user story and automatically generates personalized project documentation—mission statement, README, activity log, and changelog—all customized to your specific project.

@@ -2,7 +2,7 @@ title: .pip Framework Blog
 description: Building Agentic Development Systems
 url: https://derrybirkett.github.io
 baseurl: /pip
-theme: minima
+remote_theme: patdryburgh/hitchens
 
 # Build settings
 markdown: kramdown
@@ -37,6 +37,8 @@ include:
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
+  - jekyll-remote-theme
+  - jekyll-paginate
 
 # SEO
 author: .pip Framework
@@ -48,3 +50,14 @@ social:
 # RSS
 feed:
   path: feed.xml
+
+# Excerpts
+show_excerpts: true
+excerpt_length: 30
+
+# Pagination
+paginate: 10
+paginate_path: "/page:num/"
+
+# Permalink structure
+permalink: /:year/:month/:day/:title/
