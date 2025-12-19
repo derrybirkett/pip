@@ -4,6 +4,20 @@ All notable changes to the website/app are documented here.
 
 ## Unreleased
 
+## 2025-12-19 — Jekyll Blog Migration
+### Changed
+- **Migrated blog to Jekyll** with Hitchens minimalist theme
+  - Standardized on industry-standard static site generator
+  - All 6 posts converted to Jekyll format with proper YAML front matter
+  - Configured pagination (10 posts per page)
+  - Custom footer with monospace.studio attribution
+  - Centered horizontal dividers for visual consistency
+  - Blog now renders at https://derrybirkett.github.io/pip
+- **Fixed GitHub Pages build issues**
+  - Switched to `github-pages` gem bundle for dependency compatibility
+  - Removed invalid SCSS imports for remote themes
+  - Applied custom CSS overrides for footer and divider styling
+
 ## 2025-12-19 — Agent Workflow Documents (Phase 1 v1.1.0)
 ### Added
 - **5 Comprehensive Agent Workflow Documents** showing how each agent applies agentic design patterns:
