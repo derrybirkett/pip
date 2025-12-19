@@ -6,13 +6,6 @@ theme: minima
 
 # Build settings
 markdown: kramdown
-permalink: /blog/:year/:month/:day/:title/
-
-# Collections
-collections:
-  posts:
-    output: true
-    permalink: /blog/:year/:month/:day/:title/
 
 # Exclude from build
 exclude:
