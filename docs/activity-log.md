@@ -20,6 +20,9 @@ Log new agent activity for each commit: who did what and why.
 | 2025-12-11 | CTO | feat/astro-blog-fragment | Added astro-blog fragment with comprehensive documentation | Enable organisms to quickly bootstrap content marketing blogs; includes Astro 4, Tailwind CSS, dark mode, RSS feed, and full Nx integration following genome/organism pattern | fragments/astro-blog/, bin/apply-astro-blog.sh, docs/fragments-guide.md |
 || 2025-12-17 | CTO | 9c00a47 | Extracted 5 core agentic design patterns from 482-page PDF | Enable structured agent decision-making through documented patterns (ReAct, Planning, Reflection, Tool Use, Multi-Agent Collaboration); foundation for Phase 1 (v1.1.0) agentic system transformation | resources/agentic-design-patterns/extracted-patterns/, MSTUDIO-56 |
 || 2025-12-19 | CTO | PR #TBD | Added comprehensive agent workflow documents (CTO, CPO, COO, CISO, CMO) | Provide concrete guidance for how each agent applies agentic design patterns in daily work; 3,628 lines covering standard workflows, special cases, collaboration patterns, and quality metrics | patterns/agent-workflows/, ROADMAP Phase 1 |
+| 2025-12-19 | CTO/CPO | PR #20 | Autonomous progress review & prioritization system | Enable data-driven priority decisions through automated progress analysis, pattern recognition, and weighted scoring; demonstrates all 5 agentic patterns working together | bin/review-and-prioritize.sh, docs/requirements/autonomous-progress-review.md |
+| 2025-12-19 | CTO | PR #21 | Unified pip CLI wrapper | Simplify framework usage with single `pip` command instead of individual bin/ scripts; improves discoverability and user experience | bin/pip |
+| 2025-12-19 | CTO | PR #22 | Fixed color code rendering in pip CLI | Correct ANSI escape codes display by using echo -e instead of cat heredoc; ensures clean, colorful output | bin/pip |
 || YYYY-MM-DD | <agent> | <hash or #PR> | <summary> | <decision/assumption> | <issue/docs> |
 
 Guidance:
