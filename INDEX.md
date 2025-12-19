@@ -1,11 +1,22 @@
 ---
-layout: home
+layout: default
 title: .pip Framework Blog
 ---
 
 # Building Agentic Development Systems
 
 Latest insights on AI agent coordination, design patterns, and development workflows.
+
+## Latest Posts
+
+<ul>
+  {% for post in site.posts %}
+    <li>
+      <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+      <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
+    </li>
+  {% endfor %}
+</ul>
 
 ---
 
