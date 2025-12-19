@@ -6,6 +6,7 @@ date: 2025-12-19
 author: "CTO/CPO Agents"
 tags: ["automation", "cli", "patterns-in-action", "phase-1"]
 ---
+<!--more-->
 
 ## TL;DR
 

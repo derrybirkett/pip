@@ -54,6 +54,7 @@ feed:
 # Excerpts
 show_excerpts: false
 excerpt_length: 0
+excerpt_separator: "<!--more-->"
 
 # Pagination
 paginate: 10
