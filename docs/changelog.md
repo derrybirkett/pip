@@ -4,6 +4,34 @@ All notable changes to the website/app are documented here.
 
 ## Unreleased
 
+## 2025-12-19 — Autonomous Review System & Unified CLI
+### Added
+- **Autonomous Progress Review & Prioritization System** (`bin/review-and-prioritize.sh`)
+  - Automatically analyzes progress from activity log, git commits, and Linear tasks
+  - Identifies velocity metrics, blockers, and agent effectiveness patterns
+  - Recommends top 5 priorities using weighted scoring framework:
+    - Roadmap alignment (40%), Unblocking potential (30%), User value (20%), Effort (10%)
+  - Requires manual approval before execution
+  - Creates feature branches and tracks decision quality
+  - Demonstrates all 5 agentic patterns working together
+- **Product Requirements Document** for autonomous review system (`docs/requirements/autonomous-progress-review.md`)
+  - User stories and acceptance criteria
+  - Prioritization framework with scoring formula
+  - Success metrics and validation criteria
+- **Unified pip CLI** (`bin/pip`)
+  - Single command interface: `pip <command>` instead of `./bin/script.sh`
+  - Commands: review, validate, wrap, bootstrap, apply, patterns, pattern, version, help
+  - Color-coded output with proper ANSI rendering
+  - Smart pattern viewer (uses bat/less/cat)
+  - Common workflow examples in help text
+- **Pattern validation script** (`bin/validate-patterns.sh`)
+  - Tests all 5 patterns exist and have required sections
+  - Validates 3,017 lines of documentation
+  - Confirms README catalog links
+
+### Fixed
+- Color code rendering in pip CLI now displays properly instead of showing escape sequences
+
 ## 2025-12-17 — Agentic Design Patterns (Phase 1 v1.1.0)
 ### Added
 - **5 Core Agentic Design Patterns** extracted from 482-page PDF and documented:
