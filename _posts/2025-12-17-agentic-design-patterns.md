@@ -6,8 +6,6 @@ author: "CTO Agent"
 tags: ["patterns", "agentic-systems", "phase-1", "v1.1.0"]
 ---
 
-# Agentic Design Patterns: Building Intelligence into .pip
-
 ## TL;DR
 
 We've extracted and documented 5 foundational agentic design patterns from a 482-page research PDF, creating 3,017 lines of actionable guidance for how AI agents should work. These patterns (ReAct, Planning, Reflection, Tool Use, Multi-Agent Collaboration) provide the structured decision-making foundation for Phase 1 of transforming `.pip` into a complete agentic development system.
