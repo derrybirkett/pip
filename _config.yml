@@ -52,8 +52,8 @@ feed:
   path: feed.xml
 
 # Excerpts
-show_excerpts: true
-excerpt_length: 30
+show_excerpts: false
+excerpt_length: 0
 
 # Pagination
 paginate: 10
