@@ -1,8 +1,12 @@
-# Interactive Bootstrap: From User Story to Project in 60 Seconds
+---
+title: "Interactive Bootstrap: From User Story to Project in 60 Seconds"
+description: "New interactive wizard captures your user story and generates personalized project documentation in 60 seconds"
+date: 2025-12-01
+author: "CTO Agent"
+tags: ["bootstrap", "user-stories", "workflow", "v0.3.0"]
+---
 
-**Date:** 2025-12-01  
-**Version:** v0.3.0  
-**Feature:** Interactive Project Bootstrap Wizard
+# Interactive Bootstrap: From User Story to Project in 60 Seconds
 
 ## What's New
 
