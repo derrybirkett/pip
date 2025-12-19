@@ -1,13 +1,16 @@
-/* Center decorative dividers */
-.post-content hr,
-.page-content hr,
+---
+---
+
+@import "hitchens";
+
+/* Custom styles */
+
+/* Center all horizontal rules / dividers */
 hr {
-  text-align: center;
-  margin: 2rem auto;
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  text-align: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  display: block !important;
 }
 
 /* Footer styling */
