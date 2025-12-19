@@ -4,6 +4,28 @@ All notable changes to the website/app are documented here.
 
 ## Unreleased
 
+## 2025-12-19 — Agent Workflow Documents (Phase 1 v1.1.0)
+### Added
+- **5 Comprehensive Agent Workflow Documents** showing how each agent applies agentic design patterns:
+  - **CTO Workflow** (694 lines) - ReAct loop, implementation, quality checks, handoffs to CISO/COO
+  - **CPO Workflow** (727 lines) - Discovery, requirements, RICE prioritization, validation, roadmap planning
+  - **COO Workflow** (653 lines) - Merge process, wrap-up, release communication, monitoring
+  - **CISO Workflow** (776 lines) - Security review, risk assessment, incident response, policy management
+  - **CMO Workflow** (778 lines) - Content planning, launch campaigns, distribution, performance tracking
+- Each workflow document includes:
+  - Core patterns used by that role
+  - Standard workflows with concrete examples
+  - Special workflows for edge cases (debugging, hotfixes, audits, campaigns)
+  - Collaboration patterns with other agents (handoff formats)
+  - Quality metrics and decision frameworks
+  - Quick reference guides (daily workflow, decision trees, common commands)
+- **3,628 lines of practical, actionable guidance** for agent decision-making
+- Complete first deliverable of ROADMAP Phase 1 (v1.1.0)
+
+### Changed
+- Agent workflows now documented with real-world examples and checklists
+- Pattern application made concrete through role-specific guidance
+
 ## 2025-12-17 — Agentic Design Patterns (Phase 1 v1.1.0)
 ### Added
 - **5 Core Agentic Design Patterns** extracted from 482-page PDF and documented:

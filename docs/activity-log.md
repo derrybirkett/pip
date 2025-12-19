@@ -19,6 +19,7 @@ Log new agent activity for each commit: who did what and why.
 | 2025-12-09 | CTO | PR #11 | Updated activity log, changelog, and blog post for branch protection | Complete wrap-up for PR #10; documented learning process from branching mistake; added defense-in-depth protection strategy | docs/activity-log.md, docs/changelog.md, blog/2025-12-09-branch-protection-enforcement.md |
 | 2025-12-11 | CTO | feat/astro-blog-fragment | Added astro-blog fragment with comprehensive documentation | Enable organisms to quickly bootstrap content marketing blogs; includes Astro 4, Tailwind CSS, dark mode, RSS feed, and full Nx integration following genome/organism pattern | fragments/astro-blog/, bin/apply-astro-blog.sh, docs/fragments-guide.md |
 || 2025-12-17 | CTO | 9c00a47 | Extracted 5 core agentic design patterns from 482-page PDF | Enable structured agent decision-making through documented patterns (ReAct, Planning, Reflection, Tool Use, Multi-Agent Collaboration); foundation for Phase 1 (v1.1.0) agentic system transformation | resources/agentic-design-patterns/extracted-patterns/, MSTUDIO-56 |
+|| 2025-12-19 | CTO | PR #TBD | Added comprehensive agent workflow documents (CTO, CPO, COO, CISO, CMO) | Provide concrete guidance for how each agent applies agentic design patterns in daily work; 3,628 lines covering standard workflows, special cases, collaboration patterns, and quality metrics | patterns/agent-workflows/, ROADMAP Phase 1 |
 || YYYY-MM-DD | <agent> | <hash or #PR> | <summary> | <decision/assumption> | <issue/docs> |
 
 Guidance:
