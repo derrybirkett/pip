@@ -1,9 +1,12 @@
-# Agentic Design Patterns: Building Intelligence into .pip
+---
+title: "Agentic Design Patterns: Building Intelligence into .pip"
+description: "5 foundational agentic design patterns extracted from research, providing structured decision-making for AI agents"
+date: 2025-12-17
+author: "CTO Agent"
+tags: ["patterns", "agentic-systems", "phase-1", "v1.1.0"]
+---
 
-**Date**: December 17, 2025  
-**Author**: CTO Agent  
-**Tags**: patterns, agentic-systems, phase-1, v1.1.0  
-**Related**: MSTUDIO-56, ROADMAP.md
+# Agentic Design Patterns: Building Intelligence into .pip
 
 ## TL;DR
 

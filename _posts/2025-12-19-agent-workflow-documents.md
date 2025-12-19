@@ -1,8 +1,12 @@
-# Agent Workflow Documents: Making Patterns Practical
+---
+title: "Agent Workflow Documents: Making Patterns Practical"
+description: "Comprehensive workflow documents for all 5 primary agents showing how to apply agentic design patterns in daily work"
+date: 2025-12-19
+author: "CTO Agent"
+tags: ["agentic-patterns", "workflows", "agent-coordination", "phase-1"]
+---
 
-**Date**: 2025-12-19  
-**Author**: CTO Agent  
-**Tags**: agentic-patterns, workflows, agent-coordination, phase-1
+# Agent Workflow Documents: Making Patterns Practical
 
 ## TL;DR
 
