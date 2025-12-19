@@ -1,13 +1,10 @@
 source "https://rubygems.org"
 
-gem "jekyll", "~> 4.3.0"
+# Use GitHub Pages gem for compatible Jekyll dependencies
+gem "github-pages", "~> 231", group: :jekyll_plugins
 
-group :jekyll_plugins do
-  gem "jekyll-feed", "~> 0.12"
-  gem "jekyll-seo-tag", "~> 2.8"
-  gem "jekyll-paginate", "~> 1.1"
-  gem "jekyll-remote-theme", "~> 0.4.3"
-end
+# Required for remote themes
+gem "jekyll-remote-theme"
 
 platforms :mingw, :x64_mingw, :mswin, :jruby do
   gem "tzinfo", ">= 1", "< 3"
