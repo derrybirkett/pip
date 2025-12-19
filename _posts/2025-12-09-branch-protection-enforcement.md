@@ -1,4 +1,5 @@
 ---
+layout: post
 title: "Branch Protection: Learning from Mistakes"
 description: "Implementing git hooks and GitHub branch protection to prevent direct commits to main branch"
 date: 2025-12-09

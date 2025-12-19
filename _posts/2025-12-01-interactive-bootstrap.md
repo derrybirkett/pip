@@ -1,4 +1,5 @@
 ---
+layout: post
 title: "Interactive Bootstrap: From User Story to Project in 60 Seconds"
 description: "New interactive wizard captures your user story and generates personalized project documentation in 60 seconds"
 date: 2025-12-01

@@ -1,4 +1,5 @@
 ---
+layout: post
 title: "Agentic Design Patterns: Building Intelligence into .pip"
 description: "5 foundational agentic design patterns extracted from research, providing structured decision-making for AI agents"
 date: 2025-12-17

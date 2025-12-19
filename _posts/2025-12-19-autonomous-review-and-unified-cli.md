@@ -1,4 +1,5 @@
 ---
+layout: post
 title: "Autonomous Progress Review System & Unified CLI"
 description: "Built an autonomous system that reviews progress and recommends priorities, plus a unified pip CLI demonstrating all 5 agentic design patterns working together"
 date: 2025-12-19
