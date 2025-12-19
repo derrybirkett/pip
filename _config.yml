@@ -1,0 +1,57 @@
+title: .pip Framework Blog
+description: Building Agentic Development Systems
+url: https://derrybirkett.github.io
+baseurl: /pip
+theme: minima
+
+# Build settings
+markdown: kramdown
+permalink: /blog/:year/:month/:day/:title/
+
+# Collections
+collections:
+  posts:
+    output: true
+    permalink: /blog/:year/:month/:day/:title/
+
+# Exclude from build
+exclude:
+  - README.md
+  - CONTRIBUTING.md
+  - LICENSE
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - .git
+  - .github
+  - bin
+  - docs
+  - fragments
+  - graph
+  - hooks
+  - ia
+  - method
+  - mission
+  - patterns
+  - resources
+
+# Include
+include:
+  - _posts
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# SEO
+author: .pip Framework
+social:
+  name: .pip Framework
+  links:
+    - https://github.com/derrybirkett/pip
+
+# RSS
+feed:
+  path: feed.xml
