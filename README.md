@@ -82,6 +82,7 @@ The script will ask about your project and generate:
 - Mission statement based on your user story
 - README with your project description  
 - Activity log and changelog templates
+- Agentic workflow playbook (how to use agents with a human in the loop)
 - All customized for your specific project
 
 ### Manual Setup (Advanced)
@@ -96,6 +97,7 @@ git submodule add https://github.com/derrybirkett/pip.git .pip
 mkdir -p docs
 cp .pip/docs/templates/organism-activity-log.md docs/activity-log.md
 cp .pip/docs/templates/organism-changelog.md docs/changelog.md
+cp .pip/docs/templates/organism-agentic.md docs/agentic.md
 cp .pip/mission/mission.md docs/mission.md
 
 # Edit these files for YOUR project

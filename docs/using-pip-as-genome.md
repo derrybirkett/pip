@@ -145,6 +145,7 @@ To learn about `.pip` patterns, read `.pip/README.md` and `.pip/WARP.md`
 **Always copy:**
 - `activity-log.md`
 - `changelog.md`
+- `agentic.md` (recommended: seeded by `.pip` bootstrap)
 
 **Copy if relevant:**
 - `blog/` - Only if you'll publish blog posts
