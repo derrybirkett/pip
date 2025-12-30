@@ -52,7 +52,7 @@ nx run infra:down
 
 ```bash
 # Enter dev container
-docker exec -it monospace-dev bash
+docker compose exec dev bash
 
 # Inside container
 pnpm install
@@ -75,15 +75,15 @@ your-project/
 ## Services
 
 ### PostgreSQL (db)
-- **Port**: 5432
+- **Port**: 5432 by default (override with `POSTGRES_PORT`)
 - **Database**: nexus
 - **User**: nexus
 - **Password**: nexus
-- **Connection**: `postgresql://nexus:nexus@localhost:5432/nexus`
+- **Connection**: `postgresql://nexus:nexus@localhost:${POSTGRES_PORT:-5432}/nexus`
 
 ### n8n (workflow automation)
-- **Port**: 5678
-- **URL**: http://localhost:5678
+- **Port**: 5678 by default (override with `N8N_PORT`)
+- **URL**: http://localhost:5678 (or `http://localhost:$N8N_PORT`)
 - **Auth**: Disabled for local dev
 - **Database**: Uses PostgreSQL above
 
@@ -144,7 +144,13 @@ docker compose up --build -d
 ```
 
 ### Port conflicts
-Edit `docker-compose.yml` and change port mappings:
+If `5432` is already in use (common if you already have Postgres running), override the port:
+
+```bash
+POSTGRES_PORT=5433 nx run infra:up
+```
+
+Or edit `docker-compose.yml` and change port mappings:
 ```yaml
 ports:
   - "5433:5432"  # Changed from 5432:5432

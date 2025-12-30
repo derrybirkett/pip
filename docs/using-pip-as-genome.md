@@ -66,10 +66,10 @@ Copy template structure from `.pip` to create your project's docs:
 mkdir -p docs
 
 # Copy activity log template
-cp .pip/docs/activity-log.md docs/activity-log.md
+cp .pip/docs/templates/organism-activity-log.md docs/activity-log.md
 
 # Copy changelog template
-cp .pip/docs/changelog.md docs/changelog.md
+cp .pip/docs/templates/organism-changelog.md docs/changelog.md
 
 # Copy blog structure if needed
 cp -r .pip/docs/blog docs/blog
