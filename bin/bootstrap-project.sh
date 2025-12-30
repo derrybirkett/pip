@@ -175,17 +175,26 @@ This project uses \`.pip\` as an immutable template (genome):
 
 ## Getting Started
 
-\`\`\`bash
-# Initialize Nx workspace
-npx nx@latest init --integrated
-pnpm init
-pnpm add -D nx @nx/workspace
+### Option A: Docs-only (start lean)
 
-# Apply infrastructure fragment
+- Customize your mission: \`docs/mission.md\`
+- Keep your activity log + changelog current as you ship
+
+### Option B: Nx SaaS scaffold (marketing + app + auth boundary)
+
+\`\`\`bash
+# Initialize Nx (if not already)
+npx nx@latest init --integrated
+
+# (Optional) Dev infra
 ./.pip/bin/apply-nx-dev-infra.sh
 
-# Start development environment
-nx run infra:up
+# Product surfaces
+./.pip/bin/apply-nx-product-surfaces.sh
+
+# Run
+nx serve app
+nx serve marketing
 \`\`\`
 
 ## Status
@@ -223,9 +232,10 @@ echo "  • Cursor AI rules (.cursorrules)"
 echo
 echo -e "${YELLOW}Next steps:${NC}"
 echo "  1. Review and customize docs/mission.md"
-echo "  2. Initialize Nx: npx nx@latest init --integrated"
-echo "  3. Apply infrastructure: ./.pip/bin/apply-nx-dev-infra.sh"
-echo "  4. Start building!"
+echo "  2. (Optional) Initialize Nx: npx nx@latest init --integrated"
+echo "  3. (Optional) Apply infra: ./.pip/bin/apply-nx-dev-infra.sh"
+echo "  4. Scaffold product surfaces: ./.pip/bin/apply-nx-product-surfaces.sh"
+echo "  5. Start app + marketing: nx serve app / nx serve marketing"
 echo
 echo -e "${BLUE}Happy building! 🚀${NC}"
 echo
