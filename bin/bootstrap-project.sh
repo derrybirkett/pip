@@ -147,6 +147,19 @@ if [ -f ".pip/docs/templates/organism-agentic.md" ]; then
   echo -e "${GREEN}✅ Created docs/agentic.md${NC}"
 fi
 
+# Seed GitHub repo hygiene (workflows + PR template)
+mkdir -p .github/workflows
+
+if [ -f ".pip/docs/templates/organism-validate-docs.yml" ]; then
+  cp .pip/docs/templates/organism-validate-docs.yml .github/workflows/validate-docs.yml
+  echo -e "${GREEN}✅ Created .github/workflows/validate-docs.yml${NC}"
+fi
+
+if [ -f ".pip/docs/templates/organism-pull-request-template.md" ]; then
+  cp .pip/docs/templates/organism-pull-request-template.md .github/PULL_REQUEST_TEMPLATE.md
+  echo -e "${GREEN}✅ Created .github/PULL_REQUEST_TEMPLATE.md${NC}"
+fi
+
 # Create README.md
 cat > README.md << EOF
 # ${PROJECT_NAME}
@@ -235,6 +248,8 @@ echo "  • Mission statement (docs/mission.md)"
 echo "  • Activity log (docs/activity-log.md)"
 echo "  • Changelog (docs/changelog.md)"
 echo "  • Agentic workflow playbook (docs/agentic.md)"
+echo "  • Docs hygiene workflow (.github/workflows/validate-docs.yml)"
+echo "  • Pull request template (.github/PULL_REQUEST_TEMPLATE.md)"
 echo "  • README with your project story"
 echo "  • Cursor AI rules (.cursorrules)"
 echo

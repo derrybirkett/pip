@@ -28,7 +28,8 @@ main
 #### ✅ Require status checks to pass before merging
 - [x] **Require branches to be up to date before merging**
 - Status checks to require:
-  - *(Add any CI/CD checks here as they're configured)*
+  - **Docs hygiene** *(from `.github/workflows/validate-docs.yml` in bootstrapped projects)*
+  - *(Add any additional CI/CD checks here as they're configured)*
 
 **Rationale**: Prevents merging broken code and ensures compatibility with latest main.
 
