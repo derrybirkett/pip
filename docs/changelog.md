@@ -4,6 +4,12 @@ All notable changes to the website/app are documented here.
 
 ## Unreleased
 
+### Added
+- Bootstrap now seeds:
+  - `docs/dev.md` (dev commands via Nx)
+  - `.envrc.example` + `.gitignore` entries for `direnv` (`.envrc`, `.direnv/`)
+  - `SECURITY.md`, `.github/CODEOWNERS`, and GitHub issue templates
+
 ## 2025-12-30 — Organism Bootstrap & Nx Scaffolds
 ### Added
 - **Nx Product Surfaces Scaffold** (`bin/apply-nx-product-surfaces.sh`)
