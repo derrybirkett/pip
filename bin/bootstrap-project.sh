@@ -141,6 +141,12 @@ cp .pip/docs/templates/organism-changelog.md docs/changelog.md
 sed -i '' "s/\[Project Name\]/${PROJECT_NAME}/g" docs/changelog.md
 echo -e "${GREEN}✅ Created docs/changelog.md${NC}"
 
+# Copy agentic workflow playbook
+if [ -f ".pip/docs/templates/organism-agentic.md" ]; then
+  cp .pip/docs/templates/organism-agentic.md docs/agentic.md
+  echo -e "${GREEN}✅ Created docs/agentic.md${NC}"
+fi
+
 # Create README.md
 cat > README.md << EOF
 # ${PROJECT_NAME}
@@ -167,6 +173,7 @@ This project uses \`.pip\` as an immutable template (genome):
 - [Mission](./docs/mission.md) - Project purpose and vision
 - [Activity Log](./docs/activity-log.md) - Historical record of changes
 - [Changelog](./docs/changelog.md) - User-facing release notes
+- [Agentic Workflow](./docs/agentic.md) - How to use agents with a human in the loop
 
 ### Framework Documentation  
 - [.pip Framework](./.pip/README.md) - Framework overview
@@ -227,6 +234,7 @@ echo -e "${GREEN}Your project has been bootstrapped with:${NC}"
 echo "  • Mission statement (docs/mission.md)"
 echo "  • Activity log (docs/activity-log.md)"
 echo "  • Changelog (docs/changelog.md)"
+echo "  • Agentic workflow playbook (docs/agentic.md)"
 echo "  • README with your project story"
 echo "  • Cursor AI rules (.cursorrules)"
 echo
