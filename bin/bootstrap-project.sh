@@ -133,12 +133,12 @@ EOF
 echo -e "${GREEN}✅ Created docs/mission.md${NC}"
 
 # Copy activity log and changelog templates
-cp .pip/docs/activity-log.md docs/activity-log.md
+cp .pip/docs/templates/organism-activity-log.md docs/activity-log.md
 echo -e "${GREEN}✅ Created docs/activity-log.md${NC}"
 
-cp .pip/docs/changelog.md docs/changelog.md
+cp .pip/docs/templates/organism-changelog.md docs/changelog.md
 # Customize changelog with project name
-sed -i '' "s/All notable changes to the website\/app are documented here./All notable changes to ${PROJECT_NAME} are documented here./" docs/changelog.md
+sed -i '' "s/\[Project Name\]/${PROJECT_NAME}/g" docs/changelog.md
 echo -e "${GREEN}✅ Created docs/changelog.md${NC}"
 
 # Create README.md

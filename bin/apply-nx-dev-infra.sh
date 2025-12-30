@@ -68,10 +68,13 @@ echo "✨ Nx + Docker dev scaffold applied successfully!"
 echo
 echo "Next steps:"
 echo "  1. Run: nx run infra:up"
-echo "  2. Then: docker exec -it monospace-dev bash"
-echo "  3. Inside container: pnpm install, nx serve web, etc."
+echo "  2. Then: docker compose exec dev bash"
+echo "  3. Inside container: pnpm install, nx graph, nx <targets>, etc."
 echo
 echo "Services:"
-echo "  • PostgreSQL: localhost:5432 (nexus/nexus)"
-echo "  • n8n: http://localhost:5678"
+echo "  • PostgreSQL: localhost:${POSTGRES_PORT:-5432} (db/user/pass: nexus)"
+echo "  • n8n: http://localhost:${N8N_PORT:-5678}"
+echo
+echo "Port overrides (optional):"
+echo "  • POSTGRES_PORT=5433 N8N_PORT=5679 nx run infra:up"
 echo

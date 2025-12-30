@@ -94,8 +94,8 @@ git submodule add https://github.com/derrybirkett/pip.git .pip
 
 # Bootstrap your documentation
 mkdir -p docs
-cp .pip/docs/activity-log.md docs/
-cp .pip/docs/changelog.md docs/
+cp .pip/docs/templates/organism-activity-log.md docs/activity-log.md
+cp .pip/docs/templates/organism-changelog.md docs/changelog.md
 cp .pip/mission/mission.md docs/mission.md
 
 # Edit these files for YOUR project
