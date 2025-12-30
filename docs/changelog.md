@@ -4,6 +4,40 @@ All notable changes to the website/app are documented here.
 
 ## Unreleased
 
+## 2025-12-30 — Organism Bootstrap & Nx Scaffolds
+### Added
+- **Nx Product Surfaces Scaffold** (`bin/apply-nx-product-surfaces.sh`)
+  - One-command generation of common SaaS surfaces: `apps/app`, `apps/marketing`, `libs/auth`
+  - Uses Nx generators (no template vendoring) for clean, maintainable scaffolds
+  - Auth library stays provider-agnostic (swap Supabase/Clerk/WorkOS later)
+  - Copies graph templates to organism `docs/graph/*` for customization
+  - Auto-installs `@nx/react` and `@nx/vite` if missing
+  - Comprehensive `fragments/nx-product-surfaces/README.md` documentation
+- **Agentic Workflow Playbook Template** (`docs/templates/organism-agentic.md`)
+  - 73-line guide to human-in-the-loop agentic development
+  - Explains agent roles (CPO, CTO, CISO, COO) and decision rights
+  - Links to genome patterns without duplicating framework docs
+  - Bootstrap script now seeds this into organisms as `docs/agentic.md`
+  - Makes agent workflows discoverable from day one
+- **Clean Organism Templates**
+  - `docs/templates/organism-activity-log.md` - Empty activity log (no .pip history)
+  - `docs/templates/organism-changelog.md` - Clean changelog starter
+  - Bootstrap and manual setup docs now use these templates
+
+### Fixed
+- **nx-dev-infra Docker collisions**
+  - Removed hard-coded container names to prevent cross-project naming conflicts
+  - Can now run multiple `.pip`-based projects simultaneously
+- **nx-dev-infra port conflicts**
+  - Added `POSTGRES_PORT` and `N8N_PORT` environment variable overrides
+  - Defaults: 5432 and 5678, easily overridden when ports are in use
+  - Example: `POSTGRES_PORT=5433 N8N_PORT=5679 nx run infra:up`
+
+### Changed
+- Bootstrap process now creates cleaner organisms without inheriting `.pip` commit history
+- Updated Docker commands from `docker exec -it` to `docker compose exec` (modern syntax)
+- README and fragments guide updated with new scaffolds and workflows
+
 ## 2025-12-19 — Jekyll Blog Migration
 ### Changed
 - **Migrated blog to Jekyll** with Hitchens minimalist theme
