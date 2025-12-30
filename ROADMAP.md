@@ -150,6 +150,101 @@ This roadmap describes the transformation from v1.0 → v2.0 through 7 phases ov
 
 ---
 
+### 🎯 Initiative 2: Application Fragments - Web & Mobile Scaffolds
+
+**Goal**: Provide production-ready fragments for common application patterns (web apps with auth, mobile apps with Expo) to accelerate organism development.
+
+**Timeline**: 3 weeks  
+**Status**: 📋 Ready to begin  
+**Plan ID**: `b6c8bd58-1fa9-4834-a46e-865fe9eb85ba`
+
+#### Problem Statement
+
+`.pip` currently provides infrastructure fragments (nx-dev-infra, astro-blog) but lacks:
+1. Full-stack web application scaffold with authentication
+2. Mobile application scaffold using Expo
+3. Supabase setup automation and best practices
+4. Landing page + authenticated dashboard patterns
+5. Cross-platform auth integration (web + mobile)
+
+#### Phases Overview
+
+**Phase 1: Supabase Auth App Fragment** - 1 week
+- Next.js 14 web app with Supabase auth
+- Marketing landing page
+- Complete auth flow (signup, login, password reset)
+- Authenticated dashboard with profile/settings/logout
+- ShadCN UI + Tailwind CSS
+
+**Phase 2: Expo Mobile Fragment** - 1 week
+- React Native app with Expo SDK 50+
+- Expo Router for navigation
+- Auth screens with biometric support
+- Tab navigation (Home, Profile, Settings)
+- Supabase integration (optional)
+
+**Phase 3: Integration & Validation** - 1 week
+- Cross-fragment testing
+- Documentation updates
+- Blog posts
+- Demo project
+
+#### Key Features
+
+**Supabase Auth App**:
+- Marketing landing page with hero and CTAs
+- Email/password authentication
+- Protected routes with middleware
+- Dashboard with profile dropdown
+- Profile and settings pages
+- Supabase Postgres integration
+- Row-level security (RLS) policies
+
+**Expo Mobile**:
+- File-based routing with Expo Router
+- Onboarding and auth screens
+- Biometric authentication (FaceID/TouchID)
+- Tab navigation with React Navigation
+- Secure token storage with Expo SecureStore
+- Offline support with AsyncStorage
+- Push notifications setup
+
+**Directory Structure**:
+```
+.pip/
+├── fragments/
+│   ├── supabase-auth-app/    # Web app with auth
+│   │   ├── files/
+│   │   └── README.md
+│   └── expo-mobile/          # Mobile app
+│       ├── files/
+│       └── README.md
+└── bin/
+    ├── apply-supabase-auth-app.sh
+    └── apply-expo-mobile.sh
+```
+
+#### Success Metrics
+- **Setup Time**: From git clone to running app in <10 minutes
+- **Coverage**: 90% of common web/mobile patterns included
+- **Adoption**: Used in 3+ real projects within first month
+- **Documentation**: Zero questions about basic usage
+- **Quality**: No blocking bugs in initial release
+
+#### Risk Mitigation
+- **Supabase changes**: Abstract auth layer, provide self-hosted fallback
+- **Expo incompatibilities**: Pin SDK version, document upgrade path
+- **Too opinionated**: Make fragments customizable, provide ejection path
+- **Maintenance burden**: Start with MVP, iterate based on real usage
+
+#### Dependencies
+- Existing nx-dev-infra fragment
+- Existing astro-blog fragment
+- Supabase account (free tier sufficient)
+- Expo account (free tier sufficient)
+
+---
+
 ## Milestone Breakdown
 
 ### v1.1.0: Foundation - Pattern Library & Resources
@@ -327,6 +422,67 @@ This roadmap describes the transformation from v1.0 → v2.0 through 7 phases ov
 #### Key Files
 - `fragments/agent-memory/README.md`
 - `fragments/agent-memory/apply-agent-memory.sh`
+
+---
+
+### v1.7.0: Supabase Auth App Fragment
+**Target**: Parallel with v1.1-v1.6 development  
+**Status**: 📋 Ready to start
+
+#### Goals
+- Provide production-ready web app scaffold with authentication
+- Enable rapid full-stack development with Supabase
+- Create reusable landing page and dashboard patterns
+
+#### Deliverables
+- [ ] `fragments/supabase-auth-app/` directory structure
+- [ ] Next.js 14 app with App Router
+- [ ] Marketing landing page (hero, features, CTAs)
+- [ ] Complete auth flow (signup, login, password reset)
+- [ ] Authenticated dashboard with profile dropdown
+- [ ] Profile and settings pages
+- [ ] ShadCN UI component integration
+- [ ] Supabase client setup and RLS policies
+- [ ] `bin/apply-supabase-auth-app.sh` script
+- [ ] Fragment README with examples
+- [ ] Blog post: "Building Full-Stack Apps with Supabase and .pip"
+
+#### Key Files
+- `fragments/supabase-auth-app/README.md`
+- `fragments/supabase-auth-app/files/` (Next.js app structure)
+- `bin/apply-supabase-auth-app.sh`
+- `docs/fragments-guide.md` (updated)
+
+---
+
+### v1.8.0: Expo Mobile Fragment
+**Target**: After v1.7.0  
+**Status**: 📋 Not Started
+
+#### Goals
+- Provide production-ready mobile app scaffold with Expo
+- Enable cross-platform mobile development
+- Support Supabase auth integration
+
+#### Deliverables
+- [ ] `fragments/expo-mobile/` directory structure
+- [ ] Expo SDK 50+ with Expo Router
+- [ ] Onboarding and auth screens
+- [ ] Tab navigation (Home, Profile, Settings)
+- [ ] Biometric authentication support
+- [ ] Supabase client for React Native
+- [ ] Secure token storage
+- [ ] Offline support with AsyncStorage
+- [ ] `bin/apply-expo-mobile.sh` script
+- [ ] Fragment README with deployment guide
+- [ ] Blog post: "Mobile Development with Expo and .pip"
+
+#### Key Files
+- `fragments/expo-mobile/README.md`
+- `fragments/expo-mobile/files/` (Expo app structure)
+- `bin/apply-expo-mobile.sh`
+- `docs/fragments-guide.md` (updated)
+- `ia/agents/cto/tech-stack/tech-stack.md` (updated)
 
 ---
 

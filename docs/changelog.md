@@ -103,7 +103,6 @@ All notable changes to the website/app are documented here.
 ### Changed
 - Framework validation approach: dogfooding with real projects instead of theoretical testing
 - Confirmed v1.1.0 priorities: pattern library, decision frameworks, quality metrics
-- Integrated Linear project management for tracking roadmap milestones
 
 ### Added (Linear Integration)
 - **PIP Framework project in Linear** - High-priority project tracking v0.3 → v2.0 transformation
@@ -115,15 +114,37 @@ All notable changes to the website/app are documented here.
   - Agent workflow with MCP integration
   - Best practices for humans and AI agents
 
-### Added (Linear Integration)
-- **PIP Framework project in Linear** - High-priority project tracking v0.3 → v2.0 transformation
-  - Created v1.1.0 epic (MSTUDIO-55): Foundation - Pattern Library & Resources
-  - Created first task (MSTUDIO-56): Extract and document agentic design patterns
-- **Linear integration documentation** (`docs/linear-integration.md`)
-  - Workflow for creating and managing tasks
-  - Status flow and task organization
-  - Agent workflow with MCP integration
-  - Best practices for humans and AI agents
+## 2025-12-16 — Supabase Auth & Expo Mobile Fragments Roadmap
+### Added
+- **ROADMAP.md Initiative 2**: Application Fragments - Web & Mobile Scaffolds
+  - 3-week implementation plan with phases
+  - Success metrics: <10min setup, 90% pattern coverage, 3+ project adoption
+  - Risk mitigation strategies
+- **ROADMAP.md v1.7.0 milestone**: Supabase Auth App Fragment
+  - Next.js 14 with App Router and Supabase auth
+  - Marketing landing page with hero, features, CTAs
+  - Complete auth flow (signup, login, password reset, email verification)
+  - Authenticated dashboard with profile dropdown
+  - Profile and settings pages
+  - ShadCN UI + Tailwind CSS integration
+  - RLS policies and database schema
+- **ROADMAP.md v1.8.0 milestone**: Expo Mobile Fragment
+  - Expo SDK 50+ with Expo Router (file-based routing)
+  - Onboarding and auth screens
+  - Tab navigation (Home, Profile, Settings)
+  - Biometric authentication support (FaceID/TouchID)
+  - Supabase client for React Native
+  - Secure token storage with Expo SecureStore
+  - Offline support with AsyncStorage
+- **docs/linear-tasks.md**: Local backup of Linear tasks
+  - Complete task details for all pending work
+  - Sync instructions for manual and automated workflows
+  - Provides continuity when Linear connection is lost
+  - Includes MSTUDIO-55, MSTUDIO-56, and 4 pending tasks
+
+### Changed
+- Roadmap extended from v2.0.0 to include v1.7.0 and v1.8.0 milestones
+- Task management now has resilient local backup system
 
 ## 2025-12-11 — Astro Blog Fragment
 ### Added
