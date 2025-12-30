@@ -1,0 +1,41 @@
+name: Automerge Autogen Blog PRs
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Merge eligible PRs
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          repo="${GITHUB_REPOSITORY}"
+          query="repo:${repo} is:pr is:open label:autogen-blog label:automerge -label:hold"
+
+          prs=$(gh pr list --search "$query" --json number --jq '.[].number')
+          if [ -z "$prs" ]; then
+            echo "No eligible PRs found."
+            exit 0
+          fi
+
+          for pr in $prs; do
+            state=$(gh pr view "$pr" --repo "$repo" --json mergeStateStatus --jq '.mergeStateStatus')
+            echo "PR #$pr mergeStateStatus=$state"
+
+            if [ "$state" != "CLEAN" ] && [ "$state" != "HAS_HOOKS" ]; then
+              echo "Skipping PR #$pr; not mergeable yet."
+              continue
+            fi
+
+            gh pr merge "$pr" --repo "$repo" --squash --delete-branch
+          done
