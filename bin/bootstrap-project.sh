@@ -7,6 +7,19 @@ BLUE='\033[0;34m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
+ensure_line_in_file() {
+  local line="$1"
+  local file="$2"
+
+  if [ ! -f "$file" ]; then
+    touch "$file"
+  fi
+
+  if ! grep -qxF "$line" "$file"; then
+    echo "$line" >> "$file"
+  fi
+}
+
 echo -e "${BLUE}╔════════════════════════════════════════════════════════════════╗${NC}"
 echo -e "${BLUE}║                                                                ║${NC}"
 echo -e "${BLUE}║              .pip Project Bootstrap Assistant                  ║${NC}"
@@ -147,6 +160,44 @@ if [ -f ".pip/docs/templates/organism-agentic.md" ]; then
   echo -e "${GREEN}✅ Created docs/agentic.md${NC}"
 fi
 
+# Seed development guide
+if [ -f ".pip/docs/templates/organism-dev.md" ]; then
+  cp .pip/docs/templates/organism-dev.md docs/dev.md
+  echo -e "${GREEN}✅ Created docs/dev.md${NC}"
+fi
+
+# Seed local env conventions (direnv)
+if [ -f ".pip/docs/templates/organism-envrc.example" ]; then
+  cp .pip/docs/templates/organism-envrc.example .envrc.example
+  echo -e "${GREEN}✅ Created .envrc.example${NC}"
+  ensure_line_in_file ".envrc" ".gitignore"
+  ensure_line_in_file ".direnv/" ".gitignore"
+fi
+
+# Seed SECURITY.md
+if [ -f ".pip/docs/templates/organism-security.md" ]; then
+  cp .pip/docs/templates/organism-security.md SECURITY.md
+  echo -e "${GREEN}✅ Created SECURITY.md${NC}"
+fi
+
+# Seed GitHub issue templates + CODEOWNERS stub
+mkdir -p .github/ISSUE_TEMPLATE
+
+if [ -f ".pip/docs/templates/organism-issue-bug.yml" ]; then
+  cp .pip/docs/templates/organism-issue-bug.yml .github/ISSUE_TEMPLATE/bug_report.yml
+  echo -e "${GREEN}✅ Created .github/ISSUE_TEMPLATE/bug_report.yml${NC}"
+fi
+
+if [ -f ".pip/docs/templates/organism-issue-feature.yml" ]; then
+  cp .pip/docs/templates/organism-issue-feature.yml .github/ISSUE_TEMPLATE/feature_request.yml
+  echo -e "${GREEN}✅ Created .github/ISSUE_TEMPLATE/feature_request.yml${NC}"
+fi
+
+if [ -f ".pip/docs/templates/organism-codeowners" ]; then
+  cp .pip/docs/templates/organism-codeowners .github/CODEOWNERS
+  echo -e "${GREEN}✅ Created .github/CODEOWNERS${NC}"
+fi
+
 # Seed GitHub repo hygiene (workflows + PR template)
 mkdir -p .github/workflows
 
@@ -248,8 +299,12 @@ echo "  • Mission statement (docs/mission.md)"
 echo "  • Activity log (docs/activity-log.md)"
 echo "  • Changelog (docs/changelog.md)"
 echo "  • Agentic workflow playbook (docs/agentic.md)"
+echo "  • Dev guide template (docs/dev.md)"
+echo "  • Local env example (.envrc.example)"
+echo "  • Security policy (SECURITY.md)"
 echo "  • Docs hygiene workflow (.github/workflows/validate-docs.yml)"
 echo "  • Pull request template (.github/PULL_REQUEST_TEMPLATE.md)"
+echo "  • Issue templates + CODEOWNERS stub (.github/*)"
 echo "  • README with your project story"
 echo "  • Cursor AI rules (.cursorrules)"
 echo
