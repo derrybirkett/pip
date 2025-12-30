@@ -156,6 +156,9 @@ Bootstrap new projects with reusable infrastructure scaffolds:
 # In your new project
 git submodule add git@github.com:derrybirkett/pip.git .pip
 ./.pip/bin/apply-nx-dev-infra.sh
+
+# Scaffold common product surfaces (app + marketing + auth boundary)
+./.pip/bin/apply-nx-product-surfaces.sh
 ```
 
 See [Fragments Guide](./docs/fragments-guide.md) for more.

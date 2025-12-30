@@ -35,6 +35,19 @@ Containerized Nx development environment with Postgres and n8n.
 
 [Full documentation →](../fragments/nx-dev-infra/README.md)
 
+### nx-product-surfaces
+Scaffolds common product surfaces in an Nx workspace.
+
+**Provides:**
+- `apps/app` (logged-in product surface)
+- `apps/marketing` (marketing surface)
+- `libs/auth` (provider-swappable auth boundary)
+- `docs/graph/*` templates copied into your organism
+
+**When to use:** Starting a SaaS-style product that will need marketing + app + auth.
+
+[Full documentation →](../fragments/nx-product-surfaces/README.md)
+
 ### astro-blog
 Fast, SEO-friendly blog powered by Astro with Tailwind CSS.
 
