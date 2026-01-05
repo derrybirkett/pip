@@ -11,6 +11,12 @@ This directory contains the operational system for your project: mission, method
 - **Project graphs** mapping key surfaces and flows
 - **Reusable fragments** for bootstrapping new projects with consistent infrastructure
 
+## v2 Breaking Change: Site Extracted
+
+As of v2 development, the public website/blog has been extracted into a separate **organism** repo (recommended name: `pip-site`).
+
+This repo is now focused on the `.pip` kernel (genome): governance, patterns, fragments, scripts, and documentation.
+
 ## Directory Structure
 
 ```
