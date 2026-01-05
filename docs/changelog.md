@@ -4,11 +4,15 @@ All notable changes to the website/app are documented here.
 
 ## Unreleased
 
+## 2026-01-05 — Dev & Security Templates
 ### Added
-- Bootstrap now seeds:
-  - `docs/dev.md` (dev commands via Nx)
-  - `.envrc.example` + `.gitignore` entries for `direnv` (`.envrc`, `.direnv/`)
-  - `SECURITY.md`, `.github/CODEOWNERS`, and GitHub issue templates
+- **Bootstrap Dev/Security Templates** (`bin/bootstrap-project.sh`)
+  - Automatically seeds `docs/dev.md` with common Nx dev commands
+  - Creates `.envrc.example` for direnv with `.gitignore` entries (`.envrc`, `.direnv/`)
+  - Includes `SECURITY.md` for security policy and vulnerability reporting
+  - Adds `.github/CODEOWNERS` for code ownership and review assignments
+  - Generates GitHub issue templates for standardized issue tracking
+  - Ensures new projects start with security and development hygiene best practices
 
 ## 2025-12-30 — Organism Bootstrap & Nx Scaffolds
 ### Added
