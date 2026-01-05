@@ -159,6 +159,15 @@ Default: Squash and merge to keep main history clean
    - Features: activity log + changelog + blog
    - Major releases: full wrap-up
 
+## Execution Modes (PIP_MODE)
+
+When using the unified CLI (`bin/pip`), set `PIP_MODE` explicitly:
+
+- `PIP_MODE=observe` or `PIP_MODE=propose` for exploration and planning
+- `PIP_MODE=execute` only after you have explicit approval to run commands that modify files or branches
+
+Side-effecting commands like `pip apply`, `pip bootstrap`, `pip wrap`, and `pip review` are blocked unless `PIP_MODE=execute`.
+
 ### Testing Strategy
 - **Playwright** for E2E testing (user preference from rules)
 - Unit tests: 80%+ coverage for business logic

@@ -10,6 +10,23 @@ set -e
 VERSION="1.0.0"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+# Execution mode (agent guardrails)
+# - observe: read-only, no side effects
+# - propose: read-only, requires explicit approval before execution
+# - execute: allow commands that write files or create branches
+PIP_MODE_RAW="${PIP_MODE:-execute}"
+PIP_MODE="$(echo "$PIP_MODE_RAW" | tr '[:upper:]' '[:lower:]')"
+
+case "$PIP_MODE" in
+    observe|propose|execute)
+        ;;
+    *)
+        echo -e "${RED}Error: Invalid PIP_MODE '$PIP_MODE_RAW'${NC}"
+        echo -e "Allowed: observe | propose | execute"
+        exit 2
+        ;;
+esac
+
 # Colors for output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -24,6 +41,10 @@ show_help() {
     echo -e ""
     echo -e "${GREEN}USAGE:${NC}"
     echo -e "    pip <command> [options]"
+    echo -e ""
+    echo -e "${GREEN}MODES:${NC}"
+    echo -e "    Set ${YELLOW}PIP_MODE${NC} to control execution: observe | propose | execute"
+    echo -e "    Current: ${YELLOW}${PIP_MODE}${NC}"
     echo -e ""
     echo -e "${GREEN}COMMANDS:${NC}"
     echo -e ""
@@ -74,6 +95,17 @@ show_help() {
     echo -e "${GREEN}DOCS:${NC}"
     echo -e "    Full documentation: README.md, WARP.md"
     echo -e "    Pattern library: resources/agentic-design-patterns/extracted-patterns/"
+}
+
+require_execute() {
+    local command_name="$1"
+
+    if [ "$PIP_MODE" != "execute" ]; then
+        echo -e "${YELLOW}Blocked:${NC} '${command_name}' requires execution approval."
+        echo -e "Set ${YELLOW}PIP_MODE=execute${NC} and re-run to proceed."
+        echo -e "Current: ${YELLOW}PIP_MODE=${PIP_MODE}${NC}"
+        exit 3
+    fi
 }
 
 show_version() {
@@ -174,6 +206,7 @@ show_pattern() {
 # Main command router
 case "${1:-help}" in
     review)
+        require_execute "review"
         shift
         exec "$SCRIPT_DIR/review-and-prioritize.sh" "$@"
         ;;
@@ -184,6 +217,7 @@ case "${1:-help}" in
         ;;
     
     wrap|wrap-up)
+        require_execute "wrap"
         shift
         if [ -f "$SCRIPT_DIR/wrap-up.sh" ]; then
             exec "$SCRIPT_DIR/wrap-up.sh" "$@"
@@ -198,6 +232,7 @@ case "${1:-help}" in
         ;;
     
     bootstrap)
+        require_execute "bootstrap"
         shift
         if [ -f "$SCRIPT_DIR/bootstrap-project.sh" ]; then
             exec "$SCRIPT_DIR/bootstrap-project.sh" "$@"
@@ -208,6 +243,7 @@ case "${1:-help}" in
         ;;
     
     apply)
+        require_execute "apply"
         fragment=$2
         shift 2
         if [ -z "$fragment" ]; then

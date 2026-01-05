@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json.schemastore.org/nx-project",
+  "name": "pip",
+  "projectType": "library",
+  "targets": {
+    "validate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "./bin/pip validate"
+      }
+    },
+    "patterns": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "./bin/pip patterns"
+      }
+    },
+    "review": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "./bin/pip review"
+      }
+    },
+    "wrap": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "./bin/pip wrap"
+      }
+    }
+  }
+}

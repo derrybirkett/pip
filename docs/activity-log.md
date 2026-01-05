@@ -31,6 +31,7 @@ Log new agent activity for each commit: who did what and why.
 | 2025-12-30 | CTO/CPO | PR #47 | Seeded agentic workflow playbook into new projects | Bootstrap now copies docs/agentic.md to organisms; short link-heavy guide explains human-in-the-loop agent workflows, role-based collaboration, and references genome patterns without duplicating framework docs | docs/templates/organism-agentic.md, bin/bootstrap-project.sh |
 | 2025-12-30 | CTO | PR #51 | Bootstrap seeds dev/security templates into organisms | Enable new projects to start with docs/dev.md (dev commands), .envrc.example with .gitignore entries, SECURITY.md, .github/CODEOWNERS, and GitHub issue templates for immediate dev and security hygiene | bin/bootstrap-project.sh, docs/templates/ |
 | 2026-01-05 | CTO | (v2) site extraction | Extracted the public website/blog into a separate `pip-blog` organism repo | Reduce cognitive load and keep this repo focused on the `.pip` kernel (genome); organisms can still inherit governance/tooling via the `.pip` submodule model | docs/changelog.md, ROADMAP.md, README.md |
+| 2026-01-05 | CTO | feat/nx-and-modes-migration | Added Nx workspace wrappers and explicit execution modes (PIP_MODE) | Make agent autonomy explicit at runtime; provide a task runner to orchestrate existing scripts without changing their behavior | package.json, nx.json, project.json, bin/pip, docs/policies/agent-autonomy-guardrails.md, WARP.md |
 | YYYY-MM-DD | <agent> | <hash or #PR> | <summary> | <decision/assumption> | <issue/docs> |
 
 Guidance:

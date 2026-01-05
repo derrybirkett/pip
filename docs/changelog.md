@@ -4,6 +4,16 @@ All notable changes to the `.pip` framework are documented here.
 
 ## Unreleased
 
+### Added
+- **Nx workspace wrappers for kernel scripts**
+  - Adds `nx.json` + `project.json` so you can run common tasks via `nx run pip:<target>`
+  - Adds `package.json` with Nx as a dev dependency for contributors working on the kernel repo
+
+### Changed
+- **Unified CLI now supports explicit execution modes via `PIP_MODE`**
+  - `observe`/`propose` block side-effecting commands; `execute` permits them
+  - Side-effecting commands include `pip apply`, `pip bootstrap`, `pip wrap`, and `pip review`
+
 ### Changed
 - **Breaking (v2): extracted the website/blog into a separate `pip-blog` organism repo**
   - Removed Jekyll site files and GitHub Pages publishing workflow from this repo
