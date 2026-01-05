@@ -8,12 +8,17 @@ Transform `.pip` from a documentation and scaffolding framework (v1.x) into a **
 
 ## Versioning Strategy
 
-- **v1.0.0** (Current) - Foundation complete: agent governance, fragments, documentation, processes
-- **v2.0.0** (Target) - Agentic system complete: vector memory, formal patterns, metrics, multi-agent coordination
+- **v1.1.0** (Latest tagged stable) - Foundation complete: agent governance, fragments, documentation, processes
+- **v2.0.0** (Current development) - Agentic system complete: vector memory, formal patterns, metrics, multi-agent coordination
+
+### v2 Breaking Change (Structural)
+
+The public website/blog has been extracted into a separate `pip-blog` organism repo.
+This repo is now focused on the `.pip` kernel (genome).
 
 This roadmap describes the transformation from v1.0 → v2.0 through 7 phases over 13 weeks.
 
-## Current State (v0.3.0)
+## Current State (v1.1.0)
 
 ### What We Have
 - ✅ Agent-based governance (CEO, CTO, CPO, CISO, CMO, CRO, COO)

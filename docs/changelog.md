@@ -1,8 +1,14 @@
 # Changelog
 
-All notable changes to the website/app are documented here.
+All notable changes to the `.pip` framework are documented here.
 
 ## Unreleased
+
+### Changed
+- **Breaking (v2): extracted the website/blog into a separate `pip-blog` organism repo**
+  - Removed Jekyll site files and GitHub Pages publishing workflow from this repo
+  - `pip` remains the genome/kernel repo; organisms submodule it at `.pip/`
+  - The site repo should include `pip` as a submodule if it wants to inherit governance and tooling
 
 ## 2026-01-05 — Dev & Security Templates
 ### Added
