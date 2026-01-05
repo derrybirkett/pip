@@ -25,7 +25,6 @@ This repo is now focused on the `.pip` kernel (genome): governance, patterns, fr
 ├── CONTRIBUTING.md            # How to contribute and collaborate
 ├── fragment-prompt.md         # Universal AI agent entrypoint
 ├── WARP.md                   # Warp-specific AI agent guidance
-├── INDEX.md                  # Quick reference to all documentation
 ├── mission/                   # Why this project exists
 │   └── mission.md            # Problem, solution, vision, outcomes
 ├── method/                    # How we deliver
@@ -128,13 +127,26 @@ This repository uses [direnv](https://direnv.net/) for environment variable mana
 brew install direnv  # macOS
 
 # Copy the example env file
-cp .envrc.example .envrc
+cp .envrc.example .envrc  # or: cp docs/templates/organism-envrc.example .envrc
 
 # Add your secrets to .envrc (it's gitignored)
 vim .envrc
 
 # Allow direnv to load the environment
 direnv allow
+```
+
+## Testing
+
+```bash
+# Bootstrap regression test (runs bootstrap into a temp directory)
+./bin/test-bootstrap.sh
+
+# Validate pattern library structure
+./bin/validate-patterns.sh
+
+# Fragment smoke test (creates a temp Nx workspace and applies fragments)
+./bin/test-fragments.sh
 ```
 
 ### 2. Customize Mission

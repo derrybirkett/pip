@@ -168,6 +168,13 @@ When using the unified CLI (`bin/pip`), set `PIP_MODE` explicitly:
 
 Side-effecting commands like `pip apply`, `pip bootstrap`, `pip wrap`, and `pip review` are blocked unless `PIP_MODE=execute`.
 
+You can also set a default mode for an organism via `.piprc`:
+- Create/upgrade config: `pip migrate`
+- Inspect resolved mode: `pip mode`
+
+Optional: set an execution strategy via `PIP_ACTION_MODE`:
+- `live` (default), `confirm` (prompt), `dry-run` (wrap-only)
+
 ### Testing Strategy
 - **Playwright** for E2E testing (user preference from rules)
 - Unit tests: 80%+ coverage for business logic
@@ -220,7 +227,7 @@ See `docs/fragments-guide.md` for detailed usage.
 ## Quick Reference
 
 ### Navigation
-- **Index**: `INDEX.md` — Quick reference to all documentation
+- **Docs**: `docs/` — Living documentation (processes, templates, tools)
 - **Contributing**: `CONTRIBUTING.md` — Branch naming, PR requirements, standards
 - **README**: `README.md` — Framework overview and getting started
 

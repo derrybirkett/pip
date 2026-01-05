@@ -155,7 +155,7 @@ mkdir -p "$TARGET_DIR/.pip"/{mission,method,graph,ia/agents,fragments,bin,docs/{
 echo "📄 Setting up base files..."
 cp "$PIP_DIR/README.md" "$TARGET_DIR/.pip/"
 cp "$PIP_DIR/CONTRIBUTING.md" "$TARGET_DIR/.pip/"
-cp "$PIP_DIR/INDEX.md" "$TARGET_DIR/.pip/"
+
 cp "$PIP_DIR/fragment-prompt.md" "$TARGET_DIR/.pip/"
 cp "$PIP_DIR/WARP.md" "$TARGET_DIR/.pip/"
 
@@ -197,14 +197,39 @@ cp -r "$PIP_DIR/docs/templates" "$TARGET_DIR/.pip/docs/"
 # Set up environment
 if [ "$SETUP_ENVRC" = "true" ]; then
     echo "🔐 Setting up environment..."
+    envrc_template=""
     if [ -f "$PIP_DIR/.envrc.example" ]; then
-        cp "$PIP_DIR/.envrc.example" "$TARGET_DIR/.envrc.example"
+        envrc_template="$PIP_DIR/.envrc.example"
+    elif [ -f "$PIP_DIR/docs/templates/organism-envrc.example" ]; then
+        envrc_template="$PIP_DIR/docs/templates/organism-envrc.example"
+    fi
+
+    if [ -n "$envrc_template" ]; then
+        cp "$envrc_template" "$TARGET_DIR/.envrc.example"
         if [ ! -f "$TARGET_DIR/.envrc" ]; then
             cp "$TARGET_DIR/.envrc.example" "$TARGET_DIR/.envrc"
             echo "  ✅ Created .envrc (edit this with your secrets)"
         else
             echo "  ⚠️  .envrc already exists, skipping"
         fi
+    else
+        echo "  ⚠️  No .envrc template found (skipping .envrc setup)"
+    fi
+fi
+
+# Set up pip config (.piprc)
+piprc_template=""
+if [ -f "$PIP_DIR/docs/templates/organism-piprc.example" ]; then
+    piprc_template="$PIP_DIR/docs/templates/organism-piprc.example"
+fi
+
+if [ -n "$piprc_template" ]; then
+    cp "$piprc_template" "$TARGET_DIR/.piprc.example"
+    if [ ! -f "$TARGET_DIR/.piprc" ]; then
+        cp "$TARGET_DIR/.piprc.example" "$TARGET_DIR/.piprc"
+        echo "  ✅ Created .piprc (safe defaults; edit to set PIP_MODE)"
+    else
+        echo "  ⚠️  .piprc already exists, skipping"
     fi
 fi
 
