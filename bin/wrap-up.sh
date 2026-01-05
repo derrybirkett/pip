@@ -1,7 +1,16 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+KERNEL_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+
+# If .pip is used as a git submodule, run wrap-up against the superproject
+# (the organism) rather than the detached submodule checkout.
+SUPERPROJECT_DIR="$(cd "$KERNEL_DIR" && git rev-parse --show-superproject-working-tree 2>/dev/null || true)"
+if [[ -n "${SUPERPROJECT_DIR}" ]]; then
+  ROOT_DIR="$SUPERPROJECT_DIR"
+else
+  ROOT_DIR="$KERNEL_DIR"
+fi
 
 DRY_RUN="${PIP_WRAP_UP_DRY_RUN:-0}"
 CONFIRM_DOCS_DEFAULT="${PIP_WRAP_UP_CONFIRM_DOCS:-}"
@@ -23,7 +32,7 @@ check_file(){
 }
 
 echo "=== Wrap-Up Checklist ==="
-check_file "$ROOT_DIR/docs/processes/wrap-up-checklist.md"
+check_file "$KERNEL_DIR/docs/processes/wrap-up-checklist.md"
 check_file "$ROOT_DIR/docs/activity-log.md"
 check_file "$ROOT_DIR/docs/changelog.md"
 echo "Review \"docs/processes/wrap-up-checklist.md\" and ensure every step is complete."
