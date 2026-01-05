@@ -13,7 +13,7 @@ Transform `.pip` from a documentation and scaffolding framework (v1.x) into a **
 
 ### v2 Breaking Change (Structural)
 
-The public website/blog has been extracted into a separate `pip-site` organism repo.
+The public website/blog has been extracted into a separate `pip-blog` organism repo.
 This repo is now focused on the `.pip` kernel (genome).
 
 This roadmap describes the transformation from v1.0 → v2.0 through 7 phases over 13 weeks.
