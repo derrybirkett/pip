@@ -33,3 +33,27 @@ To make autonomy explicit at runtime, the unified CLI (`bin/pip`) supports an ex
 
 Commands that can cause side effects (e.g. `pip apply`, `pip bootstrap`, `pip wrap`, `pip review`) require `PIP_MODE=execute`.
 
+## Action Mode (PIP_ACTION_MODE)
+
+`PIP_ACTION_MODE` controls *how* side-effecting commands behave when `PIP_MODE=execute`:
+
+- `PIP_ACTION_MODE=live` — run normally (default)
+- `PIP_ACTION_MODE=confirm` — prompt before side-effecting commands
+- `PIP_ACTION_MODE=dry-run` — avoid side effects (currently only `pip wrap` is supported)
+
+Resolution order:
+1. Environment variable (`PIP_ACTION_MODE=...`)
+2. `.piprc` in the organism root
+3. Kernel default
+
+### Setting a Default Mode via .piprc
+
+In an organism repo, you can set a default `PIP_MODE` in `.piprc` so you don’t have to export it each time.
+
+Resolution order:
+1. Environment variable (`PIP_MODE=...`)
+2. `.piprc` in the organism root
+3. Kernel default
+
+See `docs/tools/piprc.md` for the file format and `pip migrate`.
+

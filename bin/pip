@@ -10,11 +10,135 @@ set -e
 VERSION="1.0.0"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
+
+KERNEL_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+if [ "$(basename "$KERNEL_ROOT")" = ".pip" ]; then
+    ORGANISM_ROOT="$(cd "$KERNEL_ROOT/.." && pwd)"
+else
+    ORGANISM_ROOT="$KERNEL_ROOT"
+fi
+
+PIPRC_PATH=""
+PIPRC_VERSION=""
+
+find_piprc() {
+    if [ -f "$ORGANISM_ROOT/.piprc" ]; then
+        echo "$ORGANISM_ROOT/.piprc"
+        return 0
+    fi
+    return 1
+}
+
+trim() {
+    local s="$1"
+    s="${s#"${s%%[![:space:]]*}"}"
+    s="${s%"${s##*[![:space:]]}"}"
+    printf "%s" "$s"
+}
+
+strip_quotes() {
+    local s="$1"
+    if [ ${#s} -ge 2 ] && [ "${s:0:1}" = '"' ] && [ "${s: -1}" = '"' ]; then
+        s="${s:1:${#s}-2}"
+    elif [ ${#s} -ge 2 ] && [ "${s:0:1}" = "'" ] && [ "${s: -1}" = "'" ]; then
+        s="${s:1:${#s}-2}"
+    fi
+    printf "%s" "$s"
+}
+
+read_piprc_key() {
+    local key="$1"
+    local file="$2"
+
+    [ -f "$file" ] || return 1
+
+    while IFS= read -r line || [ -n "$line" ]; do
+        line="$(trim "$line")"
+        [ -z "$line" ] && continue
+        case "$line" in
+            \#*)
+                continue
+                ;;
+        esac
+        case "$line" in
+            *=*)
+                local k="$(trim "${line%%=*}")"
+                local v="$(trim "${line#*=}")"
+                v="$(strip_quotes "$v")"
+                if [ "$k" = "$key" ]; then
+                    printf "%s" "$v"
+                    return 0
+                fi
+                ;;
+        esac
+    done < "$file"
+    return 1
+}
+
+load_piprc() {
+    local piprc=""
+    if piprc="$(find_piprc 2>/dev/null)"; then
+        PIPRC_PATH="$piprc"
+        PIPRC_VERSION="$(read_piprc_key "PIPRC_VERSION" "$piprc" 2>/dev/null || true)"
+    fi
+}
+
+load_piprc
+
+# Action mode (execution strategy)
+# - live: run commands normally
+# - confirm: prompt before side-effecting commands
+# - dry-run: avoid side effects; currently only `wrap` is supported
+PIP_ACTION_MODE_SOURCE="default"
+PIP_ACTION_MODE_RAW=""
+if [ -n "${PIP_ACTION_MODE:-}" ]; then
+    PIP_ACTION_MODE_RAW="$PIP_ACTION_MODE"
+    PIP_ACTION_MODE_SOURCE="env"
+elif [ -n "$PIPRC_PATH" ]; then
+    PIP_ACTION_MODE_RAW="$(read_piprc_key "PIP_ACTION_MODE" "$PIPRC_PATH" 2>/dev/null || true)"
+    if [ -n "$PIP_ACTION_MODE_RAW" ]; then
+        PIP_ACTION_MODE_SOURCE="piprc"
+    fi
+fi
+PIP_ACTION_MODE_RAW="${PIP_ACTION_MODE_RAW:-live}"
+PIP_ACTION_MODE="$(echo "$PIP_ACTION_MODE_RAW" | tr '[:upper:]' '[:lower:]')"
+
+case "$PIP_ACTION_MODE" in
+    live|confirm|dry-run)
+        ;;
+    *)
+        echo -e "${RED}Error: Invalid PIP_ACTION_MODE '$PIP_ACTION_MODE_RAW'${NC}"
+        echo -e "Allowed: live | confirm | dry-run"
+        exit 2
+        ;;
+esac
+
 # Execution mode (agent guardrails)
 # - observe: read-only, no side effects
 # - propose: read-only, requires explicit approval before execution
 # - execute: allow commands that write files or create branches
-PIP_MODE_RAW="${PIP_MODE:-execute}"
+PIP_MODE_SOURCE="default"
+PIP_MODE_RAW=""
+if [ -n "${PIP_MODE:-}" ]; then
+    PIP_MODE_RAW="$PIP_MODE"
+    PIP_MODE_SOURCE="env"
+elif [ -n "$PIPRC_PATH" ]; then
+    PIP_MODE_RAW="$(read_piprc_key "PIP_MODE" "$PIPRC_PATH" 2>/dev/null || true)"
+    if [ -z "$PIP_MODE_RAW" ]; then
+        # Legacy key supported for migration.
+        PIP_MODE_RAW="$(read_piprc_key "PIP_MODE_DEFAULT" "$PIPRC_PATH" 2>/dev/null || true)"
+    fi
+    if [ -n "$PIP_MODE_RAW" ]; then
+        PIP_MODE_SOURCE="piprc"
+    fi
+fi
+PIP_MODE_RAW="${PIP_MODE_RAW:-execute}"
 PIP_MODE="$(echo "$PIP_MODE_RAW" | tr '[:upper:]' '[:lower:]')"
 
 case "$PIP_MODE" in
@@ -27,13 +151,6 @@ case "$PIP_MODE" in
         ;;
 esac
 
-# Colors for output
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-BLUE='\033[0;34m'
-NC='\033[0m' # No Color
-
 show_help() {
     echo -e ""
     echo -e "${BLUE}pip${NC} - Project Intelligence & Process CLI"
@@ -44,7 +161,9 @@ show_help() {
     echo -e ""
     echo -e "${GREEN}MODES:${NC}"
     echo -e "    Set ${YELLOW}PIP_MODE${NC} to control execution: observe | propose | execute"
-    echo -e "    Current: ${YELLOW}${PIP_MODE}${NC}"
+    echo -e "    Set ${YELLOW}PIP_ACTION_MODE${NC} to control execution strategy: live | confirm | dry-run"
+    echo -e "    Defaults can be configured via ${YELLOW}.piprc${NC} (see: pip migrate)"
+    echo -e "    Current: ${YELLOW}${PIP_MODE}${NC} (${PIP_MODE_SOURCE}), ${YELLOW}${PIP_ACTION_MODE}${NC} (${PIP_ACTION_MODE_SOURCE})"
     echo -e ""
     echo -e "${GREEN}COMMANDS:${NC}"
     echo -e ""
@@ -62,6 +181,8 @@ show_help() {
     echo -e "    pattern <name>      Show specific pattern details"
     echo -e "    "
     echo -e "  ${YELLOW}Information:${NC}"
+    echo -e "    mode                Show current execution mode and config source"
+    echo -e "    migrate             Create/upgrade .piprc in the project root"
     echo -e "    version             Show version information"
     echo -e "    help                Show this help message"
     echo -e ""
@@ -105,6 +226,91 @@ require_execute() {
         echo -e "Set ${YELLOW}PIP_MODE=execute${NC} and re-run to proceed."
         echo -e "Current: ${YELLOW}PIP_MODE=${PIP_MODE}${NC}"
         exit 3
+    fi
+
+    if [ "$PIP_ACTION_MODE" = "dry-run" ]; then
+        if [ "$command_name" != "wrap" ]; then
+            echo -e "${YELLOW}Blocked:${NC} '${command_name}' is disabled in dry-run mode."
+            echo -e "Set ${YELLOW}PIP_ACTION_MODE=live${NC} (or unset it) to proceed."
+            echo -e "Current: ${YELLOW}PIP_ACTION_MODE=${PIP_ACTION_MODE}${NC}"
+            exit 3
+        fi
+    fi
+
+    if [ "$PIP_ACTION_MODE" = "confirm" ]; then
+        local confirm=""
+        read -rp "Proceed with '${command_name}'? [y/N] " confirm
+        if [[ ! "$confirm" =~ ^[Yy]$ ]]; then
+            echo "Cancelled."
+            exit 0
+        fi
+    fi
+}
+
+show_mode() {
+    echo -e ""
+    echo -e "${BLUE}Execution Mode${NC}"
+    echo -e ""
+    echo -e "Mode:        ${YELLOW}${PIP_MODE}${NC}"
+    echo -e "Mode source: ${YELLOW}${PIP_MODE_SOURCE}${NC}"
+    echo -e "Action:      ${YELLOW}${PIP_ACTION_MODE}${NC}"
+    echo -e "Action src:  ${YELLOW}${PIP_ACTION_MODE_SOURCE}${NC}"
+    if [ -n "$PIPRC_PATH" ]; then
+        echo -e "Piprc:  ${YELLOW}${PIPRC_PATH}${NC}"
+        if [ -n "$PIPRC_VERSION" ]; then
+            echo -e "Schema: ${YELLOW}${PIPRC_VERSION}${NC}"
+        fi
+    else
+        echo -e "Piprc:  ${YELLOW}(not found)${NC}"
+    fi
+    echo -e ""
+    echo -e "To override for one command: ${YELLOW}PIP_MODE=execute pip <cmd>${NC}"
+    echo -e "To set a default: edit ${YELLOW}.piprc${NC} (or run ${YELLOW}pip migrate${NC})"
+    echo -e ""
+}
+
+migrate_piprc() {
+    local target="$ORGANISM_ROOT/.piprc"
+    local tmp=""
+
+    if [ ! -f "$target" ]; then
+        cat > "$target" <<'EOF'
+# .piprc — organism configuration for the .pip kernel
+#
+# Format: KEY=VALUE (one per line)
+# - Lines starting with '#' are comments
+# - Avoid secrets here; use .envrc for tokens and credentials
+
+PIPRC_VERSION=1
+
+# Execution mode (agent guardrails)
+# observe | propose | execute
+PIP_MODE=propose
+
+# Action mode (execution strategy)
+# live | confirm | dry-run
+PIP_ACTION_MODE=live
+EOF
+        echo -e "${GREEN}Created:${NC} $target"
+        return 0
+    fi
+
+    if ! grep -q '^PIPRC_VERSION=' "$target" 2>/dev/null; then
+        tmp="$(mktemp -t piprc.XXXXXX)"
+        {
+            echo "PIPRC_VERSION=1"
+            echo
+            cat "$target"
+        } > "$tmp"
+        mv "$tmp" "$target"
+        echo -e "${GREEN}Updated:${NC} Added PIPRC_VERSION to $target"
+    fi
+
+    if grep -q '^PIP_MODE_DEFAULT=' "$target" 2>/dev/null && ! grep -q '^PIP_MODE=' "$target" 2>/dev/null; then
+        tmp="$(mktemp -t piprc.XXXXXX)"
+        sed 's/^PIP_MODE_DEFAULT=/PIP_MODE=/' "$target" > "$tmp"
+        mv "$tmp" "$target"
+        echo -e "${GREEN}Updated:${NC} Migrated PIP_MODE_DEFAULT -> PIP_MODE in $target"
     fi
 }
 
@@ -220,6 +426,10 @@ case "${1:-help}" in
         require_execute "wrap"
         shift
         if [ -f "$SCRIPT_DIR/wrap-up.sh" ]; then
+            if [ "$PIP_ACTION_MODE" = "dry-run" ]; then
+                export PIP_WRAP_UP_DRY_RUN=1
+                export PIP_WRAP_UP_SKIP_PUSH=1
+            fi
             exec "$SCRIPT_DIR/wrap-up.sh" "$@"
         else
             echo -e "${YELLOW}Note: wrap-up.sh not yet implemented${NC}"
@@ -280,6 +490,15 @@ case "${1:-help}" in
             exit 1
         fi
         show_pattern "$2"
+        ;;
+
+    mode)
+        show_mode
+        ;;
+
+    migrate)
+        require_execute "migrate"
+        migrate_piprc
         ;;
     
     version|--version|-v)

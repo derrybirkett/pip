@@ -8,13 +8,21 @@ All notable changes to the `.pip` framework are documented here.
 - **Nx workspace wrappers for kernel scripts**
   - Adds `nx.json` + `project.json` so you can run common tasks via `nx run pip:<target>`
   - Adds `package.json` with Nx as a dev dependency for contributors working on the kernel repo
+- **First-class organism config via `.piprc`**
+  - Adds `docs/templates/organism-piprc.example` and seeds `.piprc` during bootstrap
+  - Adds `pip migrate` to initialize/upgrade `.piprc` safely
+  - Adds `pip mode` to show resolved modes and their sources
+- **Execution strategy mode via `PIP_ACTION_MODE`**
+  - `live` executes immediately (default)
+  - `confirm` prompts before side effects when `PIP_MODE=execute`
+  - `dry-run` blocks side effects (wrap-up is supported as a dry run)
 
 ### Changed
-- **Unified CLI now supports explicit execution modes via `PIP_MODE`**
+- **Unified CLI now supports explicit execution modes via `PIP_MODE` and `.piprc` defaults**
   - `observe`/`propose` block side-effecting commands; `execute` permits them
+  - `PIP_ACTION_MODE` controls execution strategy (`live`/`confirm`/`dry-run`)
   - Side-effecting commands include `pip apply`, `pip bootstrap`, `pip wrap`, and `pip review`
 
-### Changed
 - **Breaking (v2): extracted the website/blog into a separate `pip-blog` organism repo**
   - Removed Jekyll site files and GitHub Pages publishing workflow from this repo
   - `pip` remains the genome/kernel repo; organisms submodule it at `.pip/`
@@ -254,7 +262,7 @@ All notable changes to the `.pip` framework are documented here.
 - `bin/wrap-up.sh` script + COO role docs to automate the wrap-up checklist, commit, tag, and push process triggered by “ok wrap up”.
 
 ### Changed
-- Updated `README.md`, `INDEX.md`, `WARP.md`, and `fragment-prompt.md` to include the COO role and agent-tool mappings.
+- Updated `README.md`, `WARP.md`, and `fragment-prompt.md` to include the COO role and agent-tool mappings.
 - `ia/agent_manifest.yml` now lists owning agents and tools for transparency (CTO for bootstrap scripts, COO for wrap-up automation).
 - `docs/processes/wrap-up-checklist.md` now explicitly references COO ownership and the wrap-up script.
 

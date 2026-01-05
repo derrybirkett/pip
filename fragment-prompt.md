@@ -340,7 +340,7 @@ Add "Read File" node pointing to `.pip/fragment-prompt.md` before agent tasks to
 - **Full repository guidance**: `WARP.md`
 - **Contributing guidelines**: `CONTRIBUTING.md`
 - **Getting started**: `README.md`
-- **Quick reference**: `INDEX.md`
+- **Living docs**: `docs/` (processes, templates, tools)
 - **Fragments deep-dive**: `docs/fragments-guide.md`
 - **Delivery process**: `method/delivery-method.md`
 - **Agent roles**: `ia/agent_manifest.yml` + `ia/agents/<role>/`

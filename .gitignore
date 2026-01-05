@@ -1,6 +1,9 @@
 # Environment variables and secrets
 .envrc
 
+# Organism config (only relevant in downstream repos)
+.piprc
+
 # OS files
 .DS_Store
 Thumbs.db

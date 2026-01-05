@@ -27,6 +27,20 @@ This roadmap describes the transformation from v1.0 → v2.0 through 7 phases ov
 - ✅ Interactive project bootstrap wizard
 - ✅ Activity log and changelog tracking
 - ✅ Universal AI entrypoint (fragment-prompt.md, WARP.md)
+- ✅ Runtime execution modes + organism config (`PIP_MODE`, `PIP_ACTION_MODE`, `.piprc`, `pip migrate`)
+
+### Runtime Modes (First-Class)
+
+`.pip` supports explicit runtime modes in the unified CLI (`bin/pip`) and via `.piprc`:
+
+- **Execution guardrail**: `PIP_MODE` = `observe` | `propose` | `execute`
+- **Execution strategy**: `PIP_ACTION_MODE` = `live` | `confirm` | `dry-run`
+    - `dry-run` is currently supported for `pip wrap` (wrap-up), and blocks other side-effecting commands.
+
+This provides:
+- Safe defaults for organisms (via `.piprc`)
+- One-command overrides (via env vars)
+- A migration path (`pip migrate`) for upgrading config over time
 
 ### What's Missing
 - ❌ Formal agentic workflow patterns (ReAct, Planning, Reflection)
@@ -268,6 +282,7 @@ This roadmap describes the transformation from v1.0 → v2.0 through 7 phases ov
 - [ ] Agent workflow documentation (CTO, CPO, CISO, CMO, COO)
 - [ ] Decision frameworks (architecture, prioritization, risk, scope)
 - [ ] Quality metrics definitions (CTO, CPO, COO)
+- ✅ Runtime mode docs + config template upgrades (`PIP_MODE`, `PIP_ACTION_MODE`, `.piprc`, `pip migrate`)
 - [ ] Blog post: "Integrating Agentic Design Patterns"
 
 #### Key Files
@@ -324,6 +339,7 @@ This roadmap describes the transformation from v1.0 → v2.0 through 7 phases ov
 - [ ] Memory usage patterns per role
 - [ ] Quality checklists for each agent
 - [ ] Agent configuration system (`ia/agent-config.yml`)
+- [ ] Capability modes in `.piprc` (feature toggles like `PIP_FEATURE_*`)
 - [ ] Tool configuration templates
 - [ ] Blog post: "Formal Agent Workflows"
 
