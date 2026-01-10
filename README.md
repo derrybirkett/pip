@@ -120,7 +120,59 @@ cp .pip/mission/mission.md docs/mission.md
 
 This installs a pre-commit hook that blocks commits to `main` branch, enforcing the feature branch workflow.
 
-### 1. Environment Setup
+### 1. Execution Modes (New in v2)
+
+`.pip` v2 introduces explicit execution modes to control agent behavior and ensure safe operation:
+
+#### PIP_MODE: Execution Permission
+Controls whether side-effecting operations are permitted:
+
+- **`observe`** - Read-only mode; all side effects blocked
+- **`propose`** - Suggest changes without executing them  
+- **`execute`** - Permit side-effecting operations (apply, bootstrap, wrap, review)
+
+#### PIP_ACTION_MODE: Execution Strategy
+Controls how side effects are executed when `PIP_MODE=execute`:
+
+- **`live`** - Execute immediately (default)
+- **`confirm`** - Prompt before each side effect
+- **`dry-run`** - Block side effects, show what would happen
+
+#### Examples
+
+```bash
+# Safe exploration (read-only)
+PIP_MODE=observe pip review
+
+# Execute with confirmation prompts
+PIP_MODE=execute PIP_ACTION_MODE=confirm pip apply nx-dev-infra
+
+# Preview wrap-up without executing
+PIP_MODE=execute PIP_ACTION_MODE=dry-run pip wrap
+
+# Configure default mode for your organism
+pip migrate  # Creates/upgrades .piprc
+pip mode     # Shows resolved modes
+```
+
+#### Setting Defaults with .piprc
+
+Create a `.piprc` file in your organism to set default modes:
+
+```bash
+# Create .piprc with defaults
+pip migrate
+```
+
+Example `.piprc`:
+```bash
+PIP_MODE=execute
+PIP_ACTION_MODE=confirm
+```
+
+See the [migration guide](./docs/migrating-v1-to-v2.md) for complete v2 documentation.
+
+### 2. Environment Setup
 This repository uses [direnv](https://direnv.net/) for environment variable management:
 ```bash
 # Install direnv (if not already installed)

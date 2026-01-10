@@ -21,6 +21,43 @@ Thanks for helping improve this project. This guide explains how to propose edit
   - Messaging/marketing: CMO
   - Pricing/packaging: CRO
   - Cross-functional/mission: CEO
+  - **Breaking changes: CEO + relevant agent** (must be well-documented)
+
+### Breaking Changes & Major Updates
+
+Breaking changes require extra scrutiny to protect users:
+
+**Required:**
+- [ ] CEO approval (strategic impact assessment)
+- [ ] Relevant agent approval (CTO for technical, CPO for product, etc.)
+- [ ] Migration guide in `docs/` directory
+- [ ] Updated changelog with clear "Breaking Change" label
+- [ ] Version bump reflecting semver (e.g., v1.x → v2.0)
+- [ ] Announcement plan (consider CMO review for messaging)
+
+**Definition:** A breaking change is any modification that:
+- Removes or significantly changes existing functionality
+- Requires users to update their code or configuration
+- Changes the structure of reusable fragments
+- Alters the genome/organism contract
+- Breaks backward compatibility with previous versions
+
+**Example:** Extracting the website from the kernel repo (v1 → v2) was a breaking change requiring migration documentation.
+
+### Self-Merge Guidelines
+
+While we trust contributors' judgment, consider getting peer review for:
+- Changes affecting multiple components or agents
+- New patterns or architectural decisions
+- Changes to core tooling (bootstrap, wrap-up, fragments)
+- Breaking changes (required, not optional)
+- Security-sensitive changes
+
+**Safe to self-merge:**
+- Documentation fixes and improvements
+- Bug fixes with tests
+- Minor refactoring within a single component
+- Activity log and changelog updates
 
 ## Standards
 - Code: follow project linters/formatters; add tests where relevant (see [testing strategy](./ia/agents/cto/tech-stack/testing-strategy.md))
