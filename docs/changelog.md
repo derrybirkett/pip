@@ -5,6 +5,26 @@ All notable changes to the `.pip` framework are documented here.
 ## Unreleased
 
 ### Added
+- **v1 to v2 Migration Guide** (`docs/migrating-v1-to-v2.md`)
+  - Comprehensive guide for upgrading from v1.1.0 to v2.x
+  - Clear migration paths for submodule users, contributors, and forked repos
+  - Documents new v2 features (execution modes, .piprc, Nx wrappers)
+  - Includes feature parity table and timeline
+- **Pull Request Template** (`.github/pull_request_template.md`)
+  - Standardizes PR descriptions with structured sections
+  - Includes testing checklist, documentation requirements, impact assessment
+  - Agent review assignment guidance (CTO, CPO, CISO, CMO, COO, CEO)
+  - Pre-merge checklist to ensure quality and completeness
+- **Prominent PIP_MODE Documentation in README**
+  - Added dedicated "Execution Modes" section to Getting Started
+  - Clear examples for observe, propose, and execute modes
+  - PIP_ACTION_MODE examples (live, confirm, dry-run)
+  - .piprc configuration guidance with examples
+- **Peer Review Policy for Breaking Changes** (CONTRIBUTING.md)
+  - Explicit requirements for breaking changes (CEO + relevant agent approval)
+  - Clear definition of what constitutes a breaking change
+  - Self-merge guidelines to distinguish safe vs. review-needed changes
+  - Migration guide requirements for breaking changes
 - **Nx workspace wrappers for kernel scripts**
   - Adds `nx.json` + `project.json` so you can run common tasks via `nx run pip:<target>`
   - Adds `package.json` with Nx as a dev dependency for contributors working on the kernel repo
