@@ -5,6 +5,26 @@ All notable changes to the `.pip` framework are documented here.
 ## Unreleased
 
 ### Added
+- **Autonomous Agent System** (`.github/agents/`, `.github/workflows/`)
+  - AI-powered roadmap implementation via OpenAI GPT-4
+  - Autonomous agent picks up unassigned roadmap issues every 6 hours
+  - CTO review agent (technical quality, architecture, best practices)
+  - CISO review agent (security vulnerabilities, credential scanning)
+  - Auto-merge for passing PRs from `automated/*` branches
+  - CPO triage helper script for quick approval workflow
+  - Project board automation (issue lifecycle management)
+  - Production-tested with issue #64 → PR #68 (auto-merged)
+  - Cost: ~$2-5/month (OpenAI API + GitHub Actions free tier)
+  - Velocity: Up to 4 automated tasks/day
+- **Agent Adoption Guide for Organisms** (`docs/agent-adoption-guide.md`)
+  - Comprehensive 483-line guide for organisms to adopt agent system
+  - Complete setup steps (10 steps from copy to enable)
+  - Customization options (schedule, priority, auto-merge, review criteria)
+  - Monitoring and cost tracking guidance
+  - Best practices (writing agent-friendly issues, incremental adoption)
+  - Security considerations and troubleshooting
+  - Example configurations for TypeScript/React projects
+  - Enables any organism to benefit from autonomous development
 - **v1 to v2 Migration Guide** (`docs/migrating-v1-to-v2.md`)
   - Comprehensive guide for upgrading from v1.1.0 to v2.x
   - Clear migration paths for submodule users, contributors, and forked repos
