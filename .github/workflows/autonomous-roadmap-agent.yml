@@ -44,7 +44,7 @@ jobs:
       - name: Run autonomous agent
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI }}
           PRIORITY_FILTER: ${{ inputs.priority || 'p1' }}
           ISSUE_NUMBER: ${{ inputs.issue_number }}
         run: |

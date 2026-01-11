@@ -55,7 +55,7 @@ Add these secrets to your repository:
 
 ```bash
 # Required
-gh secret set OPENAI_API_KEY --body "sk-..."
+gh secret set OPENAI --body "sk-..."
 gh secret set GH_PROJECT_TOKEN --body "ghp_..."
 
 # Optional (for notifications)
@@ -63,7 +63,7 @@ gh secret set SLACK_WEBHOOK_URL --body "https://..."
 ```
 
 **Secret requirements:**
-- `OPENAI_API_KEY`: OpenAI API key with GPT-4 access
+- `OPENAI`: OpenAI API key with GPT-4 access
 - `GH_PROJECT_TOKEN`: GitHub PAT with `repo`, `project`, `workflow` scopes
 - `SLACK_WEBHOOK_URL`: (Optional) For agent notifications
 
@@ -203,7 +203,7 @@ gh issue close 123 --reason "not planned"
 
 **Environment variables:**
 - `GITHUB_TOKEN`: Auto-provided by Actions
-- `OPENAI_API_KEY`: From secrets
+- `OPENAI_API_KEY`: From secrets.OPENAI
 - `PRIORITY_FILTER`: From workflow input (default: p1)
 - `ISSUE_NUMBER`: From workflow input (optional)
 
@@ -364,7 +364,7 @@ gh run view <run-id> --log
 ```
 
 **Common issues:**
-- Missing `OPENAI_API_KEY` secret
+- Missing `OPENAI` secret
 - Insufficient GitHub token permissions
 - No eligible roadmap issues found
 - OpenAI rate limit exceeded
