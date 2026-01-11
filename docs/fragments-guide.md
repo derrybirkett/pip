@@ -36,15 +36,24 @@ Containerized Nx development environment with Postgres and n8n.
 [Full documentation →](../fragments/nx-dev-infra/README.md)
 
 ### nx-product-surfaces
-Scaffolds common product surfaces in an Nx workspace.
+Scaffolds a complete SaaS application with mission-driven content.
 
 **Provides:**
-- `apps/app` (logged-in product surface)
-- `apps/marketing` (marketing surface)
-- `libs/auth` (provider-swappable auth boundary)
+- `apps/marketing` — Landing page with hero section (auto-populated from mission)
+- `apps/app` — Dashboard with sidebar nav, dashboard page, user profile
+- `libs/auth` — Provider-swappable auth boundary (Supabase/Clerk/WorkOS ready)
 - `docs/graph/*` templates copied into your organism
+- Tailwind CSS + React Router configured
+- Mission data injection from `docs/mission.md`
 
-**When to use:** Starting a SaaS-style product that will need marketing + app + auth.
+**When to use:** Starting any SaaS-style product that needs marketing + app + auth.
+
+**Key Features:**
+- Hero section populated from bootstrap mission data
+- Working dashboard layout with navigation
+- User profile page with edit form
+- Auth context ready for provider integration
+- Dark mode support built-in
 
 [Full documentation →](../fragments/nx-product-surfaces/README.md)
 
