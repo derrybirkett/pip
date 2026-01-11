@@ -204,15 +204,28 @@ Respond ONLY with valid JSON, no additional text.`;
       ],
       max_tokens: CONFIG.maxTokens,
       temperature: CONFIG.temperature,
+      response_format: { type: 'json_object' },
     });
 
     const content = response.choices[0].message.content.trim();
     
-    // Extract JSON from markdown code blocks if present
-    const jsonMatch = content.match(/```(?:json)?\s*([\s\S]*?)```/) || [null, content];
-    const jsonContent = jsonMatch[1] || content;
+    // Log raw response for debugging
+    console.log('Raw OpenAI response length:', content.length);
     
-    return JSON.parse(jsonContent);
+    // Try to parse directly first
+    try {
+      return JSON.parse(content);
+    } catch (parseError) {
+      // If that fails, try extracting from markdown code blocks
+      const jsonMatch = content.match(/```(?:json)?\s*([\s\S]*?)```/);
+      if (jsonMatch) {
+        return JSON.parse(jsonMatch[1]);
+      }
+      
+      // Log the problematic content for debugging
+      console.error('Failed to parse JSON. First 500 chars:', content.substring(0, 500));
+      throw parseError;
+    }
   } catch (error) {
     console.error('❌ OpenAI API error:', error.message);
     throw error;
