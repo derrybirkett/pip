@@ -174,7 +174,7 @@ gh api repos/derrybirkett/pip/milestones --jq '.[] | {title, open_issues, closed
 
 ### CPO Triage Process
 
-**Weekly schedule:** Review `needs-approval` label
+**Weekly schedule:** Review `needs-approval` label every Monday
 
 **Approval criteria:**
 - ✅ Aligns with strategic initiatives
@@ -187,6 +187,48 @@ gh api repos/derrybirkett/pip/milestones --jq '.[] | {title, open_issues, closed
 - **Approve**: Remove `needs-approval`, add to project, assign milestone
 - **Reject**: Close with explanation, suggest alternatives
 - **Defer**: Add to backlog, revisit next quarter
+
+#### Using the Triage Helper
+
+For quick interactive triage, use the helper script:
+
+```bash
+# Run from repo root
+.github/agents/cpo-triage-helper.sh
+```
+
+**What it does:**
+1. Lists all pending approvals with details
+2. Shows available milestones
+3. Guides you through approval workflow
+4. Handles label updates automatically
+5. Allows batch processing
+
+**Manual approval commands:**
+```bash
+# View pending approvals
+gh issue list --label needs-approval
+
+# Approve and add to roadmap
+gh issue edit <N> --add-label roadmap --remove-label needs-approval
+
+# Add to milestone
+gh issue edit <N> --milestone "v1.1.0: Foundation"
+
+# Reject
+gh issue close <N> --reason "not planned"
+
+# Defer to backlog
+gh issue edit <N> --add-label backlog
+```
+
+**Weekly automation:**
+The system creates a weekly triage issue every Monday at 9 AM UTC with:
+- Count of pending approvals
+- Links to items needing review
+- Quick action commands
+
+See [`cpo-triage-reminder.yml`](../.github/workflows/cpo-triage-reminder.yml) workflow.
 
 ### Working on Roadmap Items
 
