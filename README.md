@@ -7,6 +7,7 @@ This directory contains the operational system for your project: mission, method
 `.pip` is a lightweight framework for AI-assisted development that provides:
 - **Clear mission and method** for consistent decision-making
 - **Agent-based governance** with defined roles and responsibilities
+- **Autonomous agent system** for AI-powered roadmap implementation
 - **Process templates** for delivery, documentation, and collaboration
 - **Project graphs** mapping key surfaces and flows
 - **Reusable fragments** for bootstrapping new projects with consistent infrastructure
@@ -248,6 +249,31 @@ This system uses a C-suite agent model:
 - **COO**: Delivery operations, wrap-up governance, release hygiene
 
 Each agent has defined decision rights and interfaces.
+
+### Autonomous Agent System
+
+`.pip` includes an **AI-powered autonomous agent system** that automates roadmap implementation:
+
+**What it does**:
+- 🤖 Picks up unassigned roadmap issues automatically (every 6 hours)
+- 📝 Generates implementations via OpenAI GPT-4
+- 🔀 Creates PRs with automated code/documentation
+- 👀 Reviews PRs with CTO (technical) and CISO (security) agents
+- ✅ Auto-merges when reviews pass
+- 💰 Cost: ~$2-5/month
+
+**For pip genome** (this repo):
+- Already enabled and running
+- Monitoring: `gh run list --workflow=autonomous-roadmap-agent.yml`
+- View PRs: `gh pr list --label automated`
+
+**For organisms** (your projects using `.pip` as submodule):
+- See [Agent Adoption Guide](./docs/agent-adoption-guide.md)
+- Copy agent files from `.pip/.github/agents/`
+- Configure secrets (OPENAI, GH_PROJECT_TOKEN)
+- Enable scheduled runs for automatic implementation
+
+The system is production-tested and ready for adoption!
 
 ### Activity Log
 `docs/activity-log.md` tracks what changed, when, and why. Update it before merging to main.
