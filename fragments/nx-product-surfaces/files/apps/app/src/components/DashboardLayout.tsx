@@ -66,7 +66,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         
         {/* User menu at bottom */}
         <div className="absolute bottom-0 left-0 right-0 p-6 border-t border-gray-200 dark:border-gray-700">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 mb-3">
             <div className="w-10 h-10 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center">
               👤
             </div>
@@ -75,6 +75,12 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
               <p className="text-xs text-gray-500 dark:text-gray-400">user@example.com</p>
             </div>
           </div>
+          <button
+            onClick={() => alert('Logout clicked - implement auth provider logout here')}
+            className="w-full px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg transition-colors"
+          >
+            Logout
+          </button>
         </div>
       </aside>
 
