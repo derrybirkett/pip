@@ -124,7 +124,7 @@ echo
 # Install Tailwind CSS and React Router
 echo "📦 Installing Tailwind CSS, PostCSS, Autoprefixer..."
 if ! has_dep "tailwindcss"; then
-  pm_add_dev tailwindcss postcss autoprefixer
+  pm_add_dev tailwindcss @tailwindcss/postcss postcss autoprefixer
   echo "✅ Installed Tailwind CSS"
 else
   echo "✅ Tailwind CSS already installed"
