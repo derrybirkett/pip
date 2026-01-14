@@ -5,6 +5,14 @@ All notable changes to the `.pip` framework are documented here.
 ## Unreleased
 
 ### Added
+
+### Changed
+
+### Fixed
+
+## 2026-01-14 — v2.1.0: Autonomous Agent System & COO Workflow Monitor
+
+### Added
 - **Autonomous Agent System** (`.github/agents/`, `.github/workflows/`)
   - AI-powered roadmap implementation via OpenAI GPT-4
   - Autonomous agent picks up unassigned roadmap issues every 6 hours
