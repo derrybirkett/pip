@@ -85,10 +85,18 @@ agents:
     primary_docs:
       - .pip/ia/agents/coo/role.md
       - .pip/ia/agents/coo/responsibilities.md
+      - .pip/ia/agents/coo/workflow-monitoring-playbook.md
     responsibilities:
       - Delivery operations and release hygiene
       - Wrap-up checklist ownership
       - Compliance for docs/tags
+      - CI/CD workflow monitoring and health
+      - Auto-remediation of common failures
+      - Incident triage and escalation
     tools:
       - path: bin/wrap-up.sh
         description: Runs wrap-up checklist, commit, tag, push
+      - path: GitHub Actions API
+        description: Monitor workflows, re-run failed jobs, manage branches
+      - path: GitHub CLI (gh)
+        description: Workflow management and automation
