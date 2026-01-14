@@ -10,3 +10,12 @@ unset GITHUB_TOKEN
 
 # Add your local secrets below.
 # export SOME_API_KEY="..."
+
+# Example env file for an organism project using .pip
+export CI=0
+
+# --- Webapp starter (dummy auth) ---
+# Used by the nx-webapp-starter fragment.
+export AUTH_SECRET="change-me"
+export DEMO_USER_EMAIL="demo@example.com"
+export DEMO_USER_PASSWORD="demo"

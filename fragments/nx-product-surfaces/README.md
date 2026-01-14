@@ -26,6 +26,9 @@ npx nx@latest init --integrated
 
 # Scaffold surfaces
 ./.pip/bin/apply-nx-product-surfaces.sh
+
+# (Optional) Scaffold a single Next.js webapp that works OOTB
+./.pip/bin/apply-nx-webapp-starter.sh
 ```
 
 ## Notes

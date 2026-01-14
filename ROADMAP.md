@@ -264,6 +264,157 @@ This provides:
 
 ---
 
+### 🎯 Initiative 3: PIP Runtime Adapter - Persistent Execution Environments
+
+**Goal**: Enable agents to work with persistent runtimes (local, Docker, Sprites, or others) through a unified adapter interface for reliable, safe, and flexible execution.
+
+**Timeline**: 4 weeks  
+**Status**: 📋 Ready to begin  
+**Plan ID**: TBD
+
+#### Problem Statement
+
+`.pip` organisms need to execute commands and manage file systems reliably across different runtime substrates. Currently:
+1. No unified interface for different execution environments (local, Docker, Sprites)
+2. No persistent checkpointing or rollback capabilities
+3. No consistent file system contract across runtimes
+4. No safe preview URL generation for deployed applications
+5. Missing abstraction for agent-safe command execution
+
+#### Overview
+
+The PIP runtime adapter abstracts over different execution substrates so agents can:
+- Persist and read/write files in a `.pip/` workspace
+- Execute shell commands safely inside the runtime
+- Create and restore checkpoints of the environment
+- Serve preview URLs when applicable
+
+#### Runtime Interface
+
+A runtime adapter implements these core functions:
+
+| Function            | Description                                                                        |
+| ------------------- | ---------------------------------------------------------------------------------- |
+| `create()`          | Initialize the runtime environment if it doesn't exist (e.g. create a container).  |
+| `start()`           | Boot up the environment so it's ready to run commands.                             |
+| `exec(cmd)`         | Execute a shell command within the runtime.                                        |
+| `stop()`            | Gracefully stop the environment.                                                   |
+| `destroy()`         | Remove the environment and its data.                                               |
+| `checkpoint()`      | Create a checkpoint of the runtime state.                                          |
+| `restore(name)`     | Restore a previously created checkpoint.                                           |
+| `fs_path()`         | Return the host‑side path to the runtime's persistent file system (for debugging). |
+| `preview_url(port)` | Return a URL to access a port running in the runtime (if supported).               |
+
+**Note:** Adapters that do not support preview URLs (e.g. pure local) can return `None` for `preview_url()`.
+
+#### `.pip/` Directory Contract
+
+Each organism's repository includes a `.pip/` folder with structured subfolders to guide agent behavior:
+
+* `.pip/memory/` — persistent notes, decisions, and context files created by agents
+* `.pip/tasks/` — queued work unit descriptions (e.g., JSON or Markdown tasks)
+* `.pip/output/` — generated artifacts (reports, code files, etc.)
+* `.pip/runtime/` — logs, receipts, and the runtime's own state metadata (e.g., last checkpoint name)
+
+The runtime adapter mounts or creates these directories inside the runtime's file system. Agents use simple file primitives (`read`, `write`, `list`, `search`, `delete`) to interact with them.
+
+#### CLI Commands
+
+Runtime actions are exposed through the PIP CLI:
+
+* `pip runtime create --adapter=<local|docker|sprites>`
+  Initialize a runtime for the current organism.
+
+* `pip runtime start`
+  Boot the runtime environment; runs background processes if needed.
+
+* `pip runtime exec "<shell command>"`
+  Execute a shell command within the runtime.
+
+* `pip runtime checkpoint --name=<checkpoint_name>`
+  Save a checkpoint of the current runtime state.
+
+* `pip runtime restore --name=<checkpoint_name>`
+  Restore the runtime to a checkpoint.
+
+* `pip preview`
+  If supported, start the organism's app and return a public preview URL.
+
+* `pip runtime destroy`
+  Tear down the runtime and clean up all resources.
+
+#### Adapter Implementations
+
+**Local Adapter**:
+- `create/start:` Ensures `.pip/` directories exist on the host
+- `exec:` Runs commands in the host shell; no isolation
+- `checkpoint/restore:` File system snapshots (if supported) or skipped
+- `preview_url:` Not applicable; agents rely on direct host networking
+
+**Docker Adapter**:
+- `create/start:` Create a container image and volume to persist `.pip/`
+- `exec:` Use `docker exec` to run commands inside the container
+- `checkpoint/restore:` Docker's checkpoint/restore features (CRIU on Linux)
+- `preview_url:` Port‑map from container to host; no public URL unless integrated with tunneling
+
+**Sprites Adapter**:
+- `create/start:` Use Sprites API to create/start a user sandbox with persistent storage
+- `exec:` Send commands via the Sprites API
+- `checkpoint/restore:` Utilize Sprites' built‑in checkpoint support
+- `preview_url:` Use the unique HTTPS endpoint provided per sandbox
+
+#### Phases Overview
+
+**Phase 1: Interface & Local Adapter** - 1 week
+- Define runtime adapter interface in TypeScript/Python
+- Implement local adapter
+- Create `.pip/runtime/` directory structure and logging
+- Unit tests for local adapter
+
+**Phase 2: Docker Adapter** - 1 week
+- Implement Docker adapter with volume persistence
+- Docker image bootstrapping
+- Container lifecycle management
+- Integration tests
+
+**Phase 3: CLI Integration** - 1 week
+- Add `pip runtime` commands to unified CLI
+- Command parsing and validation
+- Help and examples
+- Preview URL integration with `pip preview`
+
+**Phase 4: Sprites Adapter & Production** - 1 week
+- Implement Sprites adapter
+- Security review and hardening
+- Documentation and examples
+- Blog post and release
+
+#### Security Considerations
+
+* **Secret Management:** Runtime adapters never expose API tokens to agents. Secrets are managed server‑side and proxied through secure functions.
+* **Isolation:** Docker and Sprites provide isolation; local adapter is flagged for lower‑trust scenarios.
+* **Resource Limits:** Define CPU/memory/time limits for `exec()` calls to avoid runaway tasks.
+
+#### Success Metrics
+- **Adapter coverage**: 3 adapters (local, Docker, Sprites) fully working
+- **Checkpoint reliability**: 100% successful create/restore cycles
+- **Agent adoption**: All new organisms use runtime adapters by default
+- **Setup time**: Adapter initialization in <5 minutes per runtime type
+- **Security**: Zero exposed secrets in adapter logs or output
+
+#### Risk Mitigation
+- **Docker complexity**: Start with local adapter, provide Docker docs
+- **Sprites API changes**: Abstract API calls, pin API version
+- **Resource runaway**: Implement timeout and memory limits from day one
+
+#### Dependencies
+- Existing `.pip/` directory structure and file system
+- Unified CLI infrastructure (`bin/pip`)
+- Docker (optional, for Docker adapter)
+- Sprites SDK (optional, for Sprites adapter)
+
+---
+
 ## Milestone Breakdown
 
 ### v1.1.0: Foundation - Pattern Library & Resources
