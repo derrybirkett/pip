@@ -57,6 +57,19 @@ Scaffolds a complete SaaS application with mission-driven content.
 
 [Full documentation →](../fragments/nx-product-surfaces/README.md)
 
+### nx-webapp-starter
+Scaffolds a single Next.js app in an Nx workspace that works out-of-the-box.
+
+**Provides:**
+- `/` simple marketing landing page
+- `/login` dummy but working auth
+- `/app` protected app surface with navbar
+- `/profile` user profile page
+
+**When to use:** You want one web surface that ships fast with login + profile + app shell.
+
+[Full documentation →](../fragments/nx-webapp-starter/README.md)
+
 ### astro-blog
 Fast, SEO-friendly blog powered by Astro with Tailwind CSS.
 

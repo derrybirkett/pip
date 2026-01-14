@@ -55,7 +55,10 @@ npx nx@latest init --integrated
 # 3. Apply product surfaces
 ./.pip/bin/apply-nx-product-surfaces.sh
 
-# 4. Start apps
+# 4. (Optional) Scaffold a single Next.js webapp that works OOTB
+./.pip/bin/apply-nx-webapp-starter.sh
+
+# 5. Start apps
 nx serve marketing  # Port 4201
 nx serve app        # Port 4200
 ```

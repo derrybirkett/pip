@@ -43,6 +43,8 @@ npx --yes nx@latest init --integrated --interactive=false
 
 "$PIP_ROOT/bin/apply-nx-product-surfaces.sh"
 
+"$PIP_ROOT/bin/apply-nx-webapp-starter.sh"
+
 if have pnpm; then
   "$PIP_ROOT/bin/apply-astro-blog.sh"
 else
@@ -65,6 +67,12 @@ assert_exists "package.json"
 assert_exists "apps/app"
 assert_exists "apps/marketing"
 assert_exists "libs/auth"
+assert_exists "web"
+assert_exists "web/src/app"
+assert_exists "web/src/app/login"
+assert_exists "web/src/app/app"
+assert_exists "web/src/app/profile"
+assert_exists "web/src/middleware.ts"
 assert_exists "docs/graph/product-app.md"
 assert_exists "docs/graph/marketing-website.md"
 assert_exists "docs/graph/blog.md"
