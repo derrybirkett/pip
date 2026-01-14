@@ -9,6 +9,7 @@ The agent system consists of:
 - **CTO Review Agent** - Reviews PRs for technical quality
 - **CISO Review Agent** - Reviews PRs for security vulnerabilities
 - **CPO Triage Helper** - Streamlines approval workflow
+- **COO Workflow Monitor** - Triages CI/CD failures and auto-remediates when possible
 
 ## Architecture
 
@@ -31,6 +32,12 @@ CPO Triage (manual approval gate)
 Auto-Merge (conditional)
   - Merges PRs from automated/* branches
   - Only if reviews pass
+        ↓
+COO Workflow Monitor (on workflow failure)
+  - Analyzes failure logs via OpenAI
+  - Classifies failure type
+  - Auto-remediates (branch conflicts, retries)
+  - Escalates to CTO/CISO/CPO/CEO as needed
 ```
 
 ## Setup
@@ -253,6 +260,30 @@ gh issue close 123 --reason "not planned"
 - Includes helper commands
 - Tags CPO for review
 
+### 5. COO Workflow Monitor
+
+**File:** `.github/workflows/coo-workflow-monitor.yml`
+
+**Trigger:** Any workflow failure (workflow_run completion)
+
+**What it does:**
+1. Detects workflow failures automatically
+2. Fetches failure logs and analyzes with OpenAI
+3. Classifies failure type (branch conflict, test failure, dependency, security, infrastructure, auth)
+4. Determines if auto-remediation is possible
+5. Executes remediation (e.g., delete conflicting branch, retry)
+6. Escalates to CTO/CISO/CPO/CEO if needed
+7. Posts triage report and creates issues
+
+**Environment variables:**
+- `GITHUB_TOKEN`: Auto-provided by Actions
+- `OPENAI_API_KEY`: From secrets.OPENAI
+- `WORKFLOW_RUN_ID`: Auto-provided by workflow_run event
+- `WORKFLOW_NAME`: Failed workflow name
+- `WORKFLOW_CONCLUSION`: failure/cancelled
+- `WORKFLOW_URL`: Link to failed run
+- `WORKFLOW_BRANCH`: Branch that failed
+
 ## Agent Scripts
 
 ### autonomous-agent.js
@@ -325,13 +356,46 @@ gh issue close 123 --reason "not planned"
 - Creates security issues for tracking
 - Blocks merge if critical vulnerabilities found
 
+### coo-workflow-monitor.js
+
+**Purpose:** Intelligent CI/CD failure triage and auto-remediation
+
+**Failure types:**
+1. **Branch Conflict** - Remote has commits not in local (auto-remediate: delete branch)
+2. **Test Failure** - Code breaks tests (escalate to CTO)
+3. **Dependency Issue** - Package install fails (auto-remediate or escalate)
+4. **Security Scan** - Vulnerabilities detected (escalate to CISO)
+5. **Infrastructure** - Timeouts, runner issues (retry or escalate to CEO)
+6. **Authentication** - Expired credentials (escalate to CISO)
+
+**Key functions:**
+- `loadPlaybook()` - Loads COO workflow monitoring playbook for context
+- `getWorkflowDetails()` - Fetches failed workflow logs via GitHub CLI
+- `performTriage()` - Uses OpenAI to classify failure and determine remediation
+- `executeRemediation()` - Runs auto-remediation commands
+- `createEscalationIssue()` - Creates issue for CTO/CISO/CPO/CEO when needed
+
+**OpenAI prompt includes:**
+- Workflow failure logs (up to 6000 chars)
+- COO playbook context (4000 chars)
+- Failure classification criteria
+- Auto-remediation decision tree
+- Escalation guidelines
+
+**Output:**
+- Triage report with classification and root cause
+- Auto-remediation execution (if applicable)
+- Escalation issue (if needed)
+- Artifact: `/tmp/coo-triage-report.md`
+
 ## Cost Management
 
 **Expected costs:**
 - Implementation: $0.10/task
 - CTO review: $0.02/PR
 - CISO review: $0.02/PR
-- **Total: ~$2-5/month** (10 tasks + 20 reviews)
+- COO workflow monitor: $0.03/failure
+- **Total: ~$2-7/month** (10 tasks + 20 reviews + 10 failures)
 
 **Cost controls:**
 1. Set OpenAI spending limit: $20/month
