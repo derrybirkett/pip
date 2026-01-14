@@ -16,6 +16,17 @@ All notable changes to the `.pip` framework are documented here.
   - Production-tested with issue #64 → PR #68 (auto-merged)
   - Cost: ~$2-5/month (OpenAI API + GitHub Actions free tier)
   - Velocity: Up to 4 automated tasks/day
+- **COO Workflow Monitor Agent** (`.github/agents/coo-workflow-monitor.js`)
+  - Automatically detects and triages CI/CD workflow failures
+  - Uses OpenAI GPT-4 to analyze failure logs and classify failure types
+  - Loads COO workflow monitoring playbook as decision-making context
+  - Auto-remediates safe failures (branch conflicts, infrastructure retries)
+  - Escalates complex issues to appropriate agents (CTO/CISO/CPO/CEO)
+  - Creates GitHub issues with proper labels and context
+  - Posts triage reports as workflow artifacts
+  - Failure types: branch conflicts, test failures, dependencies, security scans, infrastructure, authentication
+  - Cost: ~$0.03/failure (~$0.30/month for 10 failures)
+  - Total agent system cost: ~$2-7/month
 - **Agent Adoption Guide for Organisms** (`docs/agent-adoption-guide.md`)
   - Comprehensive 483-line guide for organisms to adopt agent system
   - Complete setup steps (10 steps from copy to enable)
