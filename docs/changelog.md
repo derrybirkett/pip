@@ -5,6 +5,65 @@ All notable changes to the `.pip` framework are documented here.
 ## Unreleased
 
 ### Added
+
+### Changed
+
+### Fixed
+
+## 2026-01-14 — v2.1.0: Autonomous Agent System & COO Workflow Monitor
+
+### Added
+- **Autonomous Agent System** (`.github/agents/`, `.github/workflows/`)
+  - AI-powered roadmap implementation via OpenAI GPT-4
+  - Autonomous agent picks up unassigned roadmap issues every 6 hours
+  - CTO review agent (technical quality, architecture, best practices)
+  - CISO review agent (security vulnerabilities, credential scanning)
+  - Auto-merge for passing PRs from `automated/*` branches
+  - CPO triage helper script for quick approval workflow
+  - Project board automation (issue lifecycle management)
+  - Production-tested with issue #64 → PR #68 (auto-merged)
+  - Cost: ~$2-5/month (OpenAI API + GitHub Actions free tier)
+  - Velocity: Up to 4 automated tasks/day
+- **COO Workflow Monitor Agent** (`.github/agents/coo-workflow-monitor.js`)
+  - Automatically detects and triages CI/CD workflow failures
+  - Uses OpenAI GPT-4 to analyze failure logs and classify failure types
+  - Loads COO workflow monitoring playbook as decision-making context
+  - Auto-remediates safe failures (branch conflicts, infrastructure retries)
+  - Escalates complex issues to appropriate agents (CTO/CISO/CPO/CEO)
+  - Creates GitHub issues with proper labels and context
+  - Posts triage reports as workflow artifacts
+  - Failure types: branch conflicts, test failures, dependencies, security scans, infrastructure, authentication
+  - Cost: ~$0.03/failure (~$0.30/month for 10 failures)
+  - Total agent system cost: ~$2-7/month
+- **Agent Adoption Guide for Organisms** (`docs/agent-adoption-guide.md`)
+  - Comprehensive 483-line guide for organisms to adopt agent system
+  - Complete setup steps (10 steps from copy to enable)
+  - Customization options (schedule, priority, auto-merge, review criteria)
+  - Monitoring and cost tracking guidance
+  - Best practices (writing agent-friendly issues, incremental adoption)
+  - Security considerations and troubleshooting
+  - Example configurations for TypeScript/React projects
+  - Enables any organism to benefit from autonomous development
+- **v1 to v2 Migration Guide** (`docs/migrating-v1-to-v2.md`)
+  - Comprehensive guide for upgrading from v1.1.0 to v2.x
+  - Clear migration paths for submodule users, contributors, and forked repos
+  - Documents new v2 features (execution modes, .piprc, Nx wrappers)
+  - Includes feature parity table and timeline
+- **Pull Request Template** (`.github/pull_request_template.md`)
+  - Standardizes PR descriptions with structured sections
+  - Includes testing checklist, documentation requirements, impact assessment
+  - Agent review assignment guidance (CTO, CPO, CISO, CMO, COO, CEO)
+  - Pre-merge checklist to ensure quality and completeness
+- **Prominent PIP_MODE Documentation in README**
+  - Added dedicated "Execution Modes" section to Getting Started
+  - Clear examples for observe, propose, and execute modes
+  - PIP_ACTION_MODE examples (live, confirm, dry-run)
+  - .piprc configuration guidance with examples
+- **Peer Review Policy for Breaking Changes** (CONTRIBUTING.md)
+  - Explicit requirements for breaking changes (CEO + relevant agent approval)
+  - Clear definition of what constitutes a breaking change
+  - Self-merge guidelines to distinguish safe vs. review-needed changes
+  - Migration guide requirements for breaking changes
 - **Nx workspace wrappers for kernel scripts**
   - Adds `nx.json` + `project.json` so you can run common tasks via `nx run pip:<target>`
   - Adds `package.json` with Nx as a dev dependency for contributors working on the kernel repo

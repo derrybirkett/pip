@@ -1,5 +1,17 @@
 # Product App
 
+## Auto-Generated Structure
+
+When using the `nx-product-surfaces` fragment, a basic dashboard app is automatically created:
+- Sidebar navigation with Dashboard, Profile, Settings
+- Dashboard page with placeholder metrics widgets
+- User profile page with display and edit form
+- Auth boundary ready for provider integration
+- Responsive mobile menu
+- Dark mode support
+
+See: `apps/app/src/components/DashboardLayout.tsx`, `apps/app/src/pages/Dashboard.tsx`, `apps/app/src/pages/Profile.tsx`
+
 ## Core Flows
 
 ### Auth: Login & Signup

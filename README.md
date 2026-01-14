@@ -7,6 +7,7 @@ This directory contains the operational system for your project: mission, method
 `.pip` is a lightweight framework for AI-assisted development that provides:
 - **Clear mission and method** for consistent decision-making
 - **Agent-based governance** with defined roles and responsibilities
+- **Autonomous agent system** for AI-powered roadmap implementation
 - **Process templates** for delivery, documentation, and collaboration
 - **Project graphs** mapping key surfaces and flows
 - **Reusable fragments** for bootstrapping new projects with consistent infrastructure
@@ -120,7 +121,59 @@ cp .pip/mission/mission.md docs/mission.md
 
 This installs a pre-commit hook that blocks commits to `main` branch, enforcing the feature branch workflow.
 
-### 1. Environment Setup
+### 1. Execution Modes (New in v2)
+
+`.pip` v2 introduces explicit execution modes to control agent behavior and ensure safe operation:
+
+#### PIP_MODE: Execution Permission
+Controls whether side-effecting operations are permitted:
+
+- **`observe`** - Read-only mode; all side effects blocked
+- **`propose`** - Suggest changes without executing them  
+- **`execute`** - Permit side-effecting operations (apply, bootstrap, wrap, review)
+
+#### PIP_ACTION_MODE: Execution Strategy
+Controls how side effects are executed when `PIP_MODE=execute`:
+
+- **`live`** - Execute immediately (default)
+- **`confirm`** - Prompt before each side effect
+- **`dry-run`** - Block side effects, show what would happen
+
+#### Examples
+
+```bash
+# Safe exploration (read-only)
+PIP_MODE=observe pip review
+
+# Execute with confirmation prompts
+PIP_MODE=execute PIP_ACTION_MODE=confirm pip apply nx-dev-infra
+
+# Preview wrap-up without executing
+PIP_MODE=execute PIP_ACTION_MODE=dry-run pip wrap
+
+# Configure default mode for your organism
+pip migrate  # Creates/upgrades .piprc
+pip mode     # Shows resolved modes
+```
+
+#### Setting Defaults with .piprc
+
+Create a `.piprc` file in your organism to set default modes:
+
+```bash
+# Create .piprc with defaults
+pip migrate
+```
+
+Example `.piprc`:
+```bash
+PIP_MODE=execute
+PIP_ACTION_MODE=confirm
+```
+
+See the [migration guide](./docs/migrating-v1-to-v2.md) for complete v2 documentation.
+
+### 2. Environment Setup
 This repository uses [direnv](https://direnv.net/) for environment variable management:
 ```bash
 # Install direnv (if not already installed)
@@ -196,6 +249,31 @@ This system uses a C-suite agent model:
 - **COO**: Delivery operations, wrap-up governance, release hygiene
 
 Each agent has defined decision rights and interfaces.
+
+### Autonomous Agent System
+
+`.pip` includes an **AI-powered autonomous agent system** that automates roadmap implementation:
+
+**What it does**:
+- 🤖 Picks up unassigned roadmap issues automatically (every 6 hours)
+- 📝 Generates implementations via OpenAI GPT-4
+- 🔀 Creates PRs with automated code/documentation
+- 👀 Reviews PRs with CTO (technical) and CISO (security) agents
+- ✅ Auto-merges when reviews pass
+- 💰 Cost: ~$2-5/month
+
+**For pip genome** (this repo):
+- Already enabled and running
+- Monitoring: `gh run list --workflow=autonomous-roadmap-agent.yml`
+- View PRs: `gh pr list --label automated`
+
+**For organisms** (your projects using `.pip` as submodule):
+- See [Agent Adoption Guide](./docs/agent-adoption-guide.md)
+- Copy agent files from `.pip/.github/agents/`
+- Configure secrets (OPENAI, GH_PROJECT_TOKEN)
+- Enable scheduled runs for automatic implementation
+
+The system is production-tested and ready for adoption!
 
 ### Activity Log
 `docs/activity-log.md` tracks what changed, when, and why. Update it before merging to main.

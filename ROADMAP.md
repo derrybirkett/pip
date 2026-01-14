@@ -1,6 +1,16 @@
 # .pip Roadmap
 
-This document outlines the strategic direction and planned features for the `.pip` framework.
+> **📋 Active Roadmap:** The roadmap is now managed in [GitHub Issues and Projects](https://github.com/users/derrybirkett/projects/4).
+> 
+> This document provides strategic context and vision. For detailed tasks, progress tracking, and deliverables, see the GitHub Project.
+
+## Quick Navigation
+
+- **[Project Board](https://github.com/users/derrybirkett/projects/4)** - Kanban view of all roadmap items
+- **[All Roadmap Issues](https://github.com/derrybirkett/pip/issues?q=is%3Aissue+label%3Aroadmap)** - Complete list
+- **[Initiative 1: Agentic System](https://github.com/derrybirkett/pip/issues/59)** - Epic issue
+- **[Initiative 2: Fragments](https://github.com/derrybirkett/pip/issues/60)** - Epic issue
+- **[Milestones](https://github.com/derrybirkett/pip/milestones)** - Version tracking
 
 ## Vision
 
@@ -686,19 +696,54 @@ Runtime actions are exposed through the PIP CLI:
 
 ---
 
-## Contributing to Roadmap
+## Using the GitHub Roadmap
 
-This roadmap is a living document. To propose changes:
+### How to Navigate
 
-1. Open an issue with tag `roadmap-proposal`
-2. Describe the feature and its value
-3. Estimate effort and dependencies
-4. CPO reviews and prioritizes
-5. CEO approves strategic alignment
+**Project Views:**
+- **Board View** - Kanban board showing Backlog → Ready → In Progress → Review → Done
+- **Table View** - All fields visible for filtering and bulk operations
+- **Roadmap View** - Timeline visualization by milestone
+- **By Initiative** - Group issues by strategic initiative
 
-For detailed implementation plans, see the Plans section in Warp.
+**Finding Work:**
+```bash
+# See all roadmap issues
+gh issue list --label roadmap
+
+# Filter by milestone
+gh issue list --milestone "v1.1.0: Foundation"
+
+# Filter by initiative
+gh issue list --label initiative-1-agentic
+
+# Find unassigned tasks
+gh issue list --label roadmap --assignee ""
+```
+
+### Contributing to Roadmap
+
+To propose new roadmap items:
+
+1. **Use the issue template**: Create a new issue using the "Roadmap Item" template
+2. **Describe value**: Explain the problem and proposed solution
+3. **Estimate effort**: Use XS/S/M/L/XL sizing
+4. **Add labels**: Tag with initiative, agent role, and type
+5. **CPO triage**: CPO reviews weekly and adds to project if approved
+6. **CEO approval**: Strategic initiatives require CEO sign-off
+
+### Working on Roadmap Items
+
+1. **Pick an issue** from the project board (Ready column)
+2. **Self-assign** or ask to be assigned
+3. **Create PR** referencing the issue number
+4. **Link to milestone** if it's part of a version goal
+5. **Update project**: Status auto-updates when PR created
+
+For detailed implementation plans, see the Plans section in Warp or create a plan document.
 
 ---
 
-**Last Updated**: 2025-12-09  
-**Next Review**: End of Milestone 1 (v0.4.0)
+**Roadmap Ownership**: COO (process), CPO (priorities), CEO (strategy)  
+**Last Updated**: 2026-01-11  
+**Next Review**: Weekly roadmap triage
