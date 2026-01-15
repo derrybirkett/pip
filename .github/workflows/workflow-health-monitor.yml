@@ -90,6 +90,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          set -e
           echo "Checking for stale automated branches..."
           
           # List branches older than 7 days with 'automated/' prefix
@@ -112,7 +113,8 @@ jobs:
         if: steps.stale_branches.outputs.stale_found == 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
+        ruset -e
+          n: |
           echo "Cleaning up stale branches..."
           echo "${{ steps.stale_branches.outputs.branches }}" | while read branch; do
             if [ -n "$branch" ]; then
@@ -123,7 +125,8 @@ jobs:
       
       - name: Validate workflow files
         id: validate_workflows
-        run: |
+        ruset -e
+          n: |
           echo "Validating workflow YAML syntax..."
           
           cd .github/workflows
@@ -151,7 +154,8 @@ jobs:
           fi
       
       - name: Check for missing dependencies
-        id: check_deps
+        idset -e
+          : check_deps
         run: |
           echo "Checking agent dependencies..."
           
@@ -169,7 +173,8 @@ jobs:
             fi
           fi
       
-      - name: Update dependencies if needed
+      - naset -e
+          me: Update dependencies if needed
         if: steps.check_deps.outputs.deps_outdated == 'true'
         run: |
           echo "Updating dependencies..."
@@ -184,7 +189,8 @@ jobs:
           fi
       
       - name: Re-run failed workflows
-        env:
+        enset -e
+          v:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "Checking for recent failures to retry..."
@@ -225,7 +231,8 @@ jobs:
         continue-on-error: true
       
       - name: Create issue for critical failures
-        if: needs.health-check.result == 'failure'
+        ifset -e
+          : needs.health-check.result == 'failure'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
