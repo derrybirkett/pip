@@ -5,6 +5,18 @@ All notable changes to the `.pip` framework are documented here.
 ## Unreleased
 
 ### Added
+- **Workflow Health Monitoring System** (`.github/agents/workflow-health-check.js`, `.github/workflows/workflow-health-monitor.yml`)
+  - Proactive health check script analyzing all workflows with metrics and diagnostics
+  - Calculates success/failure rates, health status levels (healthy/warning/degraded/critical)
+  - Detects workflow configuration issues (YAML validation, dependency checks, error handling)
+  - Automated health monitor workflow running every 4 hours
+  - Self-healing capabilities: stale branch cleanup, dependency updates, failed workflow retries
+  - Generates comprehensive health reports with actionable recommendations
+  - Creates GitHub issues automatically for critical failures
+  - Quick reference guide (`docs/tools/coo-workflow-monitoring.md`)
+  - Enhanced COO workflow monitor with better diagnostics and auto-remediation
+  - Updated workflow monitoring playbook with complete tool documentation
+  - Target metrics: >95% workflow success rate, <30min MTTR, >60% auto-remediation rate
 
 ### Changed
 

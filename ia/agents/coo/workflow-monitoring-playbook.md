@@ -260,22 +260,170 @@ Recommendation: [course of action, resource needs, timeline]
 - Training for new failure types and remediation techniques
 - Alignment with CTO on infrastructure investments
 
-## Tools & Access Requirements
+## COO Workflow Automation Tools
 
-### Required Access
-- GitHub Actions admin access (view/re-run workflows)
-- Repository write access (branch management)
-- GitHub API token (automation)
-- Notification channels (email, Slack, etc.)
+### Proactive Health Monitoring
 
-### Recommended Tools
-- GitHub CLI (`gh`) for workflow management
-- Monitoring dashboard (GitHub Actions UI, Grafana, etc.)
-- Alert routing (PagerDuty, Opsgenie, etc.)
-- Incident tracking (Linear, GitHub Issues)
+#### Workflow Health Check Script
+**Location**: `.github/agents/workflow-health-check.js`
 
-### Automation Opportunities
-- Webhook listeners for real-time failure detection
-- Auto-retry logic for transient failures
-- Proactive health checks before scheduled releases
-- Automated incident creation and routing
+**Purpose**: Proactive CI/CD monitoring and diagnostics. Scans all workflows for failures, calculates health metrics, and detects configuration issues.
+
+**Usage**:
+```bash
+cd .github/agents
+node workflow-health-check.js
+```
+
+**Features**:
+- Analyzes last 10 runs of each workflow
+- Calculates success/failure rates
+- Detects configuration issues in YAML files
+- Generates health report with recommendations
+- Exit codes: 0 (healthy), 1 (critical issues)
+
+**Health Status Levels**:
+- ✅ **Healthy**: Success rate >80%, no recent failures
+- ⚠️ **Warning**: 1-2 recent failures, success rate 60-80%
+- 🔶 **Degraded**: Failure rate 20-50%, consistent issues
+- 🔴 **Critical**: Failure rate >50%, immediate action required
+
+**When to Use**:
+- Before major releases
+- After infrastructure changes
+- Weekly operational reviews
+- Incident investigation
+- Performance audits
+
+#### Workflow Health Monitor (Automated)
+**Location**: `.github/workflows/workflow-health-monitor.yml`
+
+**Triggers**:
+- Schedule: Every 4 hours
+- Push: On workflow file changes
+- Manual: `workflow_dispatch` with options
+
+**Capabilities**:
+- Runs health check automatically
+- Cleans up stale automated branches
+- Validates workflow YAML syntax
+- Updates agent dependencies
+- Retries recent failed workflows
+- Creates GitHub issues for critical failures
+
+**Inputs** (manual trigger):
+- `auto_fix`: Attempt automatic remediation (default: true)
+- `create_issues`: Create issues for problems (default: true)
+
+**Outputs**:
+- Health report artifact
+- GitHub issue (if critical failures detected)
+- Auto-remediation summary
+
+### Reactive Monitoring
+
+#### COO Workflow Monitor
+**Location**: `.github/agents/coo-workflow-monitor.js`
+
+**Trigger**: `workflow_run` event (any workflow completion with failure)
+
+**Workflow**: `.github/workflows/coo-workflow-monitor.yml`
+
+**Capabilities**:
+- AI-powered failure triage using OpenAI
+- Classifies failure types automatically
+- Determines auto-remediation vs. escalation
+- Executes remediation commands safely
+- Creates escalation issues with context
+- Generates detailed triage reports
+
+**Failure Types Detected**:
+- Branch conflicts
+- Test failures
+- Dependency issues
+- Security scans
+- Infrastructure problems
+- Authentication errors
+
+**Auto-Remediation**:
+- Deletes stale automated branches
+- Retries transient failures
+- Updates dependencies
+- Cleans up workflow artifacts
+
+**Escalation Logic**:
+- Test failures → CTO
+- Security issues → CISO
+- Product decisions → CPO
+- Critical incidents → CEO
+- Release comms → CMO
+
+### Manual Tools
+
+#### GitHub CLI (`gh`)
+Essential for manual workflow management:
+```bash
+# List all workflows
+gh workflow list
+
+# View recent runs
+gh run list --limit 10
+
+# View specific run details
+gh run view <run-id>
+
+# View failure logs
+gh run view <run-id> --log-failed
+
+# Re-run failed jobs
+gh run rerun <run-id> --failed
+
+# List workflow files
+ls .github/workflows/
+```
+
+#### Health Check Dashboard
+Access via GitHub Actions UI:
+- Navigate to Actions tab
+- View "Workflow Health Monitor" runs
+- Download health report artifacts
+- Review auto-remediation logs
+
+## Access Requirements
+
+### Required Permissions
+- **GitHub Actions**: `read` (view workflows and runs)
+- **Contents**: `write` (branch management, commits)
+- **Issues**: `write` (create escalation issues)
+- **Pull Requests**: `write` (PR management)
+
+### Required Secrets
+- `GITHUB_TOKEN`: Provided automatically by GitHub Actions
+- `OPENAI`: OpenAI API key for AI-powered triage (required for COO monitor)
+
+### Optional Integrations
+- Notification channels (email, Slack)
+- Alert routing (PagerDuty, Opsgenie)
+- Incident tracking (Linear, GitHub Issues/Projects)
+- Monitoring dashboard (Grafana, Datadog)
+
+## Automation Capabilities
+
+### Currently Implemented
+✅ Proactive health checks every 4 hours
+✅ Automatic failure triage and classification
+✅ Stale branch cleanup
+✅ Workflow YAML validation
+✅ Dependency synchronization
+✅ Failed workflow retry logic
+✅ Escalation issue creation
+✅ Health report artifacts
+
+### Future Enhancements
+- Webhook listeners for real-time notifications
+- Slack/Discord integration for team alerts
+- Predictive failure detection using ML
+- Advanced flaky test detection
+- Performance regression detection
+- Cost optimization recommendations
+- Cross-repository workflow monitoring
