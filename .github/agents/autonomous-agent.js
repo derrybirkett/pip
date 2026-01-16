@@ -238,8 +238,12 @@ Respond ONLY with valid JSON, no additional text.`;
 async function applyChanges(implementation) {
   console.log(`\n📝 Applying ${implementation.files.length} file change(s)...`);
 
+  // Determine repo root - go up two levels from .github/agents
+  const repoRoot = path.resolve(__dirname, '../..');
+  console.log(`  📁 Repo root: ${repoRoot}`);
+
   for (const file of implementation.files) {
-    const fullPath = path.join(process.cwd(), file.path);
+    const fullPath = path.join(repoRoot, file.path);
     const dir = path.dirname(fullPath);
 
     // Create directory if needed
@@ -263,15 +267,18 @@ async function applyChanges(implementation) {
 function runValidation() {
   console.log('\n🧪 Running validation...');
 
+  // Get repo root
+  const repoRoot = path.resolve(__dirname, '../..');
+
   try {
     console.log('  → Installing dependencies...');
-    exec('pnpm install', { silent: true });
+    exec('pnpm install', { silent: true, cwd: repoRoot });
 
     console.log('  → Checking format...');
-    exec('pnpm format:check || true', { silent: true });
+    exec('pnpm format:check || true', { silent: true, cwd: repoRoot });
 
     console.log('  → Running tests...');
-    exec('pnpm test:all || true', { silent: true });
+    exec('pnpm test:all || true', { silent: true, cwd: repoRoot });
 
     console.log('✅ Validation complete');
     return true;
