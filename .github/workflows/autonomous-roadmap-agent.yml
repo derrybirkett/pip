@@ -53,5 +53,4 @@ jobs:
           PRIORITY_FILTER: ${{ inputs.priority || 'p1' }}
           ISSUE_NUMBER: ${{ inputs.issue_number }}
         run: |
-          cd .github/agents
-          node autonomous-agent.js
+          node .github/agents/autonomous-agent.js
