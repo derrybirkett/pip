@@ -40,6 +40,66 @@ function exec(command, options = {}) {
 }
 
 /**
+ * Check if there are existing open PRs for automated roadmap tasks
+ */
+function hasExistingAutomatedPRs() {
+  console.log('\n🔍 Checking for existing automated PRs...');
+  
+  try {
+    const prs = JSON.parse(
+      exec(
+        'gh pr list --label automated --label roadmap --state open --json number,title --limit 50',
+        { silent: true }
+      )
+    );
+    
+    if (prs.length > 0) {
+      console.log(`⚠️  Found ${prs.length} existing automated PRs:`);
+      prs.slice(0, 5).forEach(pr => {
+        console.log(`   #${pr.number}: ${pr.title}`);
+      });
+      if (prs.length > 5) {
+        console.log(`   ... and ${prs.length - 5} more`);
+      }
+      return true;
+    }
+    
+    console.log('✅ No existing automated PRs found');
+    return false;
+  } catch (error) {
+    console.log('⚠️  Could not check for existing PRs (continuing anyway)');
+    return false;
+  }
+}
+
+/**
+ * Check if there's already a PR for a specific issue
+ */
+function hasExistingPRForIssue(issueNumber) {
+  console.log(`\n🔍 Checking for existing PR for issue #${issueNumber}...`);
+  
+  try {
+    const prs = JSON.parse(
+      exec(
+        `gh pr list --search "#${issueNumber}" --state open --json number,title --limit 10`,
+        { silent: true }
+      )
+    );
+    
+    if (prs.length > 0) {
+      console.log(`⚠️  Found existing PR for this issue: #${prs[0].number}`);
+      return true;
+    }
+    
+    console.log('✅ No existing PR for this issue');
+    return false;
+  } catch (error) {
+    console.log('⚠️  Could not check for existing PR (continuing anyway)');
+    return false;
+  }
+}
+
+/**
  * Get next unassigned roadmap issue by priority
  */
 async function getNextRoadmapIssue(priorityFilter) {
@@ -59,11 +119,15 @@ async function getNextRoadmapIssue(priorityFilter) {
     return !labels.includes('needs-approval') && !labels.includes('agent-suggestion');
   });
 
-  // Filter unassigned issues
-  const unassigned = approvedIssues.filter(issue => issue.assignees.length === 0);
+  // Filter unassigned issues without existing PRs
+  const unassigned = approvedIssues.filter(issue => {
+    if (issue.assignees.length > 0) return false;
+    // Check if there's already a PR for this issue
+    return !hasExistingPRForIssue(issue.number);
+  });
 
   if (unassigned.length === 0) {
-    console.log('❌ No unassigned approved roadmap issues found');
+    console.log('❌ No unassigned approved roadmap issues found (or all have existing PRs)');
     return null;
   }
 
@@ -364,8 +428,15 @@ async function main() {
   console.log('🚀 Autonomous Roadmap Agent Starting...\n');
 
   try {
-    // Get configuration
+    // Check if there are already open automated PRs (unless targeting specific issue)
     const issueNumber = process.env.ISSUE_NUMBER;
+    if (!issueNumber && hasExistingAutomatedPRs()) {
+      console.log('\n⏸️  Skipping: Existing automated PRs need review first.');
+      console.log('Please review and merge/close existing PRs before creating new ones.');
+      return;
+    }
+
+    // Get configuration
     const priorityFilter = process.env.PRIORITY_FILTER || 'high';
 
     // Get next issue
