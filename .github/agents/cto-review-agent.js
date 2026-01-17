@@ -228,13 +228,13 @@ function createIssuesForSuggestions(prNumber, prTitle, review) {
     const categoryLabel = issue.category || 'technical-debt';
     
     // Enhanced issue body with better structure for agent pickup
+    const filesAffected = issue.files_affected ? `**Files/Areas:** ${issue.files_affected}\n` : '';
     const issueBody = `## 🔍 Enhancement from CTO Review
 
 **Source:** PR #${prNumber} - ${prTitle}
 **Severity:** ${issue.severity}
 **Category:** ${issue.category}
-${issue.files_affected ? `**Files/Areas:** ${issue.files_affected}` : ''}
-
+${filesAffected}
 ### Description
 ${issue.description}
 
