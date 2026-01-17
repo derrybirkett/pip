@@ -69,11 +69,12 @@ echo
 
 echo -e "${GREEN}6. What Type of Project?${NC}"
 echo "   1) Web App"
-echo "   2) Mobile App"  
+echo "   2) Mobile App"
 echo "   3) Full-stack (Web + API)"
 echo "   4) API/Backend Service"
 echo "   5) CLI Tool"
-echo "   6) Other"
+echo "   6) Agentic Development (AI-first with agent collaboration)"
+echo "   7) Other"
 printf "   > "
 read -r PROJECT_TYPE
 echo
@@ -93,7 +94,9 @@ case $PROJECT_TYPE in
   3) PROJECT_TYPE_TEXT="Full-stack application" ;;
   4) PROJECT_TYPE_TEXT="API/Backend service" ;;
   5) PROJECT_TYPE_TEXT="CLI tool" ;;
-  *) 
+  6) PROJECT_TYPE_TEXT="Agentic development framework"
+     IS_AGENTIC_PROJECT=true ;;
+  *)
     echo "   What type of project is it?"
     printf "   > "
     read -r PROJECT_TYPE_TEXT
@@ -164,6 +167,57 @@ fi
 if [ -f ".pip/docs/templates/organism-dev.md" ]; then
   cp .pip/docs/templates/organism-dev.md docs/dev.md
   echo -e "${GREEN}✅ Created docs/dev.md${NC}"
+fi
+
+# If agentic project, set up agent infrastructure
+if [ "$IS_AGENTIC_PROJECT" = "true" ]; then
+  echo
+  echo -e "${BLUE}Setting up agentic framework...${NC}"
+
+  # Create .pip directory structure for agents
+  mkdir -p .pip/{ia/agents,method,mission}
+
+  # Copy agent manifest
+  if [ -f ".pip/ia/agent_manifest.yml" ]; then
+    echo -e "${GREEN}✅ Agent manifest already available${NC}"
+  fi
+
+  # Copy AGENTS.md for reference
+  if [ -f ".pip/AGENTS.md" ]; then
+    cp .pip/AGENTS.md docs/agents-reference.md
+    echo -e "${GREEN}✅ Created docs/agents-reference.md${NC}"
+  fi
+
+  # Copy delivery method
+  if [ -f ".pip/method/delivery-method.md" ]; then
+    cp .pip/method/delivery-method.md docs/delivery-method.md
+    echo -e "${GREEN}✅ Created docs/delivery-method.md${NC}"
+  fi
+
+  # Copy agentic design patterns blog post if available
+  if [ -f ".pip/blog/2025-12-17-agentic-design-patterns.md" ]; then
+    mkdir -p docs/references
+    cp .pip/blog/2025-12-17-agentic-design-patterns.md docs/references/
+    echo -e "${GREEN}✅ Created docs/references/agentic-design-patterns.md${NC}"
+  fi
+
+  if [ -f ".pip/blog/2025-12-19-agent-workflow-documents.md" ]; then
+    mkdir -p docs/references
+    cp .pip/blog/2025-12-19-agent-workflow-documents.md docs/references/
+    echo -e "${GREEN}✅ Created docs/references/agent-workflow-documents.md${NC}"
+  fi
+
+  echo
+  echo -e "${YELLOW}📋 Agentic Framework Setup Complete!${NC}"
+  echo
+  echo "Your project is configured for AI-first development with:"
+  echo "  • Agent collaboration framework (CEO, CTO, CPO, CISO, etc.)"
+  echo "  • Workflow patterns (ReAct, Planning, Reflection)"
+  echo "  • Decision rights and handoff protocols"
+  echo
+  echo "Run the full wizard to select specific agents:"
+  echo "  ./.pip/bin/bootstrap.sh"
+  echo
 fi
 
 # Seed local env conventions (direnv)
@@ -307,6 +361,11 @@ echo "  • Pull request template (.github/PULL_REQUEST_TEMPLATE.md)"
 echo "  • Issue templates + CODEOWNERS stub (.github/*)"
 echo "  • README with your project story"
 echo "  • Cursor AI rules (.cursorrules)"
+if [ "$IS_AGENTIC_PROJECT" = "true" ]; then
+  echo "  • Agent collaboration framework (docs/agents-reference.md)"
+  echo "  • Delivery method (docs/delivery-method.md)"
+  echo "  • Agentic design patterns (docs/references/)"
+fi
 echo
 echo -e "${YELLOW}Next steps:${NC}"
 echo "  1. Review and customize docs/mission.md"

@@ -49,8 +49,9 @@ This repo is now focused on the `.pip` kernel (genome): governance, patterns, fr
 │       ├── README.md         # Fragment documentation
 │       └── files/            # Files to copy into projects
 ├── bin/                       # Apply scripts for fragments
-│   ├── bootstrap-project.sh  # Interactive project setup
-│   └── apply-nx-dev-infra.sh # Script to apply nx-dev-infra
+│   ├── bootstrap-project.sh       # Interactive project setup
+│   ├── apply-agentic-framework.sh # Script to apply agentic framework
+│   └── apply-nx-dev-infra.sh      # Script to apply nx-dev-infra
 └── docs/                      # Living documentation
     ├── activity-log.md       # Historical record of changes
     ├── changelog.md          # User-facing release notes
@@ -228,6 +229,11 @@ Bootstrap new projects with reusable infrastructure scaffolds:
 ```bash
 # In your new project
 git submodule add git@github.com:derrybirkett/pip.git .pip
+
+# Apply agentic framework (AI-first development with agent collaboration)
+./.pip/bin/apply-agentic-framework.sh
+
+# Apply Nx + Docker + Postgres development environment
 ./.pip/bin/apply-nx-dev-infra.sh
 
 # Scaffold common product surfaces (app + marketing + auth boundary)
