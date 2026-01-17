@@ -83,9 +83,9 @@ jobs:
     permissions:
       pull-requests: write
       contents: write
-    # Only auto-merge for automated and claude branches that pass all reviews
+    # Only auto-merge for automated branches that pass all reviews
     if: |
-      (startsWith(github.event.pull_request.head.ref, 'automated/') || startsWith(github.event.pull_request.head.ref, 'claude/')) &&
+      startsWith(github.event.pull_request.head.ref, 'automated/') &&
       needs.cto-review.result == 'success' &&
       needs.ciso-review.result == 'success'
     
