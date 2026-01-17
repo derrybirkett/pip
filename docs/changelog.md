@@ -19,6 +19,17 @@ All notable changes to the `.pip` framework are documented here.
   - Target metrics: >95% workflow success rate, <30min MTTR, >60% auto-remediation rate
 
 ### Changed
+- **Enhanced CTO Review Agent with Auto-Issue Creation** (`.github/agents/cto-review-agent.js`)
+  - CTO reviews now automatically create GitHub issues for non-blocking enhancement suggestions
+  - Only creates issues for `suggestion` and `minor` severity items (major/critical addressed in PR)
+  - Issues include structured metadata for easy agent pickup: source PR, category, files affected, implementation guidance
+  - New labels: `enhancement`, `from-cto-review`, `needs-cpo-triage`, `approved-for-roadmap`
+  - PR review comments now link to created enhancement issues for transparency
+  - CPO triage workflow: review enhancement issues → approve for roadmap or decline
+  - Prevents valuable improvement suggestions from being lost in PR comments
+  - Creates continuous improvement feedback loop for autonomous agents
+  - Updated CTO and CPO responsibilities to include enhancement issue workflow
+  - Clarified severity definitions in review prompt for consistent decision-making
 
 ### Fixed
 
