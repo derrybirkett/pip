@@ -105,7 +105,7 @@ ${pr.diff.slice(0, 8000)}
 - REQUEST_CHANGES only for critical issues that must be fixed
 - Use "suggestion" severity for enhancements that can be tracked as separate issues
 - Be constructive and specific
-- Consider .pip principles: small, strategic, measurable changes
+- Consider .pip principles: small, strategic, measurable changes`;
 
   try {
     const response = await openai.chat.completions.create({
