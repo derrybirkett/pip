@@ -27,7 +27,6 @@ export PRIMARY_USER="Developers"
 export PROBLEM="Manual setup takes too long"
 export SOLUTION="One-command bootstrap with batteries included"
 export DIFFERENTIATOR="OOTB auth + landing + app shell"
-export PROJECT_TYPE="1"
 
 # Simulate bootstrap (create docs/mission.md)
 mkdir -p docs
@@ -44,9 +43,6 @@ Manual setup takes too long
 One-command bootstrap with batteries included
 
 **Differentiator**: OOTB auth + landing + app shell
-
-## Project Type
-Web application
 EOF
 echo -e "${GREEN}✅ Created docs/mission.md${NC}"
 
