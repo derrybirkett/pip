@@ -325,6 +325,57 @@ gh pr list --label automated --state all
 gh issue list --label needs-approval
 ```
 
+### Duplicate PR Prevention
+
+The autonomous agent includes built-in duplicate prevention to avoid creating multiple PRs for the same issue:
+
+**Automatic Prevention:**
+- Checks for existing automated PRs before starting work
+- Validates that no PR already exists for a specific issue
+- Skips work if duplicates are detected
+
+**Configuration:**
+The prevention is enabled by default in `.github/agents/config.json`:
+```json
+{
+  "roadmap_integration": {
+    "duplicate_prevention": {
+      "enabled": true,
+      "check_existing_automated_prs": true,
+      "check_issue_specific_prs": true
+    }
+  }
+}
+```
+
+**Cleanup Tool:**
+If you have existing duplicate PRs (from before prevention was implemented), use the cleanup tool:
+
+```bash
+# Dry run to see what would be closed
+node .github/agents/cleanup-duplicate-prs.js --dry-run
+
+# Actually close duplicates (keeps newest by default)
+node .github/agents/cleanup-duplicate-prs.js
+
+# Keep oldest PR instead of newest
+node .github/agents/cleanup-duplicate-prs.js --keep-oldest
+```
+
+The cleanup tool:
+- Finds all automated PRs
+- Groups them by issue number
+- Identifies duplicates (multiple PRs for same issue)
+- Closes duplicates, keeping one PR per issue
+- Provides dry-run mode for safety
+
+**Monitoring for Duplicates:**
+```bash
+# Check for multiple PRs mentioning the same issue
+gh pr list --label automated --state open --json number,title,body | \
+  jq -r '.[] | select(.body | test("#\\d+")) | "\(.number): \(.body)"'
+```
+
 ### Track Costs
 
 Monitor OpenAI usage:
