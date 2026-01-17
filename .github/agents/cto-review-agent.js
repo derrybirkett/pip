@@ -191,13 +191,19 @@ ${review.summary}
 
   reviewBody += `---\n*Automated review by CTO Agent*`;
 
-  // Post review comment
+  // Post review comment using temp file to avoid shell escaping issues
+  const fs = require('fs');
+  const tempFile = '/tmp/cto-review-body.txt';
   try {
-    exec(`gh pr review ${prNumber} --comment --body "${reviewBody.replace(/"/g, '\\"')}"`);
+    fs.writeFileSync(tempFile, reviewBody, 'utf8');
+    exec(`gh pr review ${prNumber} --comment --body-file ${tempFile}`);
     console.log('✅ Review posted');
   } catch (error) {
     console.error('⚠️  Failed to post review, trying as comment...');
-    exec(`gh pr comment ${prNumber} --body "${reviewBody.replace(/"/g, '\\"')}"`);
+    exec(`gh pr comment ${prNumber} --body-file ${tempFile}`);
+  } finally {
+    // Clean up temp file
+    try { fs.unlinkSync(tempFile); } catch (e) { /* ignore */ }
   }
 }
 
@@ -257,11 +263,22 @@ This enhancement was identified during code review but does not block the PR mer
     const issueTitle = issue.title;
 
     try {
-      // Create issue and capture the issue number from output
+      // Create issue using temp file to avoid shell escaping issues
+      const fs = require('fs');
+      const tempBodyFile = `/tmp/cto-issue-body-${Date.now()}.txt`;
+      const tempTitleFile = `/tmp/cto-issue-title-${Date.now()}.txt`;
+      
+      fs.writeFileSync(tempBodyFile, issueBody, 'utf8');
+      fs.writeFileSync(tempTitleFile, issueTitle, 'utf8');
+      
       const result = exec(
-        `gh issue create --title "${issueTitle.replace(/"/g, '\\"')}" --body "${issueBody.replace(/"/g, '\\"')}" --label "enhancement,from-cto-review,needs-cpo-triage,${severityLabel},${categoryLabel}"`,
+        `gh issue create --title-file ${tempTitleFile} --body-file ${tempBodyFile} --label "enhancement,from-cto-review,needs-cpo-triage,${severityLabel},${categoryLabel}"`,
         { silent: true }
       );
+      
+      // Clean up temp files
+      fs.unlinkSync(tempBodyFile);
+      fs.unlinkSync(tempTitleFile);
       
       // Extract issue number from URL (e.g., "https://github.com/owner/repo/issues/123")
       const issueMatch = result.match(/\/issues\/(\d+)/);
@@ -272,6 +289,7 @@ This enhancement was identified during code review but does not block the PR mer
       }
     } catch (error) {
       console.error(`  ⚠️  Failed to create issue: ${issue.title}`);
+      console.error(`      Error: ${error.message}`);
     }
   });
 
