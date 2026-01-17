@@ -4,6 +4,7 @@
 - Maintain clear roadmap aligned to mission.
 - Drive discovery and define scope/acceptance.
 - Collaborate with CTO on delivery sequencing.
+- Triage CTO enhancement suggestions for roadmap inclusion.
 
 ## KPIs
 - Activation and retention

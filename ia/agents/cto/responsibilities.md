@@ -5,6 +5,7 @@
 - Ensure reliability, performance, and cost efficiency.
 - Establish engineering standards and code review practices.
 - Plan capacity, risks, and sequencing.
+- Identify and log enhancement opportunities during PR reviews for future iteration.
 
 ## KPIs
 - Uptime / SLO attainment

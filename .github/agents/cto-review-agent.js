@@ -87,21 +87,25 @@ ${pr.diff.slice(0, 8000)}
       "category": "architecture|performance|testing|documentation|best-practice",
       "title": "Issue title",
       "description": "Detailed explanation",
-      "suggestion": "How to fix it"
+      "suggestion": "How to fix it",
+      "files_affected": "Optional: specific files or areas to address"
     }
-  ],
-  "create_issue": false,
-  "issue_title": "Optional: title if create_issue is true",
-  "issue_body": "Optional: detailed issue description"
+  ]
 }
 
-**Guidelines:**
-- APPROVE if no significant issues (minor suggestions OK)
+**Severity Guidelines:**
+- **critical**: Must fix before merge - blocks security/functionality/data integrity
+- **major**: Should fix before merge - significant technical debt or maintainability issue
+- **minor**: Should fix soon but doesn't block - small improvements that reduce risk
+- **suggestion**: Nice-to-have enhancement - best practices, optimizations, future improvements
+
+**Decision Guidelines:**
+- APPROVE if no critical/major issues (minor and suggestions are OK)
 - COMMENT for minor issues that don't block merge
-- REQUEST_CHANGES for critical/major issues
-- create_issue=true only for architectural concerns needing discussion
+- REQUEST_CHANGES only for critical issues that must be fixed
+- Use "suggestion" severity for enhancements that can be tracked as separate issues
 - Be constructive and specific
-- Consider .pip principles: small, strategic, measurable changes`;
+- Consider .pip principles: small, strategic, measurable changes
 
   try {
     const response = await openai.chat.completions.create({
@@ -134,7 +138,7 @@ ${pr.diff.slice(0, 8000)}
 /**
  * Post review to GitHub
  */
-function postReview(prNumber, review) {
+function postReview(prNumber, review, createdIssues = []) {
   console.log(`\n📝 Posting ${review.decision} review...`);
 
   let reviewBody = `## 🏗️ CTO Technical Review
@@ -180,6 +184,11 @@ ${review.summary}
     reviewBody += `✅ No issues found. Code looks good!\n\n`;
   }
 
+  // Add links to created enhancement issues
+  if (createdIssues.length > 0) {
+    reviewBody += `\n---\n\n📋 **Enhancement Issues Created**: ${createdIssues.map(num => `#${num}`).join(', ')}\n\n`;
+  }
+
   reviewBody += `---\n*Automated review by CTO Agent*`;
 
   // Post review comment
@@ -194,47 +203,80 @@ ${review.summary}
 
 /**
  * Create issues for agent suggestions
+ * Only creates issues for 'suggestion' and 'minor' severity items
+ * Returns array of created issue numbers
  */
-function createIssuesForSuggestions(prNumber, review) {
-  // Create issues for all suggestions (not just when create_issue flag is true)
-  if (!review.issues || review.issues.length === 0) return;
+function createIssuesForSuggestions(prNumber, prTitle, review) {
+  if (!review.issues || review.issues.length === 0) return [];
 
-  console.log('\n📋 Creating issues for agent suggestions...');
+  console.log('\n📋 Creating enhancement issues from review...');
+  const createdIssues = [];
 
-  review.issues.forEach((issue, index) => {
-    // Only create issues for suggestions and minor/major issues
-    // Skip critical issues as they should block the PR
-    if (issue.severity === 'critical') return;
+  // Only create issues for suggestions and minor items
+  // Major and critical should be addressed in the PR itself
+  const enhancementIssues = review.issues.filter(
+    issue => issue.severity === 'suggestion' || issue.severity === 'minor'
+  );
 
-    const severityLabel = issue.severity === 'major' ? 'priority-medium' : 'priority-low';
+  if (enhancementIssues.length === 0) {
+    console.log('  No enhancement issues to create (only major/critical found)');
+    return [];
+  }
+
+  enhancementIssues.forEach((issue) => {
+    const severityLabel = issue.severity === 'minor' ? 'priority-medium' : 'priority-low';
     const categoryLabel = issue.category || 'technical-debt';
     
-    const issueBody = `## Agent Suggestion from PR Review
+    // Enhanced issue body with better structure for agent pickup
+    const issueBody = `## 🔍 Enhancement from CTO Review
 
-**Original PR:** #${prNumber}
+**Source:** PR #${prNumber} - ${prTitle}
 **Severity:** ${issue.severity}
 **Category:** ${issue.category}
+${issue.files_affected ? `**Files/Areas:** ${issue.files_affected}` : ''}
 
 ### Description
 ${issue.description}
 
-### Suggested Solution
+### Suggested Implementation
 ${issue.suggestion}
 
----
-**Status:** Needs CPO approval before adding to roadmap
-**Created by:** CTO Review Agent
-**Labels:** This issue requires CPO triage and approval`;
+### Context
+This enhancement was identified during code review but does not block the PR merge. It represents a ${issue.severity === 'minor' ? 'small improvement' : 'nice-to-have optimization'} that can be addressed in a future iteration.
 
-    const issueTitle = `[Agent Suggestion] ${issue.title}`;
+### Next Steps
+- [ ] CPO: Review and approve for roadmap inclusion
+- [ ] If approved: Assign to autonomous agent or manual pickup
+- [ ] Implement suggested changes
+- [ ] Link back to this issue in implementation PR
+
+---
+**Created by:** CTO Review Agent  
+**Status:** Awaiting CPO triage`;
+
+    const issueTitle = issue.title;
 
     try {
-      exec(`gh issue create --title "${issueTitle}" --body "${issueBody.replace(/"/g, '\\"')}" --label "agent-suggestion,needs-approval,${severityLabel},${categoryLabel}"`);
-      console.log(`✅ Issue created: ${issue.title}`);
+      // Create issue and capture the issue number from output
+      const result = exec(
+        `gh issue create --title "${issueTitle.replace(/"/g, '\\"')}" --body "${issueBody.replace(/"/g, '\\"')}" --label "enhancement,from-cto-review,needs-cpo-triage,${severityLabel},${categoryLabel}"`,
+        { silent: true }
+      );
+      
+      // Extract issue number from URL (e.g., "https://github.com/owner/repo/issues/123")
+      const issueMatch = result.match(/\/issues\/(\d+)/);
+      if (issueMatch) {
+        const issueNumber = issueMatch[1];
+        createdIssues.push(issueNumber);
+        console.log(`  ✅ Issue #${issueNumber}: ${issue.title}`);
+      }
     } catch (error) {
-      console.error(`⚠️  Failed to create issue: ${issue.title}`);
+      console.error(`  ⚠️  Failed to create issue: ${issue.title}`);
     }
   });
+
+  console.log(`\n  Created ${createdIssues.length} enhancement issue(s)`);
+  return createdIssues;
 }
 
 /**
@@ -255,11 +297,11 @@ async function main() {
     console.log(`\n✨ Review complete: ${review.decision}`);
     console.log(`  Issues found: ${review.issues.length}`);
 
-    // Post review
-    postReview(pr.number, review);
+    // Create enhancement issues for suggestions (for CPO triage)
+    const createdIssues = createIssuesForSuggestions(pr.number, pr.title, review);
 
-    // Create issues for suggestions (for CPO triage)
-    createIssuesForSuggestions(pr.number, review);
+    // Post review with links to created issues
+    postReview(pr.number, review, createdIssues);
 
     // Set output for workflow
     const shouldBlock = review.decision === 'REQUEST_CHANGES';

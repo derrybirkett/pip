@@ -319,15 +319,25 @@ gh issue close 123 --reason "not planned"
 - Documentation needs
 
 **Severity levels:**
-- `critical` - Blocks merge, serious design flaw
-- `major` - Should be addressed before merge
-- `minor` - Nice to have improvements
-- `suggestion` - Optional enhancements
+- `critical` - Must fix before merge - blocks security/functionality/data integrity
+- `major` - Should fix before merge - significant technical debt or maintainability issue
+- `minor` - Should fix soon but doesn't block - small improvements that reduce risk
+- `suggestion` - Nice-to-have enhancement - best practices, optimizations, future improvements
 
 **Actions:**
 - Posts review comment with findings
-- Creates issues for major/critical items
-- Labels issues as `agent-suggestion`, `needs-approval`
+- Creates enhancement issues **only** for `suggestion` and `minor` severity items
+- Labels issues as `enhancement`, `from-cto-review`, `needs-cpo-triage`
+- Links created issues back to PR review comment
+- Major and critical issues should be addressed in the PR itself
+
+**Enhancement Issue Workflow:**
+1. CTO review identifies non-blocking improvements
+2. Auto-creates GitHub issues with structured content
+3. Issues tagged with `needs-cpo-triage` for CPO review
+4. CPO approves (adds `approved-for-roadmap`) or declines (closes)
+5. Approved issues can be picked up by autonomous agent or manually
+6. Implementation PR links back to enhancement issue
 
 ### ciso-review-agent.js
 
