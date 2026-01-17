@@ -5,6 +5,20 @@ All notable changes to the `.pip` framework are documented here.
 ## Unreleased
 
 ### Added
+
+### Changed
+
+### Fixed
+
+## 2026-01-17 — v2.2.0: Enhanced Agent Workflows & Continuous Improvement
+
+### Added
+- **Agentic Framework Bootstrap** (`bin/apply-agentic-framework.sh`, `bin/bootstrap.sh`)
+  - New prominent option to bootstrap projects with agentic development framework
+  - Comprehensive script to apply agent roles, responsibilities, and workflows
+  - Simplified bootstrap process removes project type selection for clearer UX
+  - Auto-configures agent manifest, role documents, and workflow templates
+  - Includes README updates highlighting agentic framework capabilities
 - **Workflow Health Monitoring System** (`.github/agents/workflow-health-check.js`, `.github/workflows/workflow-health-monitor.yml`)
   - Proactive health check script analyzing all workflows with metrics and diagnostics
   - Calculates success/failure rates, health status levels (healthy/warning/degraded/critical)
