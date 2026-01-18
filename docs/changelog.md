@@ -4,11 +4,19 @@ All notable changes to the `.pip` framework are documented here.
 
 ## Unreleased
 
-### Added
-
-### Changed
+## 2026-01-18 — v2.2.1: Autonomous Agent Reliability Fixes
 
 ### Fixed
+- **Autonomous Agent Workflow Permissions** - Added `actions: write` permission to enable agent modification of workflow files
+- **Autonomous Agent Working Directory** - Fixed file creation to use repository root instead of `.github/agents/` directory  
+- **Duplicate PR Prevention** - Agent now validates for existing PRs before creating new ones, preventing duplicate work
+- **Enhanced Logging** - Improved agent output visibility and debugging information
+
+### Added
+- **GitHub App Permissions Troubleshooting Guide** - Documentation for resolving workflow permission issues
+- **Duplicate PR Cleanup Tool** - Script to clean up existing duplicate PRs from before prevention was implemented
+
+### Changed
 
 ## 2026-01-17 — v2.2.0: Enhanced Agent Workflows & Continuous Improvement
 
