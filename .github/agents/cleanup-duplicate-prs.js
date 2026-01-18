@@ -2,11 +2,19 @@
 
 /**
  * Cleanup Duplicate Automated PRs
- * Closes duplicate automated PRs while keeping the most recent one for each issue
+ * 
+ * Helps organisms clean up duplicate PRs created by the autonomous agent
+ * before duplicate prevention was implemented.
+ * 
+ * Usage:
+ *   node .github/agents/cleanup-duplicate-prs.js [--dry-run] [--keep-oldest]
  */
 
 const { execSync } = require('child_process');
 
+/**
+ * Execute shell command and return output
+ */
 function exec(command, options = {}) {
   try {
     const result = execSync(command, {
@@ -16,41 +24,27 @@ function exec(command, options = {}) {
     });
     return result ? result.trim() : '';
   } catch (error) {
+    if (options.silent) {
+      return '';
+    }
     console.error(`Command failed: ${command}`);
     throw error;
   }
 }
 
 /**
- * Get all open automated PRs
+ * Get all automated PRs
  */
 function getAutomatedPRs() {
-  console.log('🔍 Fetching automated PRs...\n');
-  
-  const prs = JSON.parse(
-    exec(
-      'gh pr list --label automated --label roadmap --state open --json number,title,createdAt,headRefName --limit 100',
-      { silent: true }
-    )
-  );
-  
-  console.log(`Found ${prs.length} automated PRs\n`);
-  return prs;
-}
-
-/**
- * Extract issue number from PR title or branch name
- */
-function extractIssueNumber(pr) {
-  // Try to extract from branch name first (automated/implement-123)
-  const branchMatch = pr.headRefName.match(/implement-(\d+)/);
-  if (branchMatch) return parseInt(branchMatch[1]);
-  
-  // Try to extract from title
-  const titleMatch = pr.title.match(/#(\d+)/);
-  if (titleMatch) return parseInt(titleMatch[1]);
-  
-  return null;
+  try {
+    const prs = JSON.parse(
+      exec('gh pr list --label automated --label roadmap --state open --json number,title,body,createdAt,headRefName', { silent: true })
+    );
+    return prs;
+  } catch (error) {
+    console.error('❌ Failed to fetch PRs:', error.message);
+    return [];
+  }
 }
 
 /**
@@ -58,116 +52,128 @@ function extractIssueNumber(pr) {
  */
 function groupPRsByIssue(prs) {
   const groups = {};
-  const noIssue = [];
   
-  prs.forEach(pr => {
-    const issueNum = extractIssueNumber(pr);
-    if (issueNum) {
-      if (!groups[issueNum]) {
-        groups[issueNum] = [];
+  for (const pr of prs) {
+    // Extract issue number from PR body or title
+    const body = pr.body || '';
+    const issueMatch = body.match(/Fixes #(\d+)|Closes #(\d+)|#(\d+)/);
+    const issueNumber = issueMatch ? (issueMatch[1] || issueMatch[2] || issueMatch[3]) : null;
+    
+    if (issueNumber) {
+      if (!groups[issueNumber]) {
+        groups[issueNumber] = [];
       }
-      groups[issueNum].push(pr);
-    } else {
-      noIssue.push(pr);
+      groups[issueNumber].push(pr);
     }
-  });
-  
-  return { groups, noIssue };
-}
-
-/**
- * Close a PR with a comment
- */
-function closePR(prNumber, reason) {
-  console.log(`  Closing PR #${prNumber}...`);
-  
-  try {
-    exec(`gh pr close ${prNumber} --comment "${reason}"`, { silent: true });
-    console.log(`  ✅ Closed PR #${prNumber}`);
-    return true;
-  } catch (error) {
-    console.error(`  ❌ Failed to close PR #${prNumber}`);
-    return false;
   }
+  
+  return groups;
 }
 
 /**
- * Main cleanup logic
+ * Find duplicates (multiple PRs for same issue)
  */
-async function main() {
-  console.log('🧹 Automated PR Cleanup Tool\n');
-  console.log('This will close duplicate automated PRs, keeping the most recent one.\n');
+function findDuplicates(groups) {
+  const duplicates = {};
   
-  const prs = getAutomatedPRs();
+  for (const [issueNumber, prs] of Object.entries(groups)) {
+    if (prs.length > 1) {
+      duplicates[issueNumber] = prs;
+    }
+  }
   
-  if (prs.length === 0) {
-    console.log('✨ No automated PRs found. Nothing to clean up!');
+  return duplicates;
+}
+
+/**
+ * Close PR
+ */
+function closePR(prNumber, dryRun) {
+  if (dryRun) {
+    console.log(`  [DRY RUN] Would close PR #${prNumber}`);
     return;
   }
   
-  const { groups, noIssue } = groupPRsByIssue(prs);
+  try {
+    exec(`gh pr close ${prNumber} --comment "Closed by cleanup tool: duplicate PR detected"`, { silent: true });
+    console.log(`  ✅ Closed PR #${prNumber}`);
+  } catch (error) {
+    console.error(`  ❌ Failed to close PR #${prNumber}:`, error.message);
+  }
+}
+
+/**
+ * Main execution
+ */
+function main() {
+  const args = process.argv.slice(2);
+  const dryRun = args.includes('--dry-run');
+  const keepOldest = args.includes('--keep-oldest');
   
-  let closedCount = 0;
-  let keptCount = 0;
+  console.log('🧹 Cleaning up duplicate automated PRs...\n');
   
-  // Process groups (PRs linked to issues)
-  console.log('📋 Processing PRs by issue:\n');
+  if (dryRun) {
+    console.log('🔍 DRY RUN MODE - No PRs will be closed\n');
+  }
   
-  for (const [issueNum, issuePRs] of Object.entries(groups)) {
-    if (issuePRs.length === 1) {
-      console.log(`Issue #${issueNum}: 1 PR (keeping it)`);
-      keptCount++;
-      continue;
-    }
+  // Get all automated PRs
+  const prs = getAutomatedPRs();
+  
+  if (prs.length === 0) {
+    console.log('✅ No automated PRs found. Nothing to clean up.');
+    return;
+  }
+  
+  console.log(`📋 Found ${prs.length} automated PR(s)\n`);
+  
+  // Group by issue
+  const groups = groupPRsByIssue(prs);
+  
+  // Find duplicates
+  const duplicates = findDuplicates(groups);
+  
+  if (Object.keys(duplicates).length === 0) {
+    console.log('✅ No duplicate PRs found. All good!');
+    return;
+  }
+  
+  console.log(`⚠️  Found ${Object.keys(duplicates).length} issue(s) with duplicate PRs:\n`);
+  
+  let totalClosed = 0;
+  
+  for (const [issueNumber, issuePRs] of Object.entries(duplicates)) {
+    console.log(`Issue #${issueNumber} has ${issuePRs.length} PR(s):`);
     
-    // Sort by creation date (newest first)
-    issuePRs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    // Sort by creation date
+    issuePRs.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
     
-    const keep = issuePRs[0];
-    const close = issuePRs.slice(1);
+    // Keep the oldest or newest based on flag
+    const toKeep = keepOldest ? issuePRs[0] : issuePRs[issuePRs.length - 1];
+    const toClose = issuePRs.filter(pr => pr.number !== toKeep.number);
     
-    console.log(`\nIssue #${issueNum}: ${issuePRs.length} PRs found`);
-    console.log(`  ✅ Keeping: PR #${keep.number} (most recent)`);
-    console.log(`  ❌ Closing ${close.length} duplicate(s):`);
+    console.log(`  📌 Keeping: PR #${toKeep.number} (${toKeep.headRefName})`);
     
-    for (const pr of close) {
-      const reason = `🤖 Closing duplicate PR. A newer automated PR (#${keep.number}) exists for the same issue.`;
-      if (closePR(pr.number, reason)) {
-        closedCount++;
+    for (const pr of toClose) {
+      closePR(pr.number, dryRun);
+      if (!dryRun) {
+        totalClosed++;
       }
     }
     
-    keptCount++;
+    console.log('');
   }
   
-  // Handle PRs without clear issue links
-  if (noIssue.length > 0) {
-    console.log(`\n\n⚠️  Found ${noIssue.length} PRs without clear issue links:`);
-    noIssue.forEach(pr => {
-      console.log(`  - PR #${pr.number}: ${pr.title}`);
-    });
-    console.log('\nThese were not automatically closed. Please review manually.');
-  }
-  
-  // Summary
-  console.log('\n' + '='.repeat(50));
-  console.log('📊 Cleanup Summary:');
-  console.log(`  ✅ Kept: ${keptCount} PRs`);
-  console.log(`  ❌ Closed: ${closedCount} duplicate PRs`);
-  console.log(`  ⚠️  Needs manual review: ${noIssue.length} PRs`);
-  console.log('='.repeat(50));
-  
-  if (closedCount > 0) {
-    console.log('\n✨ Cleanup complete! Future runs will be prevented by the updated agent.');
+  if (dryRun) {
+    console.log(`\n🔍 DRY RUN: Would close ${Object.values(duplicates).flat().length - Object.keys(duplicates).length} duplicate PR(s)`);
+    console.log('Run without --dry-run to actually close them.');
+  } else {
+    console.log(`\n✅ Cleanup complete! Closed ${totalClosed} duplicate PR(s).`);
   }
 }
 
 // Run if called directly
 if (require.main === module) {
-  main().catch(error => {
-    console.error('\n❌ Error:', error.message);
-    process.exit(1);
-  });
+  main();
 }
 
-module.exports = { main };
+module.exports = { main, getAutomatedPRs, groupPRsByIssue, findDuplicates };

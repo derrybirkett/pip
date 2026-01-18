@@ -131,10 +131,18 @@ async function getNextRoadmapIssue(priorityFilter) {
     return null;
   }
 
-  const issue = unassigned[0];
-  console.log(`✅ Found: #${issue.number} - ${issue.title}`);
+  // Check each issue for existing PRs (prevent duplicates)
+  for (const issue of unassigned) {
+    if (!hasExistingPRForIssue(issue.number)) {
+      console.log(`✅ Found: #${issue.number} - ${issue.title}`);
+      return issue;
+    } else {
+      console.log(`⏭️  Skipping #${issue.number} - PR already exists`);
+    }
+  }
 
-  return issue;
+  console.log('❌ No issues without existing PRs found');
+  return null;
 }
 
 /**
@@ -440,9 +448,17 @@ async function main() {
     const priorityFilter = process.env.PRIORITY_FILTER || 'high';
 
     // Get next issue
-    const issue = issueNumber
-      ? JSON.parse(exec(`gh issue view ${issueNumber} --json number,title,body,labels`, { silent: true }))
-      : await getNextRoadmapIssue(priorityFilter);
+    let issue;
+    if (issueNumber) {
+      // Check for existing PR for this specific issue
+      if (hasExistingPRForIssue(issueNumber)) {
+        console.log(`⚠️  PR already exists for issue #${issueNumber}. Skipping to prevent duplicate.`);
+        return;
+      }
+      issue = JSON.parse(exec(`gh issue view ${issueNumber} --json number,title,body,labels`, { silent: true }));
+    } else {
+      issue = await getNextRoadmapIssue(priorityFilter);
+    }
 
     if (!issue) {
       console.log('✨ No issues to process. All done!');

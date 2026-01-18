@@ -26,10 +26,13 @@ jobs:
       issues: write
       pull-requests: write
       contents: write
+      actions: write
     
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_PROJECT_TOKEN }}
       
       - name: Configure git identity
         run: |
@@ -48,7 +51,7 @@ jobs:
       
       - name: Run autonomous agent
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_PROJECT_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI }}
           PRIORITY_FILTER: ${{ inputs.priority || 'p1' }}
           ISSUE_NUMBER: ${{ inputs.issue_number }}

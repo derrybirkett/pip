@@ -31,7 +31,13 @@
       "exclude_labels": ["needs-approval", "blocked", "agent-suggestion"]
     },
     "auto_assign": false,
-    "branch_pattern": "automated/{issue-number}-{slug}"
+    "branch_pattern": "automated/{issue-number}-{slug}",
+    "duplicate_prevention": {
+      "enabled": true,
+      "check_existing_automated_prs": true,
+      "check_issue_specific_prs": true,
+      "max_automated_prs": 0
+    }
   },
   "review_agents": {
     "cto": {
