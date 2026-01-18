@@ -45,9 +45,7 @@ jobs:
           node-version: '20'
       
       - name: Install dependencies
-        run: |
-          cd .github/agents
-          npm install
+        run: npm install
       
       - name: Run autonomous agent
         env:
@@ -55,5 +53,4 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI }}
           PRIORITY_FILTER: ${{ inputs.priority || 'p1' }}
           ISSUE_NUMBER: ${{ inputs.issue_number }}
-        run: |
-          node .github/agents/autonomous-agent.js
+        run: node .github/agents/autonomous-agent.js
