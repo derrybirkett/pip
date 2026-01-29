@@ -148,6 +148,14 @@ copy_graph "marketing-website"
 copy_graph "blog"
 
 echo
+echo "🎨 Applying basestation app templates..."
+mkdir -p apps/app/src/auth
+cp "$PIP_DIR/resources/nx-product-surfaces/App.tsx" apps/app/src/app/app.tsx
+cp "$PIP_DIR/resources/nx-product-surfaces/auth/auth-session.tsx" apps/app/src/auth/auth-session.tsx
+cp "$PIP_DIR/resources/nx-product-surfaces/auth/auth-adapter.tsx" apps/app/src/auth/auth-adapter.tsx
+echo "✅ Applied App.tsx and auth templates"
+
+echo
 
 echo "✨ Product surfaces scaffold complete!"
 echo
