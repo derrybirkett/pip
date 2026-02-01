@@ -121,142 +121,6 @@ fi
 
 echo
 
-# Install Tailwind CSS and React Router
-echo "📦 Installing Tailwind CSS, PostCSS, Autoprefixer..."
-if ! has_dep "tailwindcss"; then
-  pm_add_dev tailwindcss @tailwindcss/postcss postcss autoprefixer
-  echo "✅ Installed Tailwind CSS"
-else
-  echo "✅ Tailwind CSS already installed"
-fi
-
-echo "📦 Installing React Router..."
-if ! has_dep "react-router-dom"; then
-  case "$PM" in
-    pnpm) pnpm add react-router-dom ;;
-    yarn) yarn add react-router-dom ;;
-    npm) npm install react-router-dom ;;
-  esac
-  echo "✅ Installed React Router"
-else
-  echo "✅ React Router already installed"
-fi
-
-echo
-
-# Copy fragment files for marketing app
-echo "🎨 Copying marketing landing page fragment files..."
-FRAGMENT_DIR="$PIP_DIR/fragments/nx-product-surfaces/files"
-
-if [ -d "apps/marketing" ]; then
-  # Copy component files
-  mkdir -p apps/marketing/src/components
-  
-  if [ -f "$FRAGMENT_DIR/apps/marketing/src/components/Hero.tsx" ]; then
-    cp "$FRAGMENT_DIR/apps/marketing/src/components/Hero.tsx" apps/marketing/src/components/
-    echo "✅ Copied Hero.tsx"
-  fi
-  
-  # Copy app.tsx
-  if [ -f "$FRAGMENT_DIR/apps/marketing/src/app/app.tsx" ]; then
-    cp "$FRAGMENT_DIR/apps/marketing/src/app/app.tsx" apps/marketing/src/app/
-    echo "✅ Copied marketing app.tsx"
-  fi
-  
-  # Copy app.css
-  if [ -f "$FRAGMENT_DIR/apps/marketing/src/app/app.css" ]; then
-    cp "$FRAGMENT_DIR/apps/marketing/src/app/app.css" apps/marketing/src/app/
-    echo "✅ Copied marketing app.css"
-  fi
-  
-  # Copy Tailwind config
-  if [ -f "$FRAGMENT_DIR/apps/marketing/tailwind.config.js" ]; then
-    cp "$FRAGMENT_DIR/apps/marketing/tailwind.config.js" apps/marketing/
-    echo "✅ Copied marketing tailwind.config.js"
-  fi
-  
-  # Copy PostCSS config
-  if [ -f "$FRAGMENT_DIR/apps/marketing/postcss.config.js" ]; then
-    cp "$FRAGMENT_DIR/apps/marketing/postcss.config.js" apps/marketing/
-    echo "✅ Copied marketing postcss.config.js"
-  fi
-fi
-
-echo
-
-# Copy fragment files for app
-echo "🎨 Copying app dashboard fragment files..."
-
-if [ -d "apps/app" ]; then
-  # Copy component files
-  mkdir -p apps/app/src/components apps/app/src/pages
-  
-  if [ -f "$FRAGMENT_DIR/apps/app/src/components/DashboardLayout.tsx" ]; then
-    cp "$FRAGMENT_DIR/apps/app/src/components/DashboardLayout.tsx" apps/app/src/components/
-    echo "✅ Copied DashboardLayout.tsx"
-  fi
-  
-  if [ -f "$FRAGMENT_DIR/apps/app/src/pages/Dashboard.tsx" ]; then
-    cp "$FRAGMENT_DIR/apps/app/src/pages/Dashboard.tsx" apps/app/src/pages/
-    echo "✅ Copied Dashboard.tsx"
-  fi
-  
-  if [ -f "$FRAGMENT_DIR/apps/app/src/pages/Profile.tsx" ]; then
-    cp "$FRAGMENT_DIR/apps/app/src/pages/Profile.tsx" apps/app/src/pages/
-    echo "✅ Copied Profile.tsx"
-  fi
-  
-  # Copy app.tsx
-  if [ -f "$FRAGMENT_DIR/apps/app/src/app/app.tsx" ]; then
-    cp "$FRAGMENT_DIR/apps/app/src/app/app.tsx" apps/app/src/app/
-    echo "✅ Copied app app.tsx"
-  fi
-  
-  # Copy app.css
-  if [ -f "$FRAGMENT_DIR/apps/app/src/app/app.css" ]; then
-    cp "$FRAGMENT_DIR/apps/app/src/app/app.css" apps/app/src/app/
-    echo "✅ Copied app app.css"
-  fi
-  
-  # Copy Tailwind config
-  if [ -f "$FRAGMENT_DIR/apps/app/tailwind.config.js" ]; then
-    cp "$FRAGMENT_DIR/apps/app/tailwind.config.js" apps/app/
-    echo "✅ Copied app tailwind.config.js"
-  fi
-  
-  # Copy PostCSS config
-  if [ -f "$FRAGMENT_DIR/apps/app/postcss.config.js" ]; then
-    cp "$FRAGMENT_DIR/apps/app/postcss.config.js" apps/app/
-    echo "✅ Copied app postcss.config.js"
-  fi
-fi
-
-echo
-
-# Copy auth lib files
-echo "🔐 Copying auth boundary files..."
-
-if [ -d "libs/auth" ]; then
-  mkdir -p libs/auth/src/lib
-  
-  if [ -f "$FRAGMENT_DIR/libs/auth/src/lib/auth.tsx" ]; then
-    cp "$FRAGMENT_DIR/libs/auth/src/lib/auth.tsx" libs/auth/src/lib/
-    echo "✅ Copied auth.tsx"
-  fi
-  
-  if [ -f "$FRAGMENT_DIR/libs/auth/src/lib/types.ts" ]; then
-    cp "$FRAGMENT_DIR/libs/auth/src/lib/types.ts" libs/auth/src/lib/
-    echo "✅ Copied types.ts"
-  fi
-  
-  if [ -f "$FRAGMENT_DIR/libs/auth/src/index.ts" ]; then
-    cp "$FRAGMENT_DIR/libs/auth/src/index.ts" libs/auth/src/
-    echo "✅ Copied index.ts"
-  fi
-fi
-
-echo
-
 echo "📚 Adding organism graph templates under docs/graph/..."
 mkdir -p docs/graph
 
@@ -284,26 +148,130 @@ copy_graph "marketing-website"
 copy_graph "blog"
 
 echo
+echo "📦 Installing Tailwind CSS and ShadCN dependencies..."
+pm_add_dev tailwindcss postcss autoprefixer @radix-ui/react-slot class-variance-authority clsx tailwind-merge
+echo "✅ Installed Tailwind and ShadCN dependencies"
 
-# Run mission injection if mission.md exists
-if [ -f "$TARGET_DIR/docs/mission.md" ]; then
-  echo "🔄 Injecting mission data into components..."
-  "$PIP_DIR/bin/inject-mission.sh"
-  echo
+echo
+echo "📦 Installing Playwright for E2E testing..."
+pm_add_dev @playwright/test
+echo "✅ Installed Playwright"
+
+echo
+echo "🎨 Applying app templates (ShadCN UI, auth, integrations, widgets)..."
+mkdir -p apps/app/src/auth
+mkdir -p apps/app/src/components/ui
+mkdir -p apps/app/src/integrations
+mkdir -p apps/app/src/widgets
+mkdir -p apps/app/src/lib
+
+# Copy App.tsx and styling
+cp "$PIP_DIR/resources/nx-product-surfaces/App.tsx" apps/app/src/app/app.tsx
+cp "$PIP_DIR/resources/nx-product-surfaces/app.css" apps/app/src/app/app.css
+
+# Copy auth templates
+cp "$PIP_DIR/resources/nx-product-surfaces/auth/auth-session.tsx" apps/app/src/auth/auth-session.tsx
+cp "$PIP_DIR/resources/nx-product-surfaces/auth/auth-adapter.tsx" apps/app/src/auth/auth-adapter.tsx
+
+# Copy ShadCN UI components
+cp "$PIP_DIR/resources/nx-product-surfaces/components/ui/button.tsx" apps/app/src/components/ui/button.tsx
+cp "$PIP_DIR/resources/nx-product-surfaces/components/ui/input.tsx" apps/app/src/components/ui/input.tsx
+
+# Copy integrations
+cp "$PIP_DIR/resources/nx-product-surfaces/integrations/integration-settings.ts" apps/app/src/integrations/integration-settings.ts
+cp "$PIP_DIR/resources/nx-product-surfaces/integrations/use-integration-settings.ts" apps/app/src/integrations/use-integration-settings.ts
+
+# Copy widgets
+cp "$PIP_DIR/resources/nx-product-surfaces/widgets/repos-widget.tsx" apps/app/src/widgets/repos-widget.tsx
+
+# Copy utilities
+cp "$PIP_DIR/resources/nx-product-surfaces/lib/utils.ts" apps/app/src/lib/utils.ts
+
+echo "✅ Applied all templates"
+
+echo
+echo "⚙️  Configuring Tailwind CSS..."
+cat > tailwind.config.js <<'EOF'
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    "./apps/*/src/**/*.{js,jsx,ts,tsx}",
+  ],
+  theme: {
+    extend: {
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+      },
+      colors: {
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+      },
+    },
+  },
+  plugins: [],
+}
+EOF
+echo "✅ Created tailwind.config.js"
+
+echo
+echo "⚙️  Configuring path aliases (@/)..."
+if [ -f "tsconfig.base.json" ]; then
+  # Update tsconfig.base.json to add path alias
+  node -e "
+    const fs = require('fs');
+    const tsconfig = JSON.parse(fs.readFileSync('tsconfig.base.json', 'utf8'));
+    if (!tsconfig.compilerOptions.paths) tsconfig.compilerOptions.paths = {};
+    tsconfig.compilerOptions.paths['@/*'] = ['apps/app/src/*'];
+    fs.writeFileSync('tsconfig.base.json', JSON.stringify(tsconfig, null, 2));
+  "
+  echo "✅ Updated tsconfig.base.json with @/* path alias"
+else
+  echo "⚠️  tsconfig.base.json not found, skipping path alias config"
 fi
+
+echo
 
 echo "✨ Product surfaces scaffold complete!"
 echo
 
 echo "Next steps:"
-echo "  1) Review generated files:"
-echo "     - apps/marketing/src/app/app.tsx (landing page with hero)"
-echo "     - apps/app/src/pages/Dashboard.tsx (dashboard)"
-echo "     - apps/app/src/pages/Profile.tsx (user profile)"
-echo "     - libs/auth/src/lib/auth.tsx (auth boundary)"
-echo "  2) Start marketing: nx serve marketing"
+echo "  1) Initialize Playwright: npx playwright install"
+echo "  2) (Optional) Apply infra: ./.pip/bin/apply-nx-dev-infra.sh"
 echo "  3) Start app: nx serve app"
-echo "  4) (Optional) Apply infra: ./.pip/bin/apply-nx-dev-infra.sh"
-echo "  5) Implement real auth by swapping provider in libs/auth"
-echo "     (Supabase/Clerk/WorkOS - see comments in auth.tsx)"
+echo "  4) Start marketing: nx serve marketing"
+echo "  5) Run E2E tests: npx playwright test"
+echo "  6) Choose auth provider by implementing an adapter behind libs/auth"
 echo ""

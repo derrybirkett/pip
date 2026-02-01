@@ -4,111 +4,18 @@ All notable changes to the `.pip` framework are documented here.
 
 ## Unreleased
 
-## 2026-01-18 — v2.2.1: Autonomous Agent Reliability Fixes
-
-### Fixed
-- **Autonomous Agent Workflow Permissions** - Added `actions: write` permission to enable agent modification of workflow files
-- **Autonomous Agent Working Directory** - Fixed file creation to use repository root instead of `.github/agents/` directory  
-- **Duplicate PR Prevention** - Agent now validates for existing PRs before creating new ones, preventing duplicate work
-- **Enhanced Logging** - Improved agent output visibility and debugging information
-
 ### Added
-- **GitHub App Permissions Troubleshooting Guide** - Documentation for resolving workflow permission issues
-- **Duplicate PR Cleanup Tool** - Script to clean up existing duplicate PRs from before prevention was implemented
-
-### Changed
-
-## 2026-01-17 — v2.2.0: Enhanced Agent Workflows & Continuous Improvement
-
-### Added
-- **Agentic Framework Bootstrap** (`bin/apply-agentic-framework.sh`, `bin/bootstrap.sh`)
-  - New prominent option to bootstrap projects with agentic development framework
-  - Comprehensive script to apply agent roles, responsibilities, and workflows
-  - Simplified bootstrap process removes project type selection for clearer UX
-  - Auto-configures agent manifest, role documents, and workflow templates
-  - Includes README updates highlighting agentic framework capabilities
-- **Workflow Health Monitoring System** (`.github/agents/workflow-health-check.js`, `.github/workflows/workflow-health-monitor.yml`)
-  - Proactive health check script analyzing all workflows with metrics and diagnostics
-  - Calculates success/failure rates, health status levels (healthy/warning/degraded/critical)
-  - Detects workflow configuration issues (YAML validation, dependency checks, error handling)
-  - Automated health monitor workflow running every 4 hours
-  - Self-healing capabilities: stale branch cleanup, dependency updates, failed workflow retries
-  - Generates comprehensive health reports with actionable recommendations
-  - Creates GitHub issues automatically for critical failures
-  - Quick reference guide (`docs/tools/coo-workflow-monitoring.md`)
-  - Enhanced COO workflow monitor with better diagnostics and auto-remediation
-  - Updated workflow monitoring playbook with complete tool documentation
-  - Target metrics: >95% workflow success rate, <30min MTTR, >60% auto-remediation rate
-
-### Changed
-- **Enhanced CTO Review Agent with Auto-Issue Creation** (`.github/agents/cto-review-agent.js`)
-  - CTO reviews now automatically create GitHub issues for non-blocking enhancement suggestions
-  - Only creates issues for `suggestion` and `minor` severity items (major/critical addressed in PR)
-  - Issues include structured metadata for easy agent pickup: source PR, category, files affected, implementation guidance
-  - New labels: `enhancement`, `from-cto-review`, `needs-cpo-triage`, `approved-for-roadmap`
-  - PR review comments now link to created enhancement issues for transparency
-  - CPO triage workflow: review enhancement issues → approve for roadmap or decline
-  - Prevents valuable improvement suggestions from being lost in PR comments
-  - Creates continuous improvement feedback loop for autonomous agents
-  - Updated CTO and CPO responsibilities to include enhancement issue workflow
-  - Clarified severity definitions in review prompt for consistent decision-making
-
-### Fixed
-
-## 2026-01-14 — v2.1.0: Autonomous Agent System & COO Workflow Monitor
-
-### Added
-- **Autonomous Agent System** (`.github/agents/`, `.github/workflows/`)
-  - AI-powered roadmap implementation via OpenAI GPT-4
-  - Autonomous agent picks up unassigned roadmap issues every 6 hours
-  - CTO review agent (technical quality, architecture, best practices)
-  - CISO review agent (security vulnerabilities, credential scanning)
-  - Auto-merge for passing PRs from `automated/*` branches
-  - CPO triage helper script for quick approval workflow
-  - Project board automation (issue lifecycle management)
-  - Production-tested with issue #64 → PR #68 (auto-merged)
-  - Cost: ~$2-5/month (OpenAI API + GitHub Actions free tier)
-  - Velocity: Up to 4 automated tasks/day
-- **COO Workflow Monitor Agent** (`.github/agents/coo-workflow-monitor.js`)
-  - Automatically detects and triages CI/CD workflow failures
-  - Uses OpenAI GPT-4 to analyze failure logs and classify failure types
-  - Loads COO workflow monitoring playbook as decision-making context
-  - Auto-remediates safe failures (branch conflicts, infrastructure retries)
-  - Escalates complex issues to appropriate agents (CTO/CISO/CPO/CEO)
-  - Creates GitHub issues with proper labels and context
-  - Posts triage reports as workflow artifacts
-  - Failure types: branch conflicts, test failures, dependencies, security scans, infrastructure, authentication
-  - Cost: ~$0.03/failure (~$0.30/month for 10 failures)
-  - Total agent system cost: ~$2-7/month
-- **Agent Adoption Guide for Organisms** (`docs/agent-adoption-guide.md`)
-  - Comprehensive 483-line guide for organisms to adopt agent system
-  - Complete setup steps (10 steps from copy to enable)
-  - Customization options (schedule, priority, auto-merge, review criteria)
-  - Monitoring and cost tracking guidance
-  - Best practices (writing agent-friendly issues, incremental adoption)
-  - Security considerations and troubleshooting
-  - Example configurations for TypeScript/React projects
-  - Enables any organism to benefit from autonomous development
-- **v1 to v2 Migration Guide** (`docs/migrating-v1-to-v2.md`)
-  - Comprehensive guide for upgrading from v1.1.0 to v2.x
-  - Clear migration paths for submodule users, contributors, and forked repos
-  - Documents new v2 features (execution modes, .piprc, Nx wrappers)
-  - Includes feature parity table and timeline
-- **Pull Request Template** (`.github/pull_request_template.md`)
-  - Standardizes PR descriptions with structured sections
-  - Includes testing checklist, documentation requirements, impact assessment
-  - Agent review assignment guidance (CTO, CPO, CISO, CMO, COO, CEO)
-  - Pre-merge checklist to ensure quality and completeness
-- **Prominent PIP_MODE Documentation in README**
-  - Added dedicated "Execution Modes" section to Getting Started
-  - Clear examples for observe, propose, and execute modes
-  - PIP_ACTION_MODE examples (live, confirm, dry-run)
-  - .piprc configuration guidance with examples
-- **Peer Review Policy for Breaking Changes** (CONTRIBUTING.md)
-  - Explicit requirements for breaking changes (CEO + relevant agent approval)
-  - Clear definition of what constitutes a breaking change
-  - Self-merge guidelines to distinguish safe vs. review-needed changes
-  - Migration guide requirements for breaking changes
+- **ShadCN UI + Playwright E2E Testing for nx-product-surfaces**
+  - Complete ShadCN UI components (Button, Input) with Tailwind CSS integration
+  - Utility function (`lib/utils.ts`) for className merging with clsx and tailwind-merge
+  - Integration settings system with localStorage persistence and React hooks
+  - Widget system with placeholder GitHub repos widget
+  - Playwright E2E test template covering complete user flow (marketing→login→app→logout)
+  - Additional E2E tests for GitHub integration toggle and widget conditional display
+  - Automatic Tailwind CSS configuration with ShadCN design tokens and CSS variables
+  - TypeScript path alias (@/) configuration in tsconfig.base.json
+  - Apply script now installs all dependencies and copies all templates
+  - Makes nx-product-surfaces fragment production-ready
 - **Nx workspace wrappers for kernel scripts**
   - Adds `nx.json` + `project.json` so you can run common tasks via `nx run pip:<target>`
   - Adds `package.json` with Nx as a dev dependency for contributors working on the kernel repo

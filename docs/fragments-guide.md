@@ -36,39 +36,27 @@ Containerized Nx development environment with Postgres and n8n.
 [Full documentation →](../fragments/nx-dev-infra/README.md)
 
 ### nx-product-surfaces
-Scaffolds a complete SaaS application with mission-driven content.
+Scaffolds common product surfaces in an Nx workspace with modern UI and E2E testing.
 
 **Provides:**
-- `apps/marketing` — Landing page with hero section (auto-populated from mission)
-- `apps/app` — Dashboard with sidebar nav, dashboard page, user profile
-- `libs/auth` — Provider-swappable auth boundary (Supabase/Clerk/WorkOS ready)
+- `apps/app` (logged-in product surface with ShadCN UI)
+- `apps/marketing` (marketing surface)
+- `libs/auth` (provider-swappable auth boundary)
+- **ShadCN UI Components** (Button, Input) with Tailwind CSS
+- **Integration system** with settings management
+- **Widget system** with placeholder GitHub repos widget
+- **Playwright E2E tests** for complete user flow
 - `docs/graph/*` templates copied into your organism
-- Tailwind CSS + React Router configured
-- Mission data injection from `docs/mission.md`
 
-**When to use:** Starting any SaaS-style product that needs marketing + app + auth.
+**Tech Stack:**
+- ShadCN UI + Tailwind CSS
+- Radix UI primitives
+- Playwright for E2E testing
+- TypeScript path aliases (@/)
 
-**Key Features:**
-- Hero section populated from bootstrap mission data
-- Working dashboard layout with navigation
-- User profile page with edit form
-- Auth context ready for provider integration
-- Dark mode support built-in
+**When to use:** Starting a SaaS-style product that will need marketing + app + auth.
 
 [Full documentation →](../fragments/nx-product-surfaces/README.md)
-
-### nx-webapp-starter
-Scaffolds a single Next.js app in an Nx workspace that works out-of-the-box.
-
-**Provides:**
-- `/` simple marketing landing page
-- `/login` dummy but working auth
-- `/app` protected app surface with navbar
-- `/profile` user profile page
-
-**When to use:** You want one web surface that ships fast with login + profile + app shell.
-
-[Full documentation →](../fragments/nx-webapp-starter/README.md)
 
 ### astro-blog
 Fast, SEO-friendly blog powered by Astro with Tailwind CSS.
