@@ -71,18 +71,37 @@ PROJECT_TYPE=$(ask_text "Project type (product/library/service/internal)" "produ
 
 echo
 
-# Step 2: Agent Configuration
-echo -e "${GREEN}👥 Step 2: Agent Roles${NC}"
+# Step 2: Agentic Framework
+echo -e "${GREEN}🤖 Step 2: Agentic Framework${NC}"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "Which agent roles do you need? (All are optional)"
+echo "The agentic framework enables AI-first development with:"
+echo "  • Role-based agent collaboration (CEO, CTO, CPO, CISO, etc.)"
+echo "  • Formal workflow patterns (ReAct, Planning, Reflection)"
+echo "  • Decision rights and handoff protocols"
+echo "  • Multi-agent interaction and quality metrics"
 echo
 
-USE_CEO=$(ask_yes_no "CEO (mission, strategy, cross-functional decisions)" "y")
-USE_CTO=$(ask_yes_no "CTO (technical architecture, delivery)" "y")
-USE_CPO=$(ask_yes_no "CPO (product roadmap, outcomes)" "y")
-USE_CISO=$(ask_yes_no "CISO (security, risk, compliance)" "y")
-USE_CMO=$(ask_yes_no "CMO (marketing, messaging, content)" "n")
-USE_CRO=$(ask_yes_no "CRO (revenue, pricing, growth)" "n")
+USE_AGENTIC_FRAMEWORK=$(ask_yes_no "Enable full agentic development framework?" "n")
+
+if [ "$USE_AGENTIC_FRAMEWORK" = "true" ]; then
+    echo
+    echo -e "${BLUE}Select agent roles to configure:${NC}"
+    USE_CEO=$(ask_yes_no "  CEO (mission, strategy, cross-functional decisions)" "y")
+    USE_CTO=$(ask_yes_no "  CTO (technical architecture, delivery)" "y")
+    USE_CPO=$(ask_yes_no "  CPO (product roadmap, outcomes)" "y")
+    USE_CISO=$(ask_yes_no "  CISO (security, risk, compliance)" "y")
+    USE_CMO=$(ask_yes_no "  CMO (marketing, messaging, content)" "n")
+    USE_CRO=$(ask_yes_no "  CRO (revenue, pricing, growth)" "n")
+    USE_COO=$(ask_yes_no "  COO (delivery operations, release hygiene)" "y")
+else
+    USE_CEO="false"
+    USE_CTO="false"
+    USE_CPO="false"
+    USE_CISO="false"
+    USE_CMO="false"
+    USE_CRO="false"
+    USE_COO="false"
+fi
 
 echo
 
@@ -116,16 +135,21 @@ echo -e "${YELLOW}Ready to bootstrap! Here's what I'll do:${NC}"
 echo -e "${YELLOW}═══════════════════════════════════════════════${NC}"
 echo "• Project: $PROJECT_NAME ($PROJECT_TYPE)"
 [ -n "$PROJECT_DESCRIPTION" ] && echo "• Description: $PROJECT_DESCRIPTION"
-echo "• Agents: $(
-    agents=""
-    [ "$USE_CEO" = "true" ] && agents="$agents CEO"
-    [ "$USE_CTO" = "true" ] && agents="$agents CTO"
-    [ "$USE_CPO" = "true" ] && agents="$agents CPO"
-    [ "$USE_CISO" = "true" ] && agents="$agents CISO"
-    [ "$USE_CMO" = "true" ] && agents="$agents CMO"
-    [ "$USE_CRO" = "true" ] && agents="$agents CRO"
-    echo "$agents"
-)"
+echo "• Agentic Framework: $([ "$USE_AGENTIC_FRAMEWORK" = "true" ] && echo "Enabled" || echo "Disabled")"
+if [ "$USE_AGENTIC_FRAMEWORK" = "true" ]; then
+    echo "• Agents: $(
+        agents=""
+        [ "$USE_CEO" = "true" ] && agents="$agents CEO"
+        [ "$USE_CTO" = "true" ] && agents="$agents CTO"
+        [ "$USE_CPO" = "true" ] && agents="$agents CPO"
+        [ "$USE_CISO" = "true" ] && agents="$agents CISO"
+        [ "$USE_CMO" = "true" ] && agents="$agents CMO"
+        [ "$USE_CRO" = "true" ] && agents="$agents CRO"
+        [ "$USE_COO" = "true" ] && agents="$agents COO"
+        [ -z "$agents" ] && agents=" None"
+        echo "$agents"
+    )"
+fi
 echo "• Surfaces: $(
     surfaces=""
     [ "$HAS_PRODUCT_APP" = "true" ] && surfaces="$surfaces Product"
@@ -171,13 +195,37 @@ cp "$PIP_DIR/method/delivery-method.md" "$TARGET_DIR/.pip/method/"
 cp "$PIP_DIR/ia/agent_manifest.yml" "$TARGET_DIR/.pip/ia/"
 
 # Copy agents based on selection
-echo "👥 Setting up agent roles..."
-[ "$USE_CEO" = "true" ] && cp -r "$PIP_DIR/ia/agents/ceo" "$TARGET_DIR/.pip/ia/agents/"
-[ "$USE_CTO" = "true" ] && cp -r "$PIP_DIR/ia/agents/cto" "$TARGET_DIR/.pip/ia/agents/"
-[ "$USE_CPO" = "true" ] && cp -r "$PIP_DIR/ia/agents/cpo" "$TARGET_DIR/.pip/ia/agents/"
-[ "$USE_CISO" = "true" ] && cp -r "$PIP_DIR/ia/agents/ciso" "$TARGET_DIR/.pip/ia/agents/"
-[ "$USE_CMO" = "true" ] && cp -r "$PIP_DIR/ia/agents/cmo" "$TARGET_DIR/.pip/ia/agents/"
-[ "$USE_CRO" = "true" ] && cp -r "$PIP_DIR/ia/agents/cro" "$TARGET_DIR/.pip/ia/agents/"
+if [ "$USE_AGENTIC_FRAMEWORK" = "true" ]; then
+    echo "👥 Setting up agent roles..."
+    [ "$USE_CEO" = "true" ] && cp -r "$PIP_DIR/ia/agents/ceo" "$TARGET_DIR/.pip/ia/agents/"
+    [ "$USE_CTO" = "true" ] && cp -r "$PIP_DIR/ia/agents/cto" "$TARGET_DIR/.pip/ia/agents/"
+    [ "$USE_CPO" = "true" ] && cp -r "$PIP_DIR/ia/agents/cpo" "$TARGET_DIR/.pip/ia/agents/"
+    [ "$USE_CISO" = "true" ] && cp -r "$PIP_DIR/ia/agents/ciso" "$TARGET_DIR/.pip/ia/agents/"
+    [ "$USE_CMO" = "true" ] && cp -r "$PIP_DIR/ia/agents/cmo" "$TARGET_DIR/.pip/ia/agents/"
+    [ "$USE_CRO" = "true" ] && cp -r "$PIP_DIR/ia/agents/cro" "$TARGET_DIR/.pip/ia/agents/"
+    [ "$USE_COO" = "true" ] && cp -r "$PIP_DIR/ia/agents/coo" "$TARGET_DIR/.pip/ia/agents/" 2>/dev/null || true
+
+    # Copy agentic framework documentation
+    echo "🤖 Setting up agentic framework documentation..."
+    if [ -f "$PIP_DIR/AGENTS.md" ]; then
+        cp "$PIP_DIR/AGENTS.md" "$TARGET_DIR/.pip/"
+    fi
+
+    # Copy agentic design pattern resources
+    if [ -f "$PIP_DIR/blog/2025-12-17-agentic-design-patterns.md" ]; then
+        mkdir -p "$TARGET_DIR/.pip/docs/references"
+        cp "$PIP_DIR/blog/2025-12-17-agentic-design-patterns.md" "$TARGET_DIR/.pip/docs/references/"
+    fi
+
+    if [ -f "$PIP_DIR/blog/2025-12-19-agent-workflow-documents.md" ]; then
+        mkdir -p "$TARGET_DIR/.pip/docs/references"
+        cp "$PIP_DIR/blog/2025-12-19-agent-workflow-documents.md" "$TARGET_DIR/.pip/docs/references/"
+    fi
+
+    if [ -f "$PIP_DIR/docs/agentic-benefits.md" ]; then
+        cp "$PIP_DIR/docs/agentic-benefits.md" "$TARGET_DIR/.pip/docs/"
+    fi
+fi
 
 # Copy graph files based on selection
 echo "🌐 Setting up product surfaces..."
@@ -244,10 +292,21 @@ echo -e "${GREEN}✨ Bootstrap complete! 🎉${NC}"
 echo
 echo -e "${YELLOW}Next steps:${NC}"
 echo "  1. Review and customize .pip/mission/mission.md"
-echo "  2. Update .pip/ia/agent_manifest.yml with owner assignments"
-[ "$HAS_PRODUCT_APP" = "true" ] && echo "  3. Define your product flows in .pip/graph/product-app.md"
-[ "$SETUP_ENVRC" = "true" ] && echo "  4. Add your secrets to .envrc"
-[ "$USE_NX_FRAGMENT" = "true" ] && echo "  5. Run: nx run infra:up"
+if [ "$USE_AGENTIC_FRAMEWORK" = "true" ]; then
+    echo "  2. Read .pip/AGENTS.md to understand agent collaboration"
+    echo "  3. Update .pip/ia/agent_manifest.yml with owner assignments"
+    echo "  4. Review agentic workflow patterns in .pip/docs/references/"
+    step=5
+else
+    echo "  2. Update .pip/ia/agent_manifest.yml with owner assignments"
+    step=3
+fi
+[ "$HAS_PRODUCT_APP" = "true" ] && echo "  $step. Define your product flows in .pip/graph/product-app.md" && step=$((step+1))
+[ "$SETUP_ENVRC" = "true" ] && echo "  $step. Add your secrets to .envrc" && step=$((step+1))
+[ "$USE_NX_FRAGMENT" = "true" ] && echo "  $step. Run: nx run infra:up"
 echo
 echo -e "${BLUE}📖 Read .pip/README.md for full documentation${NC}"
+if [ "$USE_AGENTIC_FRAMEWORK" = "true" ]; then
+    echo -e "${BLUE}🤖 Agentic framework enabled! See .pip/AGENTS.md for workflow guide${NC}"
+fi
 echo

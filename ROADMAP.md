@@ -1,6 +1,16 @@
 # .pip Roadmap
 
-This document outlines the strategic direction and planned features for the `.pip` framework.
+> **📋 Active Roadmap:** The roadmap is now managed in [GitHub Issues and Projects](https://github.com/users/derrybirkett/projects/4).
+> 
+> This document provides strategic context and vision. For detailed tasks, progress tracking, and deliverables, see the GitHub Project.
+
+## Quick Navigation
+
+- **[Project Board](https://github.com/users/derrybirkett/projects/4)** - Kanban view of all roadmap items
+- **[All Roadmap Issues](https://github.com/derrybirkett/pip/issues?q=is%3Aissue+label%3Aroadmap)** - Complete list
+- **[Initiative 1: Agentic System](https://github.com/derrybirkett/pip/issues/59)** - Epic issue
+- **[Initiative 2: Fragments](https://github.com/derrybirkett/pip/issues/60)** - Epic issue
+- **[Milestones](https://github.com/derrybirkett/pip/milestones)** - Version tracking
 
 ## Vision
 
@@ -261,6 +271,157 @@ This provides:
 - Existing astro-blog fragment
 - Supabase account (free tier sufficient)
 - Expo account (free tier sufficient)
+
+---
+
+### 🎯 Initiative 3: PIP Runtime Adapter - Persistent Execution Environments
+
+**Goal**: Enable agents to work with persistent runtimes (local, Docker, Sprites, or others) through a unified adapter interface for reliable, safe, and flexible execution.
+
+**Timeline**: 4 weeks  
+**Status**: 📋 Ready to begin  
+**Plan ID**: TBD
+
+#### Problem Statement
+
+`.pip` organisms need to execute commands and manage file systems reliably across different runtime substrates. Currently:
+1. No unified interface for different execution environments (local, Docker, Sprites)
+2. No persistent checkpointing or rollback capabilities
+3. No consistent file system contract across runtimes
+4. No safe preview URL generation for deployed applications
+5. Missing abstraction for agent-safe command execution
+
+#### Overview
+
+The PIP runtime adapter abstracts over different execution substrates so agents can:
+- Persist and read/write files in a `.pip/` workspace
+- Execute shell commands safely inside the runtime
+- Create and restore checkpoints of the environment
+- Serve preview URLs when applicable
+
+#### Runtime Interface
+
+A runtime adapter implements these core functions:
+
+| Function            | Description                                                                        |
+| ------------------- | ---------------------------------------------------------------------------------- |
+| `create()`          | Initialize the runtime environment if it doesn't exist (e.g. create a container).  |
+| `start()`           | Boot up the environment so it's ready to run commands.                             |
+| `exec(cmd)`         | Execute a shell command within the runtime.                                        |
+| `stop()`            | Gracefully stop the environment.                                                   |
+| `destroy()`         | Remove the environment and its data.                                               |
+| `checkpoint()`      | Create a checkpoint of the runtime state.                                          |
+| `restore(name)`     | Restore a previously created checkpoint.                                           |
+| `fs_path()`         | Return the host‑side path to the runtime's persistent file system (for debugging). |
+| `preview_url(port)` | Return a URL to access a port running in the runtime (if supported).               |
+
+**Note:** Adapters that do not support preview URLs (e.g. pure local) can return `None` for `preview_url()`.
+
+#### `.pip/` Directory Contract
+
+Each organism's repository includes a `.pip/` folder with structured subfolders to guide agent behavior:
+
+* `.pip/memory/` — persistent notes, decisions, and context files created by agents
+* `.pip/tasks/` — queued work unit descriptions (e.g., JSON or Markdown tasks)
+* `.pip/output/` — generated artifacts (reports, code files, etc.)
+* `.pip/runtime/` — logs, receipts, and the runtime's own state metadata (e.g., last checkpoint name)
+
+The runtime adapter mounts or creates these directories inside the runtime's file system. Agents use simple file primitives (`read`, `write`, `list`, `search`, `delete`) to interact with them.
+
+#### CLI Commands
+
+Runtime actions are exposed through the PIP CLI:
+
+* `pip runtime create --adapter=<local|docker|sprites>`
+  Initialize a runtime for the current organism.
+
+* `pip runtime start`
+  Boot the runtime environment; runs background processes if needed.
+
+* `pip runtime exec "<shell command>"`
+  Execute a shell command within the runtime.
+
+* `pip runtime checkpoint --name=<checkpoint_name>`
+  Save a checkpoint of the current runtime state.
+
+* `pip runtime restore --name=<checkpoint_name>`
+  Restore the runtime to a checkpoint.
+
+* `pip preview`
+  If supported, start the organism's app and return a public preview URL.
+
+* `pip runtime destroy`
+  Tear down the runtime and clean up all resources.
+
+#### Adapter Implementations
+
+**Local Adapter**:
+- `create/start:` Ensures `.pip/` directories exist on the host
+- `exec:` Runs commands in the host shell; no isolation
+- `checkpoint/restore:` File system snapshots (if supported) or skipped
+- `preview_url:` Not applicable; agents rely on direct host networking
+
+**Docker Adapter**:
+- `create/start:` Create a container image and volume to persist `.pip/`
+- `exec:` Use `docker exec` to run commands inside the container
+- `checkpoint/restore:` Docker's checkpoint/restore features (CRIU on Linux)
+- `preview_url:` Port‑map from container to host; no public URL unless integrated with tunneling
+
+**Sprites Adapter**:
+- `create/start:` Use Sprites API to create/start a user sandbox with persistent storage
+- `exec:` Send commands via the Sprites API
+- `checkpoint/restore:` Utilize Sprites' built‑in checkpoint support
+- `preview_url:` Use the unique HTTPS endpoint provided per sandbox
+
+#### Phases Overview
+
+**Phase 1: Interface & Local Adapter** - 1 week
+- Define runtime adapter interface in TypeScript/Python
+- Implement local adapter
+- Create `.pip/runtime/` directory structure and logging
+- Unit tests for local adapter
+
+**Phase 2: Docker Adapter** - 1 week
+- Implement Docker adapter with volume persistence
+- Docker image bootstrapping
+- Container lifecycle management
+- Integration tests
+
+**Phase 3: CLI Integration** - 1 week
+- Add `pip runtime` commands to unified CLI
+- Command parsing and validation
+- Help and examples
+- Preview URL integration with `pip preview`
+
+**Phase 4: Sprites Adapter & Production** - 1 week
+- Implement Sprites adapter
+- Security review and hardening
+- Documentation and examples
+- Blog post and release
+
+#### Security Considerations
+
+* **Secret Management:** Runtime adapters never expose API tokens to agents. Secrets are managed server‑side and proxied through secure functions.
+* **Isolation:** Docker and Sprites provide isolation; local adapter is flagged for lower‑trust scenarios.
+* **Resource Limits:** Define CPU/memory/time limits for `exec()` calls to avoid runaway tasks.
+
+#### Success Metrics
+- **Adapter coverage**: 3 adapters (local, Docker, Sprites) fully working
+- **Checkpoint reliability**: 100% successful create/restore cycles
+- **Agent adoption**: All new organisms use runtime adapters by default
+- **Setup time**: Adapter initialization in <5 minutes per runtime type
+- **Security**: Zero exposed secrets in adapter logs or output
+
+#### Risk Mitigation
+- **Docker complexity**: Start with local adapter, provide Docker docs
+- **Sprites API changes**: Abstract API calls, pin API version
+- **Resource runaway**: Implement timeout and memory limits from day one
+
+#### Dependencies
+- Existing `.pip/` directory structure and file system
+- Unified CLI infrastructure (`bin/pip`)
+- Docker (optional, for Docker adapter)
+- Sprites SDK (optional, for Sprites adapter)
 
 ---
 
@@ -535,19 +696,54 @@ This provides:
 
 ---
 
-## Contributing to Roadmap
+## Using the GitHub Roadmap
 
-This roadmap is a living document. To propose changes:
+### How to Navigate
 
-1. Open an issue with tag `roadmap-proposal`
-2. Describe the feature and its value
-3. Estimate effort and dependencies
-4. CPO reviews and prioritizes
-5. CEO approves strategic alignment
+**Project Views:**
+- **Board View** - Kanban board showing Backlog → Ready → In Progress → Review → Done
+- **Table View** - All fields visible for filtering and bulk operations
+- **Roadmap View** - Timeline visualization by milestone
+- **By Initiative** - Group issues by strategic initiative
 
-For detailed implementation plans, see the Plans section in Warp.
+**Finding Work:**
+```bash
+# See all roadmap issues
+gh issue list --label roadmap
+
+# Filter by milestone
+gh issue list --milestone "v1.1.0: Foundation"
+
+# Filter by initiative
+gh issue list --label initiative-1-agentic
+
+# Find unassigned tasks
+gh issue list --label roadmap --assignee ""
+```
+
+### Contributing to Roadmap
+
+To propose new roadmap items:
+
+1. **Use the issue template**: Create a new issue using the "Roadmap Item" template
+2. **Describe value**: Explain the problem and proposed solution
+3. **Estimate effort**: Use XS/S/M/L/XL sizing
+4. **Add labels**: Tag with initiative, agent role, and type
+5. **CPO triage**: CPO reviews weekly and adds to project if approved
+6. **CEO approval**: Strategic initiatives require CEO sign-off
+
+### Working on Roadmap Items
+
+1. **Pick an issue** from the project board (Ready column)
+2. **Self-assign** or ask to be assigned
+3. **Create PR** referencing the issue number
+4. **Link to milestone** if it's part of a version goal
+5. **Update project**: Status auto-updates when PR created
+
+For detailed implementation plans, see the Plans section in Warp or create a plan document.
 
 ---
 
-**Last Updated**: 2025-12-09  
-**Next Review**: End of Milestone 1 (v0.4.0)
+**Roadmap Ownership**: COO (process), CPO (priorities), CEO (strategy)  
+**Last Updated**: 2026-01-11  
+**Next Review**: Weekly roadmap triage

@@ -67,15 +67,14 @@ printf "   > "
 read -r DIFFERENTIATOR
 echo
 
-echo -e "${GREEN}6. What Type of Project?${NC}"
-echo "   1) Web App"
-echo "   2) Mobile App"  
-echo "   3) Full-stack (Web + API)"
-echo "   4) API/Backend Service"
-echo "   5) CLI Tool"
-echo "   6) Other"
-printf "   > "
-read -r PROJECT_TYPE
+echo -e "${GREEN}6. Enable Agentic Framework?${NC}"
+echo "   The agentic framework enables AI-first development with:"
+echo "   • Role-based agent collaboration (CEO, CTO, CPO, CISO, etc.)"
+echo "   • Formal workflow patterns (ReAct, Planning, Reflection)"
+echo "   • Decision rights and handoff protocols"
+echo
+echo -n "   Enable agentic framework? (y/N): "
+read -r AGENTIC_RESPONSE
 echo
 
 # Strip control characters from all inputs
@@ -84,22 +83,14 @@ PRIMARY_USER=$(echo "$PRIMARY_USER" | tr -d '[:cntrl:]')
 PROBLEM=$(echo "$PROBLEM" | tr -d '[:cntrl:]')
 SOLUTION=$(echo "$SOLUTION" | tr -d '[:cntrl:]')
 DIFFERENTIATOR=$(echo "$DIFFERENTIATOR" | tr -d '[:cntrl:]')
-PROJECT_TYPE=$(echo "$PROJECT_TYPE" | tr -d '[:cntrl:]')
+AGENTIC_RESPONSE=$(echo "$AGENTIC_RESPONSE" | tr -d '[:cntrl:]')
 
-# Determine project type text
-case $PROJECT_TYPE in
-  1) PROJECT_TYPE_TEXT="Web application" ;;
-  2) PROJECT_TYPE_TEXT="Mobile application" ;;
-  3) PROJECT_TYPE_TEXT="Full-stack application" ;;
-  4) PROJECT_TYPE_TEXT="API/Backend service" ;;
-  5) PROJECT_TYPE_TEXT="CLI tool" ;;
-  *) 
-    echo "   What type of project is it?"
-    printf "   > "
-    read -r PROJECT_TYPE_TEXT
-    PROJECT_TYPE_TEXT=$(echo "$PROJECT_TYPE_TEXT" | tr -d '[:cntrl:]')
-    ;;
-esac
+# Determine if agentic framework should be enabled
+if [[ "$AGENTIC_RESPONSE" =~ ^[Yy] ]]; then
+  IS_AGENTIC_PROJECT=true
+else
+  IS_AGENTIC_PROJECT=false
+fi
 echo
 
 echo "────────────────────────────────────────────────────────────────"
@@ -123,9 +114,6 @@ ${PROBLEM}
 ${SOLUTION}
 
 **Differentiator**: ${DIFFERENTIATOR}
-
-## Project Type
-${PROJECT_TYPE_TEXT}
 
 ## Why It Matters (Vision & Outcomes)
 - **Vision**: <Describe where you want to be in 12-24 months>
@@ -164,6 +152,57 @@ fi
 if [ -f ".pip/docs/templates/organism-dev.md" ]; then
   cp .pip/docs/templates/organism-dev.md docs/dev.md
   echo -e "${GREEN}✅ Created docs/dev.md${NC}"
+fi
+
+# If agentic project, set up agent infrastructure
+if [ "$IS_AGENTIC_PROJECT" = "true" ]; then
+  echo
+  echo -e "${BLUE}Setting up agentic framework...${NC}"
+
+  # Create .pip directory structure for agents
+  mkdir -p .pip/{ia/agents,method,mission}
+
+  # Copy agent manifest
+  if [ -f ".pip/ia/agent_manifest.yml" ]; then
+    echo -e "${GREEN}✅ Agent manifest already available${NC}"
+  fi
+
+  # Copy AGENTS.md for reference
+  if [ -f ".pip/AGENTS.md" ]; then
+    cp .pip/AGENTS.md docs/agents-reference.md
+    echo -e "${GREEN}✅ Created docs/agents-reference.md${NC}"
+  fi
+
+  # Copy delivery method
+  if [ -f ".pip/method/delivery-method.md" ]; then
+    cp .pip/method/delivery-method.md docs/delivery-method.md
+    echo -e "${GREEN}✅ Created docs/delivery-method.md${NC}"
+  fi
+
+  # Copy agentic design patterns blog post if available
+  if [ -f ".pip/blog/2025-12-17-agentic-design-patterns.md" ]; then
+    mkdir -p docs/references
+    cp .pip/blog/2025-12-17-agentic-design-patterns.md docs/references/
+    echo -e "${GREEN}✅ Created docs/references/agentic-design-patterns.md${NC}"
+  fi
+
+  if [ -f ".pip/blog/2025-12-19-agent-workflow-documents.md" ]; then
+    mkdir -p docs/references
+    cp .pip/blog/2025-12-19-agent-workflow-documents.md docs/references/
+    echo -e "${GREEN}✅ Created docs/references/agent-workflow-documents.md${NC}"
+  fi
+
+  echo
+  echo -e "${YELLOW}📋 Agentic Framework Setup Complete!${NC}"
+  echo
+  echo "Your project is configured for AI-first development with:"
+  echo "  • Agent collaboration framework (CEO, CTO, CPO, CISO, etc.)"
+  echo "  • Workflow patterns (ReAct, Planning, Reflection)"
+  echo "  • Decision rights and handoff protocols"
+  echo
+  echo "Run the full wizard to select specific agents:"
+  echo "  ./.pip/bin/bootstrap.sh"
+  echo
 fi
 
 # Seed local env conventions (direnv)
@@ -223,9 +262,26 @@ ${PROBLEM}
 
 ## Solution
 
-${PROJECT_TYPE_TEXT} that ${SOLUTION,,}
+A full-stack SaaS product that ${SOLUTION,,}
 
 **What makes it different**: ${DIFFERENTIATOR}
+
+## Product Structure
+
+This project follows PIP's opinionated product graph:
+
+- **Marketing Website** - Landing pages, pricing, public content
+- **Product App** - SaaS dashboard with authentication
+- **Auth Boundary** - Secure login, signup, password recovery
+- **API** - Backend services integrated with the product app
+- **Blog** (Optional) - Content marketing and updates
+
+### Tech Stack
+- **Monorepo**: Nx
+- **UI**: React with ShadCN UI components
+- **Backend**: Supabase (Postgres + Auth)
+- **Payments**: Stripe
+- **Operations**: Docker
 
 ## Documentation
 
@@ -274,8 +330,7 @@ nx serve marketing
 
 ---
 
-**Primary User**: ${PRIMARY_USER}  
-**Project Type**: ${PROJECT_TYPE_TEXT}
+**Primary User**: ${PRIMARY_USER}
 EOF
 
 echo -e "${GREEN}✅ Created README.md${NC}"
@@ -307,13 +362,21 @@ echo "  • Pull request template (.github/PULL_REQUEST_TEMPLATE.md)"
 echo "  • Issue templates + CODEOWNERS stub (.github/*)"
 echo "  • README with your project story"
 echo "  • Cursor AI rules (.cursorrules)"
+if [ "$IS_AGENTIC_PROJECT" = "true" ]; then
+  echo "  • Agent collaboration framework (docs/agents-reference.md)"
+  echo "  • Delivery method (docs/delivery-method.md)"
+  echo "  • Agentic design patterns (docs/references/)"
+fi
 echo
 echo -e "${YELLOW}Next steps:${NC}"
 echo "  1. Review and customize docs/mission.md"
-echo "  2. (Optional) Initialize Nx: npx nx@latest init --integrated"
-echo "  3. (Optional) Apply infra: ./.pip/bin/apply-nx-dev-infra.sh"
+echo "  2. Initialize Nx workspace: npx nx@latest init --integrated"
+echo "  3. Apply dev infrastructure: ./.pip/bin/apply-nx-dev-infra.sh"
 echo "  4. Scaffold product surfaces: ./.pip/bin/apply-nx-product-surfaces.sh"
-echo "  5. Start app + marketing: nx serve app / nx serve marketing"
+echo "       (Creates: marketing site + product app + auth boundary)"
+echo "  5. Start development:"
+echo "       nx serve app         # Product app on http://localhost:4200"
+echo "       nx serve marketing   # Marketing site on http://localhost:4300"
 echo
 echo -e "${BLUE}Happy building! 🚀${NC}"
 echo
