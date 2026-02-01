@@ -36,13 +36,23 @@ Containerized Nx development environment with Postgres and n8n.
 [Full documentation →](../fragments/nx-dev-infra/README.md)
 
 ### nx-product-surfaces
-Scaffolds common product surfaces in an Nx workspace.
+Scaffolds common product surfaces in an Nx workspace with modern UI and E2E testing.
 
 **Provides:**
-- `apps/app` (logged-in product surface)
+- `apps/app` (logged-in product surface with ShadCN UI)
 - `apps/marketing` (marketing surface)
 - `libs/auth` (provider-swappable auth boundary)
+- **ShadCN UI Components** (Button, Input) with Tailwind CSS
+- **Integration system** with settings management
+- **Widget system** with placeholder GitHub repos widget
+- **Playwright E2E tests** for complete user flow
 - `docs/graph/*` templates copied into your organism
+
+**Tech Stack:**
+- ShadCN UI + Tailwind CSS
+- Radix UI primitives
+- Playwright for E2E testing
+- TypeScript path aliases (@/)
 
 **When to use:** Starting a SaaS-style product that will need marketing + app + auth.
 

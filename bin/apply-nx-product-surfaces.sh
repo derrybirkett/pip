@@ -148,12 +148,119 @@ copy_graph "marketing-website"
 copy_graph "blog"
 
 echo
-echo "🎨 Applying basestation app templates..."
+echo "📦 Installing Tailwind CSS and ShadCN dependencies..."
+pm_add_dev tailwindcss postcss autoprefixer @radix-ui/react-slot class-variance-authority clsx tailwind-merge
+echo "✅ Installed Tailwind and ShadCN dependencies"
+
+echo
+echo "📦 Installing Playwright for E2E testing..."
+pm_add_dev @playwright/test
+echo "✅ Installed Playwright"
+
+echo
+echo "🎨 Applying app templates (ShadCN UI, auth, integrations, widgets)..."
 mkdir -p apps/app/src/auth
+mkdir -p apps/app/src/components/ui
+mkdir -p apps/app/src/integrations
+mkdir -p apps/app/src/widgets
+mkdir -p apps/app/src/lib
+
+# Copy App.tsx and styling
 cp "$PIP_DIR/resources/nx-product-surfaces/App.tsx" apps/app/src/app/app.tsx
+cp "$PIP_DIR/resources/nx-product-surfaces/app.css" apps/app/src/app/app.css
+
+# Copy auth templates
 cp "$PIP_DIR/resources/nx-product-surfaces/auth/auth-session.tsx" apps/app/src/auth/auth-session.tsx
 cp "$PIP_DIR/resources/nx-product-surfaces/auth/auth-adapter.tsx" apps/app/src/auth/auth-adapter.tsx
-echo "✅ Applied App.tsx and auth templates"
+
+# Copy ShadCN UI components
+cp "$PIP_DIR/resources/nx-product-surfaces/components/ui/button.tsx" apps/app/src/components/ui/button.tsx
+cp "$PIP_DIR/resources/nx-product-surfaces/components/ui/input.tsx" apps/app/src/components/ui/input.tsx
+
+# Copy integrations
+cp "$PIP_DIR/resources/nx-product-surfaces/integrations/integration-settings.ts" apps/app/src/integrations/integration-settings.ts
+cp "$PIP_DIR/resources/nx-product-surfaces/integrations/use-integration-settings.ts" apps/app/src/integrations/use-integration-settings.ts
+
+# Copy widgets
+cp "$PIP_DIR/resources/nx-product-surfaces/widgets/repos-widget.tsx" apps/app/src/widgets/repos-widget.tsx
+
+# Copy utilities
+cp "$PIP_DIR/resources/nx-product-surfaces/lib/utils.ts" apps/app/src/lib/utils.ts
+
+echo "✅ Applied all templates"
+
+echo
+echo "⚙️  Configuring Tailwind CSS..."
+cat > tailwind.config.js <<'EOF'
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    "./apps/*/src/**/*.{js,jsx,ts,tsx}",
+  ],
+  theme: {
+    extend: {
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+      },
+      colors: {
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+      },
+    },
+  },
+  plugins: [],
+}
+EOF
+echo "✅ Created tailwind.config.js"
+
+echo
+echo "⚙️  Configuring path aliases (@/)..."
+if [ -f "tsconfig.base.json" ]; then
+  # Update tsconfig.base.json to add path alias
+  node -e "
+    const fs = require('fs');
+    const tsconfig = JSON.parse(fs.readFileSync('tsconfig.base.json', 'utf8'));
+    if (!tsconfig.compilerOptions.paths) tsconfig.compilerOptions.paths = {};
+    tsconfig.compilerOptions.paths['@/*'] = ['apps/app/src/*'];
+    fs.writeFileSync('tsconfig.base.json', JSON.stringify(tsconfig, null, 2));
+  "
+  echo "✅ Updated tsconfig.base.json with @/* path alias"
+else
+  echo "⚠️  tsconfig.base.json not found, skipping path alias config"
+fi
 
 echo
 
@@ -161,8 +268,10 @@ echo "✨ Product surfaces scaffold complete!"
 echo
 
 echo "Next steps:"
-echo "  1) (Optional) Apply infra: ./.pip/bin/apply-nx-dev-infra.sh"
-echo "  2) Start app: nx serve app"
-echo "  3) Start marketing: nx serve marketing"
-echo "  4) Choose auth provider later by implementing an adapter behind libs/auth"
+echo "  1) Initialize Playwright: npx playwright install"
+echo "  2) (Optional) Apply infra: ./.pip/bin/apply-nx-dev-infra.sh"
+echo "  3) Start app: nx serve app"
+echo "  4) Start marketing: nx serve marketing"
+echo "  5) Run E2E tests: npx playwright test"
+echo "  6) Choose auth provider by implementing an adapter behind libs/auth"
 echo ""

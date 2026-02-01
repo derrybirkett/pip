@@ -5,6 +5,17 @@ All notable changes to the `.pip` framework are documented here.
 ## Unreleased
 
 ### Added
+- **ShadCN UI + Playwright E2E Testing for nx-product-surfaces**
+  - Complete ShadCN UI components (Button, Input) with Tailwind CSS integration
+  - Utility function (`lib/utils.ts`) for className merging with clsx and tailwind-merge
+  - Integration settings system with localStorage persistence and React hooks
+  - Widget system with placeholder GitHub repos widget
+  - Playwright E2E test template covering complete user flow (marketing→login→app→logout)
+  - Additional E2E tests for GitHub integration toggle and widget conditional display
+  - Automatic Tailwind CSS configuration with ShadCN design tokens and CSS variables
+  - TypeScript path alias (@/) configuration in tsconfig.base.json
+  - Apply script now installs all dependencies and copies all templates
+  - Makes nx-product-surfaces fragment production-ready
 - **Nx workspace wrappers for kernel scripts**
   - Adds `nx.json` + `project.json` so you can run common tasks via `nx run pip:<target>`
   - Adds `package.json` with Nx as a dev dependency for contributors working on the kernel repo

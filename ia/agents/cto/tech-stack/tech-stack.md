@@ -5,7 +5,10 @@
 - Package/task orchestration and caching
 
 ## UI
-- ShadCN UI components
+- **ShadCN UI** - Accessible React component library built on Radix UI
+  - Tailwind CSS for styling
+  - Customizable design tokens via CSS variables
+  - Components: Button, Input, and extensible catalog
 - Design tokens and theming
 
 ## Backend/Data
@@ -13,8 +16,11 @@
 - Consider Redis (caching/queues) and GraphQL where needed
 
 ## Testing
-- Playwright for E2E
-- Unit/integration with project-preferred frameworks
+- **Playwright** for E2E testing
+  - Cross-browser testing (Chromium, Firefox, WebKit)
+  - Complete user flow testing
+  - Template includes marketing → login → app → logout flow
+- Unit/integration with project-preferred frameworks (Vitest)
 
 ## Payments
 - Stripe for payments and billing

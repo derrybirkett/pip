@@ -33,9 +33,8 @@ Log new agent activity for each commit: who did what and why.
 | 2026-01-05 | CTO | (v2) site extraction | Extracted the public website/blog into a separate `pip-blog` organism repo | Reduce cognitive load and keep this repo focused on the `.pip` kernel (genome); organisms can still inherit governance/tooling via the `.pip` submodule model | docs/changelog.md, ROADMAP.md, README.md |
 | 2026-01-05 | CTO | feat/nx-and-modes-migration | Added Nx workspace wrappers and explicit execution modes (PIP_MODE) | Make agent autonomy explicit at runtime; provide a task runner to orchestrate existing scripts without changing their behavior | package.json, nx.json, project.json, bin/pip, docs/policies/agent-autonomy-guardrails.md, WARP.md |
 | 2026-01-05 | CTO | feat/modes-and-piprc | Added first-class organism configuration via `.piprc` with `pip migrate`/`pip mode`, introduced `PIP_ACTION_MODE` (live/confirm/dry-run) to make execution strategy explicit, and removed stale `INDEX.md` references across docs | Improve portability and testability of the framework while keeping side effects explicit and controllable | bin/pip, bin/bootstrap.sh, docs/tools/piprc.md, docs/templates/organism-piprc.example, WARP.md |
-| YYYY-MM-DD | <agent> | <hash or #PR> | <summary> | <decision/assumption> | <issue/docs> |
-
-Guidance:
+| 2026-02-01 | CTO | PR #99 | Complete ShadCN UI + Playwright integration for nx-product-surfaces | Transform pip into opinionated modern framework with ShadCN components (Button, Input), Tailwind CSS, integration/widget systems, and comprehensive E2E testing covering marketing->login->app->logout flow | resources/nx-product-surfaces/, bin/apply-nx-product-surfaces.sh, docs/fragments-guide.md, ia/agents/cto/tech-stack/tech-stack.md |
+- Reference related issue, doc, or decision.
 - One row per meaningful change merged to `main`.
 - Reference related issue, doc, or decision.
 - Keep rationale concise and actionable for future readers.
