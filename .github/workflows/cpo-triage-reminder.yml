@@ -1,8 +1,6 @@
 name: CPO Triage Reminder
 
 on:
-  schedule:
-    - cron: '0 9 * * 1'  # Monday 9 AM UTC
   workflow_dispatch:
 
 jobs:
