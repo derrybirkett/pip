@@ -5,6 +5,15 @@ All notable changes to the `.pip` framework are documented here.
 ## Unreleased
 
 ### Added
+- **Organism Registry** (`registry/`, `bin/pip registry`)
+  - Central YAML manifest (`registry/organisms.yml`) inventorying all projects in the portfolio
+  - `pip registry list` — color-coded table of organisms with type, status, and notes
+  - `pip registry status` — health checks: path existence, git repo, .pip submodule, activity log, changelog, staleness (>30d warning)
+  - `pip registry sync` — updates `last_activity` dates from each organism's latest git commit
+  - `pip registry add <name>` — interactive organism registration
+  - COO-owned, with Nx target (`nx run pip:registry`)
+  - Cleaned up empty stub directories (genome, pantry) from experimental workspace
+
 - **ShadCN UI + Playwright E2E Testing for nx-product-surfaces**
   - Complete ShadCN UI components (Button, Input) with Tailwind CSS integration
   - Utility function (`lib/utils.ts`) for className merging with clsx and tailwind-merge

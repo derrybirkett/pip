@@ -24,6 +24,10 @@ Secrets belong in `.envrc`, never in repo files. Follow `ia/agents/ciso/security
 
 ## Command Glossary
 - **ok wrap up** — (COO-owned) Run `bin/wrap-up.sh` to walk through the wrap process: confirm `docs/processes/wrap-up-checklist.md`, update the activity log and changelog, stage everything, prompt for a commit message, optionally tag (e.g., `v0.4.0`), and push code + tags back to GitHub.
+- **pip registry list** — (COO-owned) List all organisms in the portfolio with type, status, and notes.
+- **pip registry status** — (COO-owned) Health check: scan each organism path for .pip submodule presence, activity-log freshness, changelog existence, and staleness.
+- **pip registry sync** — (COO-owned, requires `execute` mode) Update `last_activity` dates in `registry/organisms.yml` from each organism's latest git commit.
+- **pip registry add \<name\>** — (COO-owned, requires `execute` mode) Interactively add a new organism to the registry.
 
 
 <!-- nx configuration start-->

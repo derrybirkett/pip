@@ -1,0 +1,34 @@
+# Organism Registry
+# Central inventory of all projects consuming pip as genome.
+# Owned by: COO
+#
+# Schema:
+#   name:               Project name (unique identifier)
+#   path:               Local filesystem path (~ expands to $HOME)
+#   repo:               Remote repository URL (optional)
+#   type:               saas | blog | design-system | tool | experiment | infra
+#   status:             active | experimental | archived | stub
+#   pip_submodule:      true | false — whether .pip is embedded as git submodule
+#   fragments_applied:  List of pip fragments applied to this organism
+#   last_activity:      ISO date of last known meaningful change
+#   notes:              Free-text context for agents
+#
+# Lifecycle statuses:
+#   active        — Under active development, has regular commits
+#   experimental  — Exploratory work, may or may not continue
+#   archived      — No longer maintained, kept for reference
+#   stub          — Placeholder with no meaningful code yet
+
+organisms:
+  - name: basestation
+    path: ~/Sites/gh/basestation
+    repo: github.com/derrybirkett/basestation
+    type: saas
+    status: active
+    pip_submodule: true
+    fragments_applied:
+      - nx-dev-infra
+      - nx-product-surfaces
+    last_activity: 2026-02-01
+    notes: "Flagship SaaS product — one place to pull all data sources into a hub"
+

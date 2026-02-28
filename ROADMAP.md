@@ -668,6 +668,56 @@ Runtime actions are exposed through the PIP CLI:
 
 ---
 
+### 🎯 Initiative 4: Portfolio Maturity — Registry, Blog & Hatch
+
+**Goal**: Systematically manage, monitor, and mature the project portfolio through visibility (registry), voice (blog), and velocity (bootstrapper).
+
+**Timeline**: 4-6 weeks
+**Status**: 🔄 In Progress (Track 3 complete)
+
+#### Problem Statement
+
+Multiple projects exist across `gh/` (published) and `x/` (experimental) with no central coordination. Status is tracked mentally, the blog is still a default template, and spinning up new SaaS projects requires manual repetition of patterns that basestation already proved.
+
+#### Tracks (executed in reverse order)
+
+**Track 3: Project Registry** ✅ Complete (PR #101)
+- `registry/organisms.yml` — central manifest of all organisms
+- `pip registry list|status|sync|add` CLI commands
+- COO-owned, health checks for path/git/.pip/activity-log/staleness
+- Cleaned up empty stub directories (genome, pantry)
+
+**Track 2: Operationalize the Blog** — Next
+- Get monospace-lab (`x/labs.monospace.studio/monospace-lab`) off the default Astro template
+- Brand it as the Monospace Labs blog
+- Wire into wrap-up flow so every feature merge triggers a blog post draft
+- Give the CMO agent a real publishing surface
+- Consider pip's `astro-blog` fragment as starting point
+
+**Track 1: Build Hatch** — After Track 2
+- Consolidate `x/pop` → `x/hatch` into a working CLI
+- `hatch new <project>` scaffolds Nx monorepos pre-wired with:
+  - pip as .pip submodule
+  - Layer design system
+  - Product surfaces (marketing, auth, dashboard, blog)
+  - Playwright E2E tests
+  - Docker dev infrastructure
+- Auto-registers new organisms in `registry/organisms.yml`
+- Replaces manual basestation-style setup with a single command
+
+#### What This Unlocks
+
+Once all three tracks are complete, the development loop becomes:
+**idea → `hatch new` → build with pip agents → wrap up → blog publishes → repeat**
+
+#### Dependencies
+- Track 3 → Track 2 (registry enables CMO to find unreported features)
+- Track 2 → Track 1 (blog must exist before hatch can auto-generate launch posts)
+- Existing fragments: nx-dev-infra, nx-product-surfaces, astro-blog
+- Existing spec: `x/hatch/horizon` (Hatch 0.1 CLI spec)
+
+---
+
 ## Future Considerations (Post v2.0.0)
 
 ### Enhanced Memory Features

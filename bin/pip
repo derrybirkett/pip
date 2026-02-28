@@ -180,6 +180,12 @@ show_help() {
     echo -e "    patterns            List available agentic design patterns"
     echo -e "    pattern <name>      Show specific pattern details"
     echo -e "    "
+    echo -e "  ${YELLOW}Portfolio:${NC}"
+    echo -e "    registry list       List all organisms in the portfolio"
+    echo -e "    registry status     Health check across all organisms"
+    echo -e "    registry sync       Update last_activity dates from git"
+    echo -e "    registry add <name> Add a new organism interactively"
+    echo -e "    "
     echo -e "  ${YELLOW}Information:${NC}"
     echo -e "    mode                Show current execution mode and config source"
     echo -e "    migrate             Create/upgrade .piprc in the project root"
@@ -409,6 +415,282 @@ show_pattern() {
     fi
 }
 
+# ── Registry ────────────────────────────────────────────────────────
+
+REGISTRY_FILE="$KERNEL_ROOT/registry/organisms.yml"
+
+# Expand ~ to $HOME in a path string
+expand_path() {
+    local p="$1"
+    echo "${p/#\~/$HOME}"
+}
+
+registry_list() {
+    if [ ! -f "$REGISTRY_FILE" ]; then
+        echo -e "${RED}Error: Registry not found at $REGISTRY_FILE${NC}"
+        exit 1
+    fi
+
+    echo -e ""
+    echo -e "${BLUE}Organism Registry${NC}"
+    echo -e ""
+
+    awk '
+    /^[[:space:]]*- name:/ { if (name != "") print_row(); reset() }
+    /^[[:space:]]*- name:/       { name = val($0) }
+    /^[[:space:]]*type:/         { typ  = val($0) }
+    /^[[:space:]]*status:/       { stat = val($0) }
+    /^[[:space:]]*notes:/        { note = val($0) }
+    END { if (name != "") print_row() }
+
+    function val(line) {
+        sub(/^[^:]+:[[:space:]]*/, "", line)
+        gsub(/"/, "", line)
+        gsub(/^[[:space:]]+|[[:space:]]+$/, "", line)
+        return line
+    }
+    function reset() { name=""; typ=""; stat=""; note="" }
+    function print_row() {
+        color_on  = "\033[0m"
+        color_off = "\033[0m"
+        if (stat == "active")       color_on = "\033[0;32m"
+        if (stat == "experimental") color_on = "\033[1;33m"
+        if (stat == "archived")     color_on = "\033[0;31m"
+        if (stat == "stub")         color_on = "\033[0;31m"
+        printf "  %-18s %-16s %s%-14s%s %s\n", name, typ, color_on, stat, color_off, note
+    }
+    BEGIN {
+        printf "  \033[0;32m%-18s %-16s %-14s %s\033[0m\n", "NAME", "TYPE", "STATUS", "NOTES"
+        printf "  %-18s %-16s %-14s %s\n", "──────────────────", "────────────────", "──────────────", "────────────────────────────────"
+    }
+    ' "$REGISTRY_FILE"
+    echo -e ""
+}
+
+registry_status() {
+    if [ ! -f "$REGISTRY_FILE" ]; then
+        echo -e "${RED}Error: Registry not found at $REGISTRY_FILE${NC}"
+        exit 1
+    fi
+
+    echo -e ""
+    echo -e "${BLUE}Organism Health Check${NC}"
+    echo -e ""
+
+    # Extract fields using awk with pipe delimiter (safe for shell read)
+    awk '
+    /^[[:space:]]*- name:/ { if (name != "") emit(); reset() }
+    /^[[:space:]]*- name:/       { name = val($0) }
+    /^[[:space:]]*path:/         { path = val($0) }
+    /^[[:space:]]*status:/       { stat = val($0) }
+    /^[[:space:]]*pip_submodule:/{ psub = val($0) }
+    /^[[:space:]]*last_activity:/{ lact = val($0) }
+    END { if (name != "") emit() }
+
+    function val(line) {
+        sub(/^[^:]+:[[:space:]]*/, "", line)
+        gsub(/"/, "", line)
+        gsub(/^[[:space:]]+|[[:space:]]+$/, "", line)
+        return line
+    }
+    function reset() { name=""; path=""; stat=""; psub=""; lact="" }
+    function emit() { printf "%s|%s|%s|%s|%s\n", name, path, stat, psub, lact }
+    ' "$REGISTRY_FILE" | while IFS='|' read -r name path stat psub lact; do
+        local expanded_path
+        expanded_path="$(expand_path "$path")"
+        local issues=""
+
+        # Skip stubs and archived
+        if [ "$stat" = "stub" ] || [ "$stat" = "archived" ]; then
+            echo -e "  ${YELLOW}⊘${NC}  ${name} — ${stat}, skipped"
+            continue
+        fi
+
+        # Check: path exists
+        if [ ! -d "$expanded_path" ]; then
+            issues="${issues}path not found; "
+        else
+            # Check: git repo
+            if [ ! -d "$expanded_path/.git" ]; then
+                issues="${issues}not a git repo; "
+            fi
+
+            # Check: .pip submodule (if expected)
+            if [ "$psub" = "true" ] && [ ! -d "$expanded_path/.pip" ]; then
+                issues="${issues}.pip submodule missing; "
+            fi
+
+            # Check: activity log (only for pip-integrated projects)
+            if [ "$psub" = "true" ] && [ ! -f "$expanded_path/docs/activity-log.md" ]; then
+                issues="${issues}no activity log; "
+            fi
+
+            # Check: changelog (only for pip-integrated projects)
+            if [ "$psub" = "true" ] && [ ! -f "$expanded_path/docs/changelog.md" ]; then
+                issues="${issues}no changelog; "
+            fi
+
+            # Check: staleness (warn if last_activity > 30 days ago)
+            if [ -n "$lact" ]; then
+                local lact_epoch
+                lact_epoch=$(date -j -f "%Y-%m-%d" "$lact" "+%s" 2>/dev/null || echo 0)
+                local now_epoch
+                now_epoch=$(date "+%s")
+                local age_days=$(( (now_epoch - lact_epoch) / 86400 ))
+                if [ "$age_days" -gt 30 ]; then
+                    issues="${issues}stale (${age_days}d since last activity); "
+                fi
+            fi
+        fi
+
+        # Print result
+        if [ -z "$issues" ]; then
+            echo -e "  ${GREEN}✓${NC}  ${name} — healthy"
+        else
+            # Remove trailing "; "
+            issues="${issues%; }"
+            echo -e "  ${YELLOW}⚠${NC}  ${name} — ${issues}"
+        fi
+    done
+
+    echo -e ""
+}
+
+registry_sync() {
+    if [ ! -f "$REGISTRY_FILE" ]; then
+        echo -e "${RED}Error: Registry not found at $REGISTRY_FILE${NC}"
+        exit 1
+    fi
+
+    echo -e ""
+    echo -e "${BLUE}Syncing last_activity from git...${NC}"
+    echo -e ""
+
+    awk '
+    /^[[:space:]]*- name:/ { if (name != "") emit(); reset() }
+    /^[[:space:]]*- name:/       { name = val($0) }
+    /^[[:space:]]*path:/         { path = val($0) }
+    /^[[:space:]]*status:/       { stat = val($0) }
+    /^[[:space:]]*last_activity:/{ lact = val($0) }
+    END { if (name != "") emit() }
+
+    function val(line) {
+        sub(/^[^:]+:[[:space:]]*/, "", line)
+        gsub(/"/, "", line)
+        gsub(/^[[:space:]]+|[[:space:]]+$/, "", line)
+        return line
+    }
+    function reset() { name=""; path=""; stat=""; lact="" }
+    function emit() { printf "%s|%s|%s|%s\n", name, path, stat, lact }
+    ' "$REGISTRY_FILE" | while IFS='|' read -r name path stat lact; do
+        local expanded_path
+        expanded_path="$(expand_path "$path")"
+
+        if [ "$stat" = "stub" ] || [ "$stat" = "archived" ]; then
+            echo -e "  ${YELLOW}⊘${NC}  ${name} — ${stat}, skipped"
+            continue
+        fi
+
+        if [ ! -d "$expanded_path/.git" ]; then
+            echo -e "  ${YELLOW}⚠${NC}  ${name} — not a git repo, skipped"
+            continue
+        fi
+
+        local git_date
+        git_date=$(git -C "$expanded_path" --no-pager log -1 --format='%as' 2>/dev/null || echo "")
+
+        if [ -z "$git_date" ]; then
+            echo -e "  ${YELLOW}⚠${NC}  ${name} — no commits found"
+            continue
+        fi
+
+        if [ "$git_date" != "$lact" ]; then
+            local escaped_name
+            escaped_name=$(printf '%s' "$name" | sed 's/[&/\\]/\\&/g')
+            sed -i '' "/- name: ${escaped_name}/,/^[[:space:]]*- name:/{s/last_activity: .*/last_activity: ${git_date}/;}" "$REGISTRY_FILE"
+            sed -i '' "/- name: ${escaped_name}/,\${s/last_activity: .*/last_activity: ${git_date}/;}" "$REGISTRY_FILE"
+            echo -e "  ${GREEN}↻${NC}  ${name} — updated ${lact} → ${git_date}"
+        else
+            echo -e "  ${GREEN}✓${NC}  ${name} — already current (${lact})"
+        fi
+    done
+
+    echo -e ""
+}
+
+registry_add() {
+    local new_name="$1"
+    if [ -z "$new_name" ]; then
+        echo -e "${RED}Error: Organism name required${NC}"
+        echo -e "Usage: pip registry add <name>"
+        exit 1
+    fi
+
+    # Check for duplicate
+    if grep -q "name: ${new_name}$" "$REGISTRY_FILE" 2>/dev/null; then
+        echo -e "${RED}Error: Organism '${new_name}' already exists in registry${NC}"
+        exit 1
+    fi
+
+    echo -e ""
+    echo -e "${BLUE}Add organism: ${new_name}${NC}"
+    echo -e ""
+
+    local r_path r_repo r_type r_status r_pip r_notes
+
+    read -rp "Local path (e.g. ~/Sites/x/myproject): " r_path
+    read -rp "Remote repo (e.g. github.com/user/repo, or empty): " r_repo
+    echo -e "Types: saas, blog, design-system, tool, experiment, infra"
+    read -rp "Type: " r_type
+    echo -e "Statuses: active, experimental, archived, stub"
+    read -rp "Status [experimental]: " r_status
+    r_status="${r_status:-experimental}"
+    read -rp "Has .pip submodule? [y/N]: " r_pip
+    case "$r_pip" in
+        [Yy]*) r_pip="true" ;;
+        *)     r_pip="false" ;;
+    esac
+    read -rp "Notes: " r_notes
+
+    local today
+    today=$(date "+%Y-%m-%d")
+
+    # Append to YAML
+    cat >> "$REGISTRY_FILE" <<EOF
+
+  - name: ${new_name}
+    path: ${r_path}
+    repo: "${r_repo}"
+    type: ${r_type}
+    status: ${r_status}
+    pip_submodule: ${r_pip}
+    fragments_applied: []
+    last_activity: ${today}
+    notes: "${r_notes}"
+EOF
+
+    echo -e ""
+    echo -e "${GREEN}✓${NC} Added ${new_name} to registry"
+}
+
+registry_help() {
+    echo -e ""
+    echo -e "${BLUE}pip registry${NC} — Portfolio management"
+    echo -e ""
+    echo -e "${GREEN}COMMANDS:${NC}"
+    echo -e "    list               List all organisms with status and type"
+    echo -e "    status             Health check across all organisms"
+    echo -e "    sync               Update last_activity dates from git"
+    echo -e "    add <name>         Add a new organism interactively"
+    echo -e ""
+    echo -e "${GREEN}EXAMPLES:${NC}"
+    echo -e "    pip registry list"
+    echo -e "    pip registry status"
+    echo -e "    pip registry sync"
+    echo -e "    pip registry add my-new-project"
+    echo -e ""
+}
+
 # Main command router
 case "${1:-help}" in
     review)
@@ -490,6 +772,34 @@ case "${1:-help}" in
             exit 1
         fi
         show_pattern "$2"
+        ;;
+
+    registry)
+        subcmd="${2:-help}"
+        case "$subcmd" in
+            list)
+                registry_list
+                ;;
+            status)
+                registry_status
+                ;;
+            sync)
+                require_execute "registry sync"
+                registry_sync
+                ;;
+            add)
+                require_execute "registry add"
+                registry_add "$3"
+                ;;
+            help|--help|-h)
+                registry_help
+                ;;
+            *)
+                echo -e "${RED}Error: Unknown registry command '$subcmd'${NC}"
+                registry_help
+                exit 1
+                ;;
+        esac
         ;;
 
     mode)

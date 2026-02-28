@@ -44,6 +44,9 @@ This repo is now focused on the `.pip` kernel (genome): governance, patterns, fr
 │       ├── cmo/
 │       ├── cro/
 │       └── coo/
+├── registry/                  # Organism portfolio management
+│   ├── organisms.yml         # Central inventory of all projects
+│   └── README.md             # Registry schema and usage
 ├── fragments/                 # Reusable project scaffolds
 │   └── nx-dev-infra/         # Nx + Docker + Postgres + n8n
 │       ├── README.md         # Fragment documentation

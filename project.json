@@ -72,6 +72,13 @@
         "command": "./bin/pip apply astro-blog",
         "forwardAllArgs": true
       }
+    },
+    "registry": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "./bin/pip registry",
+        "forwardAllArgs": true
+      }
     }
   }
 }
