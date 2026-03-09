@@ -4,43 +4,28 @@ All notable changes to the `.pip` framework are documented here.
 
 ## Unreleased
 
-### Added
-- **ShadCN UI + Playwright E2E Testing for nx-product-surfaces**
-  - Complete ShadCN UI components (Button, Input) with Tailwind CSS integration
-  - Utility function (`lib/utils.ts`) for className merging with clsx and tailwind-merge
-  - Integration settings system with localStorage persistence and React hooks
-  - Widget system with placeholder GitHub repos widget
-  - Playwright E2E test template covering complete user flow (marketing→login→app→logout)
-  - Additional E2E tests for GitHub integration toggle and widget conditional display
-  - Automatic Tailwind CSS configuration with ShadCN design tokens and CSS variables
-  - TypeScript path alias (@/) configuration in tsconfig.base.json
-  - Apply script now installs all dependencies and copies all templates
-  - Makes nx-product-surfaces fragment production-ready
-- **Nx workspace wrappers for kernel scripts**
-  - Adds `nx.json` + `project.json` so you can run common tasks via `nx run pip:<target>`
-  - Adds `package.json` with Nx as a dev dependency for contributors working on the kernel repo
-- **First-class organism config via `.piprc`**
-  - Adds `docs/templates/organism-piprc.example` and seeds `.piprc` during bootstrap
-  - Adds `pip migrate` to initialize/upgrade `.piprc` safely
-  - Adds `pip mode` to show resolved modes and their sources
-- **Execution strategy mode via `PIP_ACTION_MODE`**
-  - `live` executes immediately (default)
-  - `confirm` prompts before side effects when `PIP_MODE=execute`
-  - `dry-run` blocks side effects (wrap-up is supported as a dry run)
+### Breaking (v3.0): Tooling Extracted to Hatch
 
-### Changed
-- **Unified CLI now supports explicit execution modes via `PIP_MODE` and `.piprc` defaults**
-  - `observe`/`propose` block side-effecting commands; `execute` permits them
-  - `PIP_ACTION_MODE` controls execution strategy (`live`/`confirm`/`dry-run`)
-  - Side-effecting commands include `pip apply`, `pip bootstrap`, `pip wrap`, and `pip review`
+**`.pip` is now a pure information layer** — all executable tooling has been extracted to **[hatch](https://github.com/derrybirkett/hatch)**.
 
-- **Breaking (v2): extracted the website/blog into a separate `pip-blog` organism repo**
-  - Removed Jekyll site files and GitHub Pages publishing workflow from this repo
-  - `pip` remains the genome/kernel repo; organisms submodule it at `.pip/`
-  - The site repo should include `pip` as a submodule if it wants to inherit governance and tooling
+### Removed
+- All fragments (`fragments/nx-dev-infra`, `fragments/nx-product-surfaces`, `fragments/nx-webapp-starter`, `fragments/astro-blog`)
+- All bin scripts (`bin/pip`, `bin/bootstrap-project.sh`, `bin/apply-*`, `bin/wrap-up.sh`, etc.)
+- Resources directory (`resources/nx-product-surfaces/`)
+- Organism templates (`docs/templates/organism-*.md`)
+- Fragment documentation (`docs/fragments-guide.md`)
+- Nx workspace files (`package.json`, `nx.json`, `project.json`)
+- Git hooks (`hooks/`)
 
-### Fixed
-- `pip wrap` now operates on the organism git repository when `.pip` is used as a submodule (instead of acting on the detached submodule checkout)
+### Changed  
+- README.md — Now focuses on pure governance and agentic patterns
+- AGENTS.md — CTO promotes hatch for tooling; removed command ownership sections
+- ROADMAP.md — Removed Initiative 2 (fragments expansion); focuses on agentic system only
+- Agent manifest — Simplified tooling references
+
+### Migration Path
+- For project scaffolding, use **[hatch](https://github.com/derrybirkett/hatch)** instead
+- `.pip` remains valuable for: agent governance, agentic design patterns, delivery methodology, information architecture
 
 ## 2026-01-05 — Dev & Security Templates
 ### Added
