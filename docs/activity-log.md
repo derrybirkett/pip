@@ -4,6 +4,7 @@ Log new agent activity for each commit: who did what and why.
 
 | Date (UTC) | Agent | Commit/PR | What changed | Why (rationale) | Links |
 | --- | --- | --- | --- --- | --- |
+| 2026-03-09 | CTO | main | Added pip+hatch integration testing guide | Document how governance layer (pip) and execution layer (hatch) work together for agentic operational efficiency; provide concrete test scenario from mission to deployed product | docs/testing-pip-hatch-integration.md |
 | 2026-03-09 | CTO | feat/extract-to-hatch | Extracted all executable tooling to hatch repo; pip becomes pure information layer | Focus pip on governance and agentic patterns; hatch owns project scaffolding and automation; cleaner separation of concerns enables faster iteration | README.md, AGENTS.md, ROADMAP.md, removed: fragments/, bin/, resources/, package.json, nx.json |
 | 2025-11-28 | CTO | 7271b83 | Added fragments system with nx-dev-infra scaffold | Enable one-command bootstrapping of new projects with consistent infrastructure (Nx, Docker, Postgres, n8n) | fragments/, bin/apply-nx-dev-infra.sh, docs/fragments-guide.md |
 | 2025-11-28 | CTO | 89c7889 | Added WARP.md, .envrc.example, updated README.md with environment setup | Provide AI agents with repository guidance; secure token management via direnv | WARP.md, .envrc.example |
