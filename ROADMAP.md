@@ -9,7 +9,6 @@
 - **[Project Board](https://github.com/users/derrybirkett/projects/4)** - Kanban view of all roadmap items
 - **[All Roadmap Issues](https://github.com/derrybirkett/pip/issues?q=is%3Aissue+label%3Aroadmap)** - Complete list
 - **[Initiative 1: Agentic System](https://github.com/derrybirkett/pip/issues/59)** - Epic issue
-- **[Initiative 2: Fragments](https://github.com/derrybirkett/pip/issues/60)** - Epic issue
 - **[Milestones](https://github.com/derrybirkett/pip/milestones)** - Version tracking
 
 ## Vision
@@ -18,8 +17,8 @@ Transform `.pip` from a documentation and scaffolding framework (v1.x) into a **
 
 ## Versioning Strategy
 
-- **v1.1.0** (Latest tagged stable) - Foundation complete: agent governance, fragments, documentation, processes
-- **v2.0.0** (Current development) - Agentic system complete: vector memory, formal patterns, metrics, multi-agent coordination
+- **v1.1.0** (Latest tagged stable) - Foundation complete: agent governance, documentation, processes
+- **v3.0.0** (Current development) - Pure information layer: extracted tooling to [hatch](https://github.com/derrybirkett/hatch)
 
 ### v2 Breaking Change (Structural)
 
@@ -33,11 +32,11 @@ This roadmap describes the transformation from v1.0 → v2.0 through 7 phases ov
 ### What We Have
 - ✅ Agent-based governance (CEO, CTO, CPO, CISO, CMO, CRO, COO)
 - ✅ Basic agent documentation (`ia/agents/*/role.md`)
-- ✅ Infrastructure fragments (nx-dev-infra)
-- ✅ Interactive project bootstrap wizard
 - ✅ Activity log and changelog tracking
 - ✅ Universal AI entrypoint (fragment-prompt.md, WARP.md)
 - ✅ Runtime execution modes + organism config (`PIP_MODE`, `PIP_ACTION_MODE`, `.piprc`, `pip migrate`)
+
+**Note:** Infrastructure fragments have been extracted to **[hatch](https://github.com/derrybirkett/hatch)**
 
 ### Runtime Modes (First-Class)
 
@@ -64,17 +63,17 @@ This provides:
 
 ## Strategic Initiatives
 
-### 🎯 Initiative 1: Complete Agentic Development System (v1.0 → v2.0)
+### 🎯 Initiative 1: Complete Agentic Development System (v1.0 → v3.0)
 
 **Goal**: Transform .pip into a complete agentic development system with formal patterns, persistent memory, and multi-agent coordination.
 
 **Timeline**: 13 weeks (~3 months)  
-**Status**: 📋 Ready to begin (v1.0.0 tagged)  
+**Status**: 📋 In progress (v3.0 pure governance extraction complete)  
 **Plan ID**: `c714dce0-85ea-41f3-955b-2e542d915a1d`
 
 #### Problem Statement
 
-`.pip` currently provides agent-based governance documentation and infrastructure fragments, but lacks:
+`.pip` currently provides agent-based governance documentation, but lacks:
 1. Formal agentic design patterns from research
 2. Vector database memory for context persistence
 3. Standardized agent interaction protocols
@@ -177,104 +176,9 @@ This provides:
 - Python 3.9+ for embedding scripts
 - Existing nx-dev-infra fragment
 
----
+--
 
-### 🎯 Initiative 2: Application Fragments - Web & Mobile Scaffolds
-
-**Goal**: Provide production-ready fragments for common application patterns (web apps with auth, mobile apps with Expo) to accelerate organism development.
-
-**Timeline**: 3 weeks  
-**Status**: 📋 Ready to begin  
-**Plan ID**: `b6c8bd58-1fa9-4834-a46e-865fe9eb85ba`
-
-#### Problem Statement
-
-`.pip` currently provides infrastructure fragments (nx-dev-infra, astro-blog) but lacks:
-1. Full-stack web application scaffold with authentication
-2. Mobile application scaffold using Expo
-3. Supabase setup automation and best practices
-4. Landing page + authenticated dashboard patterns
-5. Cross-platform auth integration (web + mobile)
-
-#### Phases Overview
-
-**Phase 1: Supabase Auth App Fragment** - 1 week
-- Next.js 14 web app with Supabase auth
-- Marketing landing page
-- Complete auth flow (signup, login, password reset)
-- Authenticated dashboard with profile/settings/logout
-- ShadCN UI + Tailwind CSS
-
-**Phase 2: Expo Mobile Fragment** - 1 week
-- React Native app with Expo SDK 50+
-- Expo Router for navigation
-- Auth screens with biometric support
-- Tab navigation (Home, Profile, Settings)
-- Supabase integration (optional)
-
-**Phase 3: Integration & Validation** - 1 week
-- Cross-fragment testing
-- Documentation updates
-- Blog posts
-- Demo project
-
-#### Key Features
-
-**Supabase Auth App**:
-- Marketing landing page with hero and CTAs
-- Email/password authentication
-- Protected routes with middleware
-- Dashboard with profile dropdown
-- Profile and settings pages
-- Supabase Postgres integration
-- Row-level security (RLS) policies
-
-**Expo Mobile**:
-- File-based routing with Expo Router
-- Onboarding and auth screens
-- Biometric authentication (FaceID/TouchID)
-- Tab navigation with React Navigation
-- Secure token storage with Expo SecureStore
-- Offline support with AsyncStorage
-- Push notifications setup
-
-**Directory Structure**:
-```
-.pip/
-├── fragments/
-│   ├── supabase-auth-app/    # Web app with auth
-│   │   ├── files/
-│   │   └── README.md
-│   └── expo-mobile/          # Mobile app
-│       ├── files/
-│       └── README.md
-└── bin/
-    ├── apply-supabase-auth-app.sh
-    └── apply-expo-mobile.sh
-```
-
-#### Success Metrics
-- **Setup Time**: From git clone to running app in <10 minutes
-- **Coverage**: 90% of common web/mobile patterns included
-- **Adoption**: Used in 3+ real projects within first month
-- **Documentation**: Zero questions about basic usage
-- **Quality**: No blocking bugs in initial release
-
-#### Risk Mitigation
-- **Supabase changes**: Abstract auth layer, provide self-hosted fallback
-- **Expo incompatibilities**: Pin SDK version, document upgrade path
-- **Too opinionated**: Make fragments customizable, provide ejection path
-- **Maintenance burden**: Start with MVP, iterate based on real usage
-
-#### Dependencies
-- Existing nx-dev-infra fragment
-- Existing astro-blog fragment
-- Supabase account (free tier sufficient)
-- Expo account (free tier sufficient)
-
----
-
-### 🎯 Initiative 3: PIP Runtime Adapter - Persistent Execution Environments
+### 🎯 Initiative 2: PIP Runtime Adapter - Persistent Execution Environments
 
 **Goal**: Enable agents to work with persistent runtimes (local, Docker, Sprites, or others) through a unified adapter interface for reliable, safe, and flexible execution.
 

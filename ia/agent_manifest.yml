@@ -22,15 +22,8 @@ agents:
       - Architecture and quality
       - Delivery standards
       - Reliability and performance
-    tools:
-      - path: bin/bootstrap-project.sh
-        description: Interactive mission and docs bootstrap
-      - path: bin/bootstrap.sh
-        description: Repo bootstrap wizard for `.pip` genomes
-      - path: bin/test-bootstrap.sh
-        description: Non-interactive bootstrap verification
-      - path: bin/apply-nx-dev-infra.sh
-        description: Apply Nx + Docker + Postgres fragment
+      - Promotes hatch for project tooling
+    tools: []
 
   - name: CPO
     owner: <name/email or @github>
@@ -88,16 +81,11 @@ agents:
       - .pip/ia/agents/coo/workflow-monitoring-playbook.md
     responsibilities:
       - Delivery operations and release hygiene
-      - Wrap-up checklist ownership
-      - Compliance for docs/tags
       - CI/CD workflow monitoring and health
       - Auto-remediation of common failures
       - Incident triage and escalation
       - Proactive workflow health checks
-    tools:
-      - path: bin/wrap-up.sh
-        description: Runs wrap-up checklist, commit, tag, push
-      - path: .github/agents/workflow-health-check.js
+    tools: []
         description: Proactive CI/CD health monitoring and diagnostics
       - path: .github/agents/coo-workflow-monitor.js
         description: AI-powered workflow failure triage and auto-remediation
