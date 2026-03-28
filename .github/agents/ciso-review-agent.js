@@ -13,7 +13,7 @@ const openai = new OpenAI({
 });
 
 const CONFIG = {
-  model: 'gpt-4-turbo-preview',
+  model: process.env.OPENAI_MODEL || 'gpt-4.1-mini',
   maxTokens: 2000,
   temperature: 0.1, // Lower temperature for security = more conservative
 };

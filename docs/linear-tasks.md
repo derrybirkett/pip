@@ -47,7 +47,7 @@ This file serves as a local backup of all Linear tasks for the PIP Framework pro
 - Coverage: 90% of common web/mobile patterns
 - Adoption: 3+ real projects within first month
 
-**Related**: [ROADMAP.md](../ROADMAP.md#initiative-2-application-fragments---web--mobile-scaffolds), [Plan](../plans/)
+**Related**: [ROADMAP.md](../ROADMAP.md#initiative-2-application-fragments---web--mobile-scaffolds)
 
 ---
 
@@ -214,7 +214,7 @@ Make Linear a first-class citizen in .pip framework with agent role ownership, a
 - 100% commits reference tickets
 - <30min organism adoption
 
-**Related**: [Plan](../plans/), [docs/linear-integration.md](./linear-integration.md)
+**Related**: [docs/linear-integration.md](./linear-integration.md)
 
 ---
 

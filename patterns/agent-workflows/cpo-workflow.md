@@ -706,9 +706,9 @@ cat docs/roadmap.md
 
 ## Related Patterns
 
-- [Planning Pattern](../../resources/agentic-design-patterns/extracted-patterns/planning-pattern.md) - Roadmap planning
-- [Reflection Pattern](../../resources/agentic-design-patterns/extracted-patterns/reflection-pattern.md) - Learning from launches
-- [Multi-Agent Collaboration](../../resources/agentic-design-patterns/extracted-patterns/multi-agent-collaboration-pattern.md) - Working with CTO/CEO/CMO
+- [Planning Pattern](./planning-pattern.md) - Roadmap planning
+- [Reflection Pattern](./reflection-pattern.md) - Learning from launches
+- [Multi-Agent Collaboration](./multi-agent-collaboration-pattern.md) - Working with CTO/CEO/CMO
 
 ---
 

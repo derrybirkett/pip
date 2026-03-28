@@ -1,6 +1,9 @@
 # Wrap-Up Process
 
-This checklist (owned by the COO) guides you through the final steps before completing work on a feature or fix. Use `bin/wrap-up.sh` (triggered whenever someone says “ok wrap up”) to walk through these steps interactively.
+This checklist (owned by the COO) guides you through the final steps before completing work on a
+feature or fix. `.pip` no longer ships a `bin/wrap-up.sh` helper, so use this document as the
+source of truth or implement an equivalent helper in the adopting project via
+[hatch](https://github.com/derrybirkett/hatch).
 
 ## What is "Wrap-Up"?
 
@@ -23,7 +26,8 @@ Wrap-up is the process of finishing your work properly before moving on:
 ### 2. Documentation
 
 #### Activity Log
-- [ ] Update `.pip/docs/activity-log.md`
+- [ ] Update `docs/activity-log.md` in this repo, or your project's `docs/activity-log.md` when
+      using `.pip` as a reference layer
 - [ ] Add row with: date, agent/person, commit/PR, what changed, why, links
 - [ ] Keep rationale concise and actionable
 
@@ -33,7 +37,7 @@ Example:
 ```
 
 #### Changelog
-- [ ] Update `.pip/docs/changelog.md` if user-facing
+- [ ] Update `docs/changelog.md` if user-facing
 - [ ] Add to "Unreleased" section or create new dated section
 - [ ] Categorize: Added, Changed, Fixed, Security
 - [ ] Write from user perspective (not implementation details)
@@ -59,7 +63,7 @@ Blog posts are required for:
 - Major improvements or changes
 - Milestone releases
 
-- [ ] Draft blog post in `.pip/docs/blog/` or actual blog location
+- [ ] Draft blog post in `docs/blog/` or the actual blog location used by the project
 - [ ] Include: what, why, how to use, screenshots/demos
 - [ ] Get review from CMO (and CTO for technical posts)
 - [ ] Link to changelog and documentation

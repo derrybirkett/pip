@@ -157,7 +157,7 @@ The current state helps you start projects faster. The agentic system helps you 
 ## 🔗 Related Documentation
 
 - [ROADMAP.md](../ROADMAP.md) - 13-week transformation plan (v0.4.0 → v1.0.0)
-- [Agentic Design Patterns PDF](../resources/agentic-design-patterns/Agentic_Design_Patterns.pdf) - 482-page research reference
+- [Agent Workflow Patterns](../patterns/agent-workflows/) - Current in-repo workflow references
 - [Agent Manifest](../ia/agent_manifest.yml) - Current agent roles and responsibilities
 
 ---

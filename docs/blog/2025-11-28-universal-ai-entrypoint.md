@@ -117,7 +117,7 @@ The universal entrypoint unlocks these future capabilities across all AI platfor
 - **PR**: [#5](https://github.com/derrybirkett/pip/pull/5)
 - **Changelog**: [docs/changelog.md](../changelog.md)
 - **Related**: [WARP.md](../../WARP.md) — Warp-specific guidance
-- **Fragments Guide**: [docs/fragments-guide.md](../fragments-guide.md)
+- **Adoption Guide**: [docs/using-pip-as-genome.md](../using-pip-as-genome.md)
 
 ---
 

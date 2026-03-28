@@ -146,7 +146,7 @@ The CMO primarily uses:
    ## Our Solution
    [Introduce feature, show it in action]
    
-   ![Screenshot](path/to/image.png)
+   `![Screenshot](path/to/image.png)`
    
    ## Key Benefits
    - Benefit 1 (with example)
@@ -758,9 +758,9 @@ cat docs/content-calendar.md
 
 ## Related Patterns
 
-- [Planning Pattern](../../resources/agentic-design-patterns/extracted-patterns/planning-pattern.md) - Content calendars, campaigns
-- [Multi-Agent Collaboration](../../resources/agentic-design-patterns/extracted-patterns/multi-agent-collaboration-pattern.md) - Working with CPO/CRO/CEO
-- [Reflection Pattern](../../resources/agentic-design-patterns/extracted-patterns/reflection-pattern.md) - Content performance analysis
+- [Planning Pattern](./planning-pattern.md) - Content calendars and campaigns
+- [Multi-Agent Collaboration](./multi-agent-collaboration-pattern.md) - Working with CPO/CRO/CEO
+- [Reflection Pattern](./reflection-pattern.md) - Content performance analysis
 
 ---
 

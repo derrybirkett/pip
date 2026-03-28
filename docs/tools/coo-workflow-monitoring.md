@@ -194,7 +194,7 @@ Access health status:
 
 ## Quick Links
 
-- [COO Role Definition](../../../ia/agents/coo/role.md)
-- [COO Responsibilities](../../../ia/agents/coo/responsibilities.md)
-- [Full Monitoring Playbook](../../../ia/agents/coo/workflow-monitoring-playbook.md)
-- [Wrap-Up Process](../../processes/wrap-up-checklist.md)
+- [COO Role Definition](../../ia/agents/coo/role.md)
+- [COO Responsibilities](../../ia/agents/coo/responsibilities.md)
+- [Full Monitoring Playbook](../../ia/agents/coo/workflow-monitoring-playbook.md)
+- [Wrap-Up Process](../processes/wrap-up-checklist.md)

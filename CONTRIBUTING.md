@@ -10,8 +10,9 @@ Thanks for helping improve this project. This guide explains how to propose edit
 
 ## Pull Requests
 - Use the PR template: describe goal, scope, screenshots, test plan, risks
-- Link issues and related docs (e.g., `.pip/docs/...`)
-- Update `./.pip/docs/changelog.md` and `./.pip/docs/activity-log.md`
+- Link issues and related docs (for example, `docs/...` in this repo or `.pip/docs/...` in an
+  adopting project)
+- Update `docs/changelog.md` and `docs/activity-log.md`
 
 ## Review & Approvals
 - Small, focused PRs are easier to review
@@ -68,4 +69,3 @@ While we trust contributors' judgment, consider getting peer review for:
 ## Automation
 - PRs can be routed to the right agent via `./ia/agent_manifest.yml`
 - CI checks: lint, test, security scans must pass
-

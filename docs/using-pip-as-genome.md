@@ -216,7 +216,7 @@ git submodule update --init  # Only once, then never again
 ### ✅ Reference, don't duplicate
 Link to `.pip` docs when they apply:
 ```markdown
-See [.pip git workflow](.pip/WARP.md#git-workflow) for branching strategy.
+See [.pip git workflow](../WARP.md#git-workflow) for branching strategy.
 ```
 
 ### ✅ Keep .pip updated

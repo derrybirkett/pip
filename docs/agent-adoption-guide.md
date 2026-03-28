@@ -60,7 +60,7 @@ Edit `.github/agents/config.json` for your organism:
 {
   "ai_provider": {
     "type": "openai",
-    "model": "gpt-4-turbo-preview",
+    "model": "gpt-4.1-mini",
     "temperature": {
       "implementation": 0.3,
       "cto_review": 0.2,
@@ -522,9 +522,9 @@ If you improve the agent system for your organism:
 
 ## Related Documentation
 
-- [Agent README](.github/agents/README.md) - Complete agent documentation
-- [Roadmap Guide](docs/roadmap-guide.md) - Using GitHub roadmap
-- [pip WARP.md](WARP.md) - pip framework guidance
+- [Agent README](../.github/agents/README.md) - Complete agent documentation
+- [Roadmap Guide](./roadmap-guide.md) - Using GitHub roadmap
+- [pip WARP.md](../WARP.md) - pip framework guidance
 - [frctls PR #25](https://github.com/derrybirkett/frctls/pull/25) - Original implementation
 
 ---

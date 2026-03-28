@@ -253,7 +253,7 @@ Next steps: [continue/iterate/escalate]
 - [Planning Pattern](./planning-pattern.md) - For product/feature work
 - [Reflection Pattern](./reflection-pattern.md) - For periodic self-evaluation
 - [Tool Use Pattern](./tool-use-pattern.md) - Guidelines for ACT step
-- [Multi-agent Pattern](./multi-agent-pattern.md) - Handoff protocols
+- [Multi-Agent Collaboration](./multi-agent-collaboration-pattern.md) - Handoff protocols
 
 ## Further Reading
 

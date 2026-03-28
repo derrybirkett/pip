@@ -141,7 +141,7 @@ Periodically verify settings are still in place:
 
 - [GitHub Branch Protection Documentation](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches)
 - [WARP.md](../WARP.md) - Local workflow and branching strategy
-- [hooks/README.md](../hooks/README.md) - Local git hooks documentation
+- [CONTRIBUTING.md](../CONTRIBUTING.md) - Pull request and branch expectations
 
 ---
 

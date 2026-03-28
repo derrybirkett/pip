@@ -337,7 +337,7 @@ gh issue list --label initiative-1-agentic --state all --json state | \
 - [ROADMAP.md](../ROADMAP.md) - Strategic vision and context
 - [CONTRIBUTING.md](../CONTRIBUTING.md) - General contribution guidelines
 - [agent workflows](../patterns/agent-workflows/) - Agent-specific workflows (when created)
-- [CPO Triage Guide](../.pip/docs/CPO-TRIAGE.md) - For agentic workflow (when applicable)
+- [Agent Adoption Guide](./agent-adoption-guide.md) - For the GitHub automation workflow
 
 ## Support
 

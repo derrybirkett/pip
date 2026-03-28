@@ -756,9 +756,9 @@ npm run lint:security
 
 ## Related Patterns
 
-- [Reflection Pattern](../../resources/agentic-design-patterns/extracted-patterns/reflection-pattern.md) - Risk assessment, post-mortems
-- [Multi-Agent Collaboration](../../resources/agentic-design-patterns/extracted-patterns/multi-agent-collaboration-pattern.md) - CTO reviews
-- [Planning Pattern](../../resources/agentic-design-patterns/extracted-patterns/planning-pattern.md) - Security audits
+- [Reflection Pattern](./reflection-pattern.md) - Risk assessment and post-mortems
+- [Multi-Agent Collaboration](./multi-agent-collaboration-pattern.md) - CTO reviews
+- [Planning Pattern](./planning-pattern.md) - Security audits
 
 ---
 

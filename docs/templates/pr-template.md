@@ -24,7 +24,7 @@
 - Related to #
 
 **Related Docs**: 
-- `.pip/docs/...`
+- `docs/...` (or `.pip/docs/...` when updating an adopting project)
 - 
 
 ## Testing
@@ -62,8 +62,8 @@
 ## Documentation Updates
 <!-- What docs did you update or need to update? -->
 
-- [ ] Activity log updated (`.pip/docs/activity-log.md`)
-- [ ] Changelog updated (`.pip/docs/changelog.md`)
+- [ ] Activity log updated (`docs/activity-log.md`)
+- [ ] Changelog updated (`docs/changelog.md`)
 - [ ] README updated (if applicable)
 - [ ] API docs updated (if applicable)
 - [ ] Blog post drafted (if user-facing feature)
