@@ -60,7 +60,7 @@ Edit `.github/agents/config.json` for your organism:
 {
   "ai_provider": {
     "type": "openai",
-    "model": "gpt-4-turbo-preview",
+    "model": "gpt-4.1-mini",
     "temperature": {
       "implementation": 0.3,
       "cto_review": 0.2,

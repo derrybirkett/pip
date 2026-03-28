@@ -8,6 +8,7 @@ All notable changes to the `.pip` framework are documented here.
 - Repaired `ia/agent_manifest.yml` so agent routing metadata parses correctly again.
 - Added automated validation for local Markdown links and manifest syntax in the docs validation workflow.
 - Updated contributor, wrap-up, onboarding, and workflow docs to match `.pip`'s documentation-only scope after tooling moved to `hatch`.
+- Updated GitHub review agents to use a supported OpenAI model and allow `OPENAI_MODEL` overrides.
 
 ### Added
 - Added missing agent workflow reference pages for planning, reflection, tool use, multi-agent collaboration, and CRO guidance.

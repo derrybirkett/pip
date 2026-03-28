@@ -95,7 +95,7 @@ Agent behavior is controlled via `config.json`:
 ```json
 {
   "ai_provider": {
-    "model": "gpt-4-turbo-preview",
+    "model": "gpt-4.1-mini",
     "temperature": {
       "implementation": 0.3,  // Higher = more creative
       "cto_review": 0.2,
