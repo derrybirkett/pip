@@ -632,9 +632,9 @@ vim docs/changelog.md
 
 ## Related Patterns
 
-- [Multi-Agent Collaboration](../../resources/agentic-design-patterns/extracted-patterns/multi-agent-collaboration-pattern.md) - Handoffs
-- [Tool Use Pattern](../../resources/agentic-design-patterns/extracted-patterns/tool-use-pattern.md) - Git, deployment tools
-- [Reflection Pattern](../../resources/agentic-design-patterns/extracted-patterns/reflection-pattern.md) - Process improvement
+- [Multi-Agent Collaboration](./multi-agent-collaboration-pattern.md) - Handoffs
+- [Tool Use Pattern](./tool-use-pattern.md) - Git and deployment tools
+- [Reflection Pattern](./reflection-pattern.md) - Process improvement
 
 ---
 

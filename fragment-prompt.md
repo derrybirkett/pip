@@ -8,10 +8,11 @@
 
 1. **Documentation Framework** — Agent-based governance with C-suite roles (CEO, CTO, CPO, CISO, CMO, CRO)
 2. **Process Templates** — Discovery, delivery, and wrap-up workflows
-3. **Project Scaffolds** — Reusable infrastructure fragments (Nx, Docker, Postgres, n8n)
+3. **Agentic Patterns** — Reusable workflows for technical, product, security, and ops agents
 4. **Product Graphs** — Maps of key surfaces and flows
 
-**Repository Type**: Documentation + Infrastructure Scaffolds (Markdown + shell scripts + Docker configs)
+**Repository Type**: Documentation-only governance layer. For executable scaffolding and tooling,
+use [hatch](https://github.com/derrybirkett/hatch).
 
 ## The Genome/Organism Model
 
@@ -45,7 +46,7 @@ my-project/
     └── changelog.md         # Your project's real releases
 ```
 
-**See [Using .pip as Genome](.pip/docs/using-pip-as-genome.md) for detailed setup guide.**
+**See [Using .pip as Genome](docs/using-pip-as-genome.md) for detailed setup guide.**
 
 ---
 
@@ -111,15 +112,10 @@ ia/agents/
 └── cro/                         ← Pricing, packaging, revenue
 ```
 
-### Fragments (Project Scaffolds)
+### Tooling Boundary
 ```
-fragments/
-└── nx-dev-infra/               ← Nx + Docker + Postgres + n8n
-    ├── README.md               ← Fragment documentation
-    └── files/                  ← Files to copy into projects
-
-bin/
-└── apply-nx-dev-infra.sh       ← Script to apply fragment
+.pip/                           ← Governance, patterns, and reference docs
+hatch/                          ← Executable scaffolding and automation tooling
 ```
 
 ### Process & Templates
@@ -128,7 +124,7 @@ docs/
 ├── processes/                  ← Workflow guides
 ├── templates/                  ← Reusable templates
 ├── blog/                       ← Blog posts for releases
-└── fragments-guide.md          ← How to use/create fragments
+└── using-pip-as-genome.md      ← How to use `.pip` as a reference layer
 ```
 
 ### Product Graphs
@@ -162,41 +158,12 @@ See `method/delivery-method.md` for full process:
 6. ✅ Merge (squash and merge)
 7. ✅ Tag release (if applicable)
 
-## How to Scaffold Code Using Fragments
+## How to Scaffold Code
 
-### What Are Fragments?
-Reusable project scaffolds that provide consistent infrastructure patterns. Apply once, then owned by the target project.
-
-### Available Fragments
-- **nx-dev-infra**: Containerized Nx development environment
-  - Node 22 + pnpm + Nx
-  - Docker Compose with dev container, Postgres, n8n
-  - Nx targets for `infra:up`, `infra:down`, `infra:logs`
-
-### How to Apply a Fragment
-```bash
-# In your new project
-git init my-app && cd my-app
-
-# Add .pip as submodule
-git submodule add git@github.com:derrybirkett/pip.git .pip
-
-# Apply fragment
-./.pip/bin/apply-nx-dev-infra.sh
-
-# Use infrastructure
-nx run infra:up
-docker exec -it <project>-dev bash
-```
-
-### Creating New Fragments
-See `docs/fragments-guide.md` for detailed instructions:
-1. Create `fragments/<name>/` directory
-2. Add `README.md` documenting the fragment
-3. Add `files/` directory with files to copy
-4. Create `bin/apply-<name>.sh` script
-5. Test in isolated project
-6. Update documentation
+`.pip` no longer ships executable fragments or bootstrap scripts. When a task requires scaffolding,
+automation, or local project setup, route it to
+[hatch](https://github.com/derrybirkett/hatch) and keep `.pip` focused on governance, process, and
+decision support.
 
 ## Decision Boundaries for C-Suite Agents
 

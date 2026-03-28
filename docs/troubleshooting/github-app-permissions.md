@@ -87,4 +87,4 @@ function isPathAllowed(filePath) {
 ## References
 
 - [GitHub Actions Permissions](https://docs.github.com/en/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token)
-- [COO Workflow Monitoring Playbook](../ia/agents/coo/workflow-monitoring-playbook.md)
+- [COO Workflow Monitoring Playbook](../../ia/agents/coo/workflow-monitoring-playbook.md)

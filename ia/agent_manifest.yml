@@ -85,7 +85,8 @@ agents:
       - Auto-remediation of common failures
       - Incident triage and escalation
       - Proactive workflow health checks
-    tools: []
+    tools:
+      - path: .github/agents/workflow-health-check.js
         description: Proactive CI/CD health monitoring and diagnostics
       - path: .github/agents/coo-workflow-monitor.js
         description: AI-powered workflow failure triage and auto-remediation

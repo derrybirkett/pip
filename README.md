@@ -124,11 +124,11 @@ See [ia/agents/](ia/agents/) for detailed role documentation.
 See [patterns/agent-workflows/](patterns/agent-workflows/) for implementation guides.
 
 ### Autonomous Agent System
-`.pip` includes GitHub Actions workflows for AI-powered automation:
+`.pip` documents GitHub Actions-based automation patterns for AI-powered workflows:
 - Autonomous roadmap implementation
 - PR review agents (CTO, CISO perspectives)
 - Workflow health monitoring
-- See [.github/workflows/](.github/workflows/) for implementation
+- See [.github/workflows/](.github/workflows/) for reference implementations.
 
 ### Documentation Standards
 - **Activity Log** — [docs/activity-log.md](docs/activity-log.md) tracks what changed, when, and why

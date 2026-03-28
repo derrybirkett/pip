@@ -153,8 +153,8 @@ nx run infra:up
 ```
 
 ### Learn More
-- [Fragments Guide](../fragments-guide.md) - Complete documentation
-- [nx-dev-infra README](../../fragments/nx-dev-infra/README.md) - Fragment details
+- [Using .pip as Genome](../using-pip-as-genome.md) - Current adoption model
+- [hatch](https://github.com/derrybirkett/hatch) - Current home for executable scaffolding and tooling
 - [WARP.md](../../WARP.md) - Repository overview
 
 ## Feedback Welcome
@@ -168,7 +168,6 @@ This is the MVP - one fragment, simple bash script. We want to learn:
 ## Links
 
 - Changelog: [../changelog.md](../changelog.md)
-- Fragments Guide: [../fragments-guide.md](../fragments-guide.md)
-- nx-dev-infra Fragment: [../../fragments/nx-dev-infra/README.md](../../fragments/nx-dev-infra/README.md)
-- Apply Script: [../../bin/apply-nx-dev-infra.sh](../../bin/apply-nx-dev-infra.sh)
+- Adoption Guide: [../using-pip-as-genome.md](../using-pip-as-genome.md)
+- Tooling Home: [hatch](https://github.com/derrybirkett/hatch)
 - Plan Document: Plan ID 633fd28f-f4ce-4fe3-8163-2f594e39cc0b

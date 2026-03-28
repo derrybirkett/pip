@@ -86,7 +86,7 @@ For most technical work, the CTO agent follows the **ReAct Pattern**:
    - Share with CPO if changes requirements
    - Get approval before large efforts
 
-**Example Plan**: See [planning-pattern.md](../../resources/agentic-design-patterns/extracted-patterns/planning-pattern.md)
+**Example Plan**: See [planning-pattern.md](./planning-pattern.md)
 
 ---
 
@@ -127,7 +127,7 @@ Execute ONE focused action:
 - Use appropriate tools
 - Make changes reversible if possible
 
-**Tool Selection** (see [tool-use-pattern.md](../../resources/agentic-design-patterns/extracted-patterns/tool-use-pattern.md)):
+**Tool Selection** (see [tool-use-pattern.md](./tool-use-pattern.md)):
 - **git**: Version control
 - **pnpm/npm**: Package management
 - **test runner**: Validation
@@ -539,7 +539,7 @@ pnpm lint
 pnpm format
 ```
 
-**Tool Selection Framework**: See [tool-use-pattern.md](../../resources/agentic-design-patterns/extracted-patterns/tool-use-pattern.md)
+**Tool Selection Framework**: See [tool-use-pattern.md](./tool-use-pattern.md)
 
 ---
 
@@ -680,11 +680,11 @@ pnpm test --coverage          # Check coverage
 
 ## Related Patterns
 
-- [ReAct Pattern](../../resources/agentic-design-patterns/extracted-patterns/react-pattern.md) - Core workflow
-- [Planning Pattern](../../resources/agentic-design-patterns/extracted-patterns/planning-pattern.md) - Complex work
-- [Reflection Pattern](../../resources/agentic-design-patterns/extracted-patterns/reflection-pattern.md) - Learning
-- [Tool Use Pattern](../../resources/agentic-design-patterns/extracted-patterns/tool-use-pattern.md) - Tool selection
-- [Multi-Agent Collaboration](../../resources/agentic-design-patterns/extracted-patterns/multi-agent-collaboration-pattern.md) - Handoffs
+- [ReAct Pattern](./react-pattern.md) - Core workflow
+- [Planning Pattern](./planning-pattern.md) - Complex work
+- [Reflection Pattern](./reflection-pattern.md) - Learning
+- [Tool Use Pattern](./tool-use-pattern.md) - Tool selection
+- [Multi-Agent Collaboration](./multi-agent-collaboration-pattern.md) - Handoffs
 
 ---
 
