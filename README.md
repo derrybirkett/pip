@@ -1,3 +1,7 @@
+> **Note:** This project's ideas evolved into [bloom](https://github.com/derrybirkett/bloom). This repo remains accessible for reference; see [TOMBSTONE.md](TOMBSTONE.md) for the salvage map. Original content below.
+
+---
+
 # .pip — Project Intelligence & Process
 
 **Information architecture and governance framework for AI-assisted development.**
